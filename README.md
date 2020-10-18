@@ -1,2 +1,5 @@
-# ÆíÀÇÁ¡´ÞÀÎ(°¡Äª)
-ÀÚ¸¶¸° ±â¹Ý Å©·Î½ºÇÃ·§Æû ¸ð¹ÙÀÏ ¾ÖÇÃ¸®ÄÉÀÌ¼Ç ÇÁ·ÎÁ§Æ®
+# íŽ¸ì˜ì ë‹¬ì¸(ê°€ì¹­)
+ìžë§ˆë¦° ê¸°ë°˜ í¬ë¡œìŠ¤í”Œëž«í¼ ëª¨ë°”ì¼ ì• í”Œë¦¬ì¼€ì´ì…˜ í”„ë¡œì íŠ¸
+
+Live Share ì£¼ì†Œ
+https://prod.liveshare.vsengsaas.visualstudio.com/join?E1F9CF1CB5D79FF027ADC43507DAE174F04F
