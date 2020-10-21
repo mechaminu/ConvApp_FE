@@ -16,7 +16,7 @@ namespace ConvApp
             InitializeComponent();
         }
 
-        public List<Post> posts = new List<Post>();
+        public static List<Post> posts = new List<Post>();
         private ImageSource imgSrc = null;
 
         async private void OnImgAdd(object sender, EventArgs e)
@@ -45,8 +45,8 @@ namespace ConvApp
 
         async private void OnShowList(object sender, EventArgs e)
         {
-            await DisplayAlert("List Status", $"# of post : {posts.Count}", "OK");
-            //await Navigation.PushAsync(new FeedPage());
+            //await DisplayAlert("List Status", $"# of post : {posts.Count}", "OK");
+            await Navigation.PushAsync(new FeedPage());
         }
     }
 }

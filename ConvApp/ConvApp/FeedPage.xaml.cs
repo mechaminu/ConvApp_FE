@@ -6,16 +6,21 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace ConvApp
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class FeedPage : ContentPage
     {
         public FeedPage()
         {
             InitializeComponent();
+        }
+
+        // OnAppearing 메소드에서 리스트뷰에 리스트를 제공해야 튕기지 않음!
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            list.ItemsSource = MainPage.posts;
         }
     }
 }

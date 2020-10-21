@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ConvApp.MainPage">
     <StackLayout x:Name="wrapper">
-        <Image x:Name="image" HorizontalOptions="Center"/>
+        
         <Entry x:Name="inputText" Placeholder="Share your experience here..."/>
         <Grid>
             <Grid.ColumnDefinitions>
@@ -17,7 +17,8 @@
                     Clicked="OnImgAdd"
                     Grid.Column="1"/>
         </Grid>
-        <Label x:Name="postCntLabel"/>
+        <Image x:Name="image" HorizontalOptions="Center"/>
+        
         <Button Text="생성한 포스트 보기"  
                 Clicked="OnShowList" />
     </StackLayout>

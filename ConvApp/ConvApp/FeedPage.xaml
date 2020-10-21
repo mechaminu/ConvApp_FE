@@ -4,15 +4,19 @@
              x:Class="ConvApp.FeedPage">
     <ContentPage.Content>
         <StackLayout>
-            <StackLayout HorizontalOptions="Fill" BackgroundColor="blue">
-                <Label Text="FeedPage" HorizontalOptions="CenterAndExpand" FontSize="Large" />
-            </StackLayout>
-            <ListView x:Name="list" VerticalOptions="Fill" BackgroundColor="Yellow">
-                <!--<ListView.ItemTemplate>
+            <Label Text="피드"
+                   HorizontalTextAlignment="Center" 
+                   HorizontalOptions="Fill" 
+                   BackgroundColor="DimGray" 
+                   Padding="0,10,0,10"
+                   FontSize="30"
+                   TextColor="White"/>
+            <ListView x:Name="list" VerticalOptions="CenterAndExpand">
+                <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ImageCell ImageSource="{Binding Image}"/>
+                        <ImageCell ImageSource="{Binding Image}" Text="{Binding TextContent}"/>
                     </DataTemplate>
-                </ListView.ItemTemplate>-->
+                </ListView.ItemTemplate>
             </ListView> 
 
         </StackLayout>
