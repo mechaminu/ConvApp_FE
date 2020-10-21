@@ -1,12 +1,11 @@
-﻿using ConvApp.Model;
-using Plugin.Media;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using Xamarin.Forms;
+using ConvApp.Model;
+
+using Plugin.Media;
+
 
 namespace ConvApp
 {
@@ -15,36 +14,38 @@ namespace ConvApp
         public MainPage()
         {
             InitializeComponent();
-            //refreshCnt();
         }
 
+        public List<Post> posts = new List<Post>();
+        private ImageSource imgSrc = null;
 
-        //public static List<Post> posts = new List<Post>();
-        //static ImageSource imgSrc = null;
-        async private void inputImg(object sender, EventArgs e)
+        async private void OnImgAdd(object sender, EventArgs e)
         {
             var photo = await CrossMedia.Current.PickPhotoAsync();
-            var photoStream = photo.GetStream();
-            image.Source = ImageSource.FromStream(() => photoStream);
-            //imgSrc = ImageSource.FromStream(() => photoStream);
+            imgSrc = ImageSource.FromStream(() => photo.GetStream());
+            if (imgSrc != null)
+                image.Source = imgSrc;
         }
-        private void postSave(object sender, EventArgs e)
-        {
-            //posts.Add(new Post
-            //{
-            //    Image = imgSrc,
-            //    TextContent = inputText.Text
-            //});
 
-            //refreshCnt();
-            //inputText.Text = "";
-        }
-        //void refreshCnt()
-        //{
-        //    postListStatusLabel.Text = posts.Count.ToString();
-        //}
-        async private void btn_callphotonext(object sender, EventArgs e)
+        private void OnSave(object sender, EventArgs e)
         {
+            // Saves gathered data into new 'Post' class instance and adds into the collection.
+            posts.Add(new Post
+            {
+                Image = imgSrc,
+                TextContent = inputText.Text,
+                Date = DateTime.Now
+            });
+
+            // Resets after saving
+            inputText.Text = "";
+            imgSrc = null;
+            image.Source = null;
+        }
+
+        async private void OnShowList(object sender, EventArgs e)
+        {
+            await DisplayAlert("List Status", $"# of post : {posts.Count}", "OK");
             //await Navigation.PushAsync(new FeedPage());
         }
     }

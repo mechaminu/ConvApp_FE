@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Xamarin.Forms;
 
 namespace ConvApp.Model
@@ -9,5 +7,6 @@ namespace ConvApp.Model
     {
         public ImageSource Image { get; set; }
         public string TextContent { get; set; }
+        public DateTime Date { get; set; }
     }
 }

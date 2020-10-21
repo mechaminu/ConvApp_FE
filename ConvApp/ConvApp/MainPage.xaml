@@ -10,20 +10,15 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            
+
             <Button Text="Save"
-                    Clicked="postSave" />
+                    Clicked="OnSave" />
             <Button Text="Add Photo"
-                    Clicked="inputImg"
+                    Clicked="OnImgAdd"
                     Grid.Column="1"/>
         </Grid>
-        <Label x:Name="postListStatusLabel"/>
+        <Label x:Name="postCntLabel"/>
         <Button Text="생성한 포스트 보기"  
-                Clicked="btn_callphotonext" />
-
-
-
-
-
+                Clicked="OnShowList" />
     </StackLayout>
 </ContentPage>

@@ -16,8 +16,6 @@ namespace ConvApp
         public FeedPage()
         {
             InitializeComponent();
-
-            //list.ItemsSource = MainPage.posts;
         }
     }
 }
