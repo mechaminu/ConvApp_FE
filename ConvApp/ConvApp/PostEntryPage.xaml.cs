@@ -1,22 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
-
 using Xamarin.Forms;
 using ConvApp.Model;
-
 using Plugin.Media;
 
 
 namespace ConvApp
 {
-    public partial class MainPage : ContentPage
+    public partial class PostEntryPage : ContentPage
     {
-        public MainPage()
+        public PostEntryPage()
         {
             InitializeComponent();
         }
 
-        public static List<Post> posts = new List<Post>();
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            // Placeholder 이미지를 전시하자
+            image.Source = ImageSource.FromUri(new Uri("https://via.placeholder.com/150"));
+        }
+
         private ImageSource imgSrc = null;
 
         async private void OnImgAdd(object sender, EventArgs e)
@@ -27,26 +31,17 @@ namespace ConvApp
                 image.Source = imgSrc;
         }
 
-        private void OnSave(object sender, EventArgs e)
+        async private void OnSave(object sender, EventArgs e)
         {
             // Saves gathered data into new 'Post' class instance and adds into the collection.
-            posts.Add(new Post
+            FeedPage.posts.Add(new Post
             {
                 Image = imgSrc,
                 TextContent = inputText.Text,
                 Date = DateTime.Now
             });
 
-            // Resets after saving
-            inputText.Text = "";
-            imgSrc = null;
-            image.Source = null;
-        }
-
-        async private void OnShowList(object sender, EventArgs e)
-        {
-            //await DisplayAlert("List Status", $"# of post : {posts.Count}", "OK");
-            await Navigation.PushAsync(new FeedPage());
+            await Navigation.PopAsync();
         }
     }
 }

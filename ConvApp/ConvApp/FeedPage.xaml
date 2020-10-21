@@ -11,14 +11,14 @@
                    Padding="0,10,0,10"
                    FontSize="30"
                    TextColor="White"/>
-            <ListView x:Name="list" VerticalOptions="CenterAndExpand">
+            <ListView x:Name="list" VerticalOptions="CenterAndExpand" SelectionMode="None" BackgroundColor="AliceBlue">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ImageCell ImageSource="{Binding Image}" Text="{Binding TextContent}"/>
+                        <ImageCell ImageSource="{Binding Image}" Text="{Binding TextContent}" Detail="{Binding Date}}" />
                     </DataTemplate>
                 </ListView.ItemTemplate>
-            </ListView> 
-
+            </ListView>
+            <Button Text="포스트 추가" Clicked="OnPostAdd"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
