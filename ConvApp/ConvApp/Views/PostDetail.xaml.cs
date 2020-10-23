@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConvApp.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,13 @@ namespace ConvApp.Views
         public PostDetail()
         {
             InitializeComponent();
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            image.Source = ((Post)BindingContext).Image;
         }
     }
 }

@@ -4,7 +4,7 @@
              x:Class="ConvApp.Views.PostDetail">
     <StackLayout>
         <Label Text="{Binding Date}"/>
-        <Image Source="{Binding Source}"/>
+        <Image x:Name="image"/>
         <Label Text="{Binding TextContent}"/>
     </StackLayout>
 </ContentPage>
