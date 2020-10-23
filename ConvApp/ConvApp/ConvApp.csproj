@@ -17,14 +17,39 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="PostEntryPage.xaml.cs">
+    <Compile Update="AppShell.xaml.cs">
+      <DependentUpon>AppShell.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\PostEntryPage.xaml.cs">
       <DependentUpon>PostEntryPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\MyPage.xaml.cs">
+      <DependentUpon>MyPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\RankingPage.xaml.cs">
+      <DependentUpon>RankingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\ProductList.xaml.cs">
+      <DependentUpon>ProductList.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="FeedPage.xaml">
+    <EmbeddedResource Update="Views\FeedPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="AppShell.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\PostDetail.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ProductList.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resources\" />
   </ItemGroup>
 </Project>

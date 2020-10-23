@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Xamarin.Forms;
 using ConvApp.Model;
 
-namespace ConvApp
+namespace ConvApp.Views
 {
     public partial class FeedPage : ContentPage
     {
@@ -21,17 +21,26 @@ namespace ConvApp
             RefreshList();   
         }
 
-        async private void OnPostAdd(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new PostEntryPage());
-            RefreshList();
-        }
-
         // ListView의 ItemsSource를 null로 만들었다 다시 할당하면 목록이 갱신됨!
         private void RefreshList()
         {
             list.ItemsSource = null;
             list.ItemsSource = posts;
         }
+
+        async private void OnPostAdd(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new PostEntryPage());
+            RefreshList();
+        }
+
+        async private void OnItemSelect(object sender, ItemTappedEventArgs e)
+        {
+            await Navigation.PushAsync(new PostDetail
+            {
+                BindingContext = posts[e.ItemIndex]
+            });
+        }
+
     }
 }

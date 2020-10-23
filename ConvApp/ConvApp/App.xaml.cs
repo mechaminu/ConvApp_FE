@@ -10,7 +10,7 @@ namespace ConvApp
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new FeedPage());
+            MainPage = new AppShell();
         }
 
         protected override void OnStart()

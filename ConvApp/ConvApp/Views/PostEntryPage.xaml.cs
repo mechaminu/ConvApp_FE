@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using Xamarin.Forms;
 using ConvApp.Model;
-using Plugin.Media;
+using Plugin.Media; 
 
 
-namespace ConvApp
+namespace ConvApp.Views
 {
     public partial class PostEntryPage : ContentPage
     {
