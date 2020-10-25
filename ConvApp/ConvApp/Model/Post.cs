@@ -4,9 +4,17 @@ using Xamarin.Forms;
 namespace ConvApp.Model
 {
     public class Post
-    {
-        public ImageSource Image { get; set; }
-        public string TextContent { get; set; }
+    { 
+        public string UserName { get; set; }
+
         public DateTime Date { get; set; }
+
+        public ImageSource UserImage { get; set; }
+
+        public ImageSource PostImage { get; set; }
+
+        public string PostTitle { get; set; }
+
+        public string PostContent { get; set; }
     }
 }

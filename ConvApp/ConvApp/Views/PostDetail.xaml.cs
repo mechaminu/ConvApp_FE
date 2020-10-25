@@ -22,7 +22,7 @@ namespace ConvApp.Views
         {
             base.OnAppearing();
 
-            image.Source = ((Post)BindingContext).Image;
+            image.Source = ((Post)BindingContext).PostImage;
         }
     }
 }

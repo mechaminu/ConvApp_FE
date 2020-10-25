@@ -5,6 +5,6 @@
     <StackLayout>
         <Label Text="{Binding Date}"/>
         <Image x:Name="image"/>
-        <Label Text="{Binding TextContent}"/>
+        <Label Text="{Binding PostContent}"/>
     </StackLayout>
 </ContentPage>

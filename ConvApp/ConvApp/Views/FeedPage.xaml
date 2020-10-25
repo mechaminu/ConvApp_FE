@@ -1,24 +1,36 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin"
              x:Class="ConvApp.Views.FeedPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="피드"
-                   HorizontalTextAlignment="Center" 
-                   HorizontalOptions="Fill" 
-                   BackgroundColor="DimGray" 
-                   Padding="0,10,0,10"
-                   FontSize="30"
-                   TextColor="White"/>
-            <ListView x:Name="list" VerticalOptions="CenterAndExpand" SelectionMode="None" ItemTapped="OnItemSelect">
+            <Button Text="Post add" Clicked="OnPostAdd"/>
+            <ListView  VerticalOptions="Center" x:Name="list" HasUnevenRows="True">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ImageCell ImageSource="{Binding Image}" Text="{Binding TextContent}" Detail="{Binding Date}" />
+                        <ViewCell>
+                            <Grid BackgroundColor="black"  >
+                                <StackLayout BackgroundColor="White" Orientation="Vertical">
+                                    <StackLayout Padding="0"  Orientation="Horizontal">
+                                        <controls:CircleImage Source="{Binding UserImage}" HeightRequest="30" HorizontalOptions="Start" x:Name="userimage" />
+                                        <Label Text="{Binding UserName}\n{Binding Date}" TextColor="Black" FontSize="10"/>
+                                        <Label Text="{Binding Date}" TextColor="Black" FontSize="10"/>
+                                    </StackLayout>
+                                    <Image Source="{Binding PostImage}"/>
+                                    <Label Text="{Binding PostTitle}" FontSize="Title" Padding="30,10,30,10"/>
+                                    <Expander>
+                                        <Expander.Header>
+                                            <Label Text="more" FontSize="7" Padding="30,0,30,0" />
+                                        </Expander.Header>
+                                        <Label Text="{Binding PostContent}" FontSize="16" Padding="30,0,30,0" />
+                                    </Expander>
+                                </StackLayout>
+                            </Grid>
+                        </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Button Text="포스트 추가" Clicked="OnPostAdd"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

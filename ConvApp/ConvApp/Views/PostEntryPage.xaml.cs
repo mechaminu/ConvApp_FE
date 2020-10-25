@@ -35,8 +35,12 @@ namespace ConvApp.Views
             // Saves gathered data into new 'Post' class instance and adds into the collection.
             FeedPage.posts.Add(new Post
             {
-                Image = imgSrc,
-                TextContent = inputText.Text,
+                UserName="honggildong",
+                PostTitle="testtitle",
+                UserImage=null,
+
+                PostImage = imgSrc,
+                PostContent = inputText.Text,
                 Date = DateTime.Now
             });
 
