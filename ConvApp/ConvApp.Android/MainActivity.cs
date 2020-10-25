@@ -21,6 +21,9 @@ namespace ConvApp.Droid
 
             base.OnCreate(savedInstanceState);
 
+            // Flag setting
+            Xamarin.Forms.Forms.SetFlags(new string[] { "CarouselView_Experimental", "MediaElement_Experimental", "SwipeView_Experimental", "Expander_Experimental" });
+
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             ImageCircleRenderer.Init();
