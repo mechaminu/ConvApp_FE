@@ -42,5 +42,19 @@ namespace ConvApp.Views
             });
         }
 
+        private void OnRefresh(object sender, EventArgs e)
+        {
+                var list = (ListView)sender;
+                //put your refreshing logic here
+                var itemList = posts;
+                posts.Clear();
+                foreach (var s in itemList)
+                {
+                    posts.Add(s);
+                }
+                //make sure to end the refresh state
+                list.IsRefreshing = false;
+            
+        }
     }
 }

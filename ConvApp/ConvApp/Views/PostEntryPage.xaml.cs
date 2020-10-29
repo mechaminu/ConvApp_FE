@@ -20,7 +20,7 @@ namespace ConvApp.Views
             image.Source = ImageSource.FromUri(new Uri("https://via.placeholder.com/150"));
         }
 
-        private ImageSource imgSrc = null;
+        public ImageSource imgSrc = null;
 
         async private void OnImgAdd(object sender, EventArgs e)
         {
@@ -30,21 +30,24 @@ namespace ConvApp.Views
                 image.Source = imgSrc;
         }
 
-        async private void OnSave(object sender, EventArgs e)
+        async private void OnNext(object sender, EventArgs e)
         {
-            // Saves gathered data into new 'Post' class instance and adds into the collection.
-            FeedPage.posts.Add(new Post
-            {
-                UserName="honggildong",
-                PostTitle="testtitle",
-                UserImage=null,
+            //// Saves gathered data into new 'Post' class instance and adds into the collection.
+            //FeedPage.posts.Add(new Post
+            //{
+            //    UserName="honggildong",
+            //    PostTitle="testtitle",
+            //    UserImage=null,
 
-                PostImage = imgSrc,
-                PostContent = inputText.Text,
-                Date = DateTime.Now
-            });
+            //    PostImage = imgSrc,
+            //    PostContent = inputText.Text,
+            //    Date = DateTime.Now
+            //});
 
-            await Navigation.PopAsync();
+            ////await Navigation.PopAsync();
+            //await Navigation.PushAsync(new FeedPage());
+            
+            await Navigation.PushAsync(new PostContent(imgSrc)) ;
         }
     }
 }

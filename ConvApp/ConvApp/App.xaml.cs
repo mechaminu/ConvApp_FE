@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConvApp.Views;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -11,6 +12,7 @@ namespace ConvApp
             InitializeComponent();
 
             MainPage = new AppShell();
+            //MainPage = new PostContent();
         }
 
         protected override void OnStart()

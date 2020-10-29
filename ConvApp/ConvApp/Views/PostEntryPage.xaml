@@ -3,20 +3,27 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ConvApp.Views.PostEntryPage">
     <StackLayout x:Name="wrapper">
-
-        <Image x:Name="image" HorizontalOptions="Center"/>
-        <Entry x:Name="inputText" Placeholder="Share your experience here..."/>
+        <Button BackgroundColor="White" Text="다음" TextColor="Black" HorizontalOptions="End" Clicked="OnNext"/>
         <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-
-            <Button Text="이미지 추가"
-                    Clicked="OnImgAdd"/>
-            <Button Text="저장"
-                    Clicked="OnSave"
-                    Grid.Column="1"/>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+            </Grid.RowDefinitions>
+            <Image x:Name="image" HorizontalOptions="Center" Grid.Row="0"/>
         </Grid>
+        <StackLayout>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Text="이미지 추가"
+                    Clicked="OnImgAdd"/>
+                <Button Text="카메라"
+                        Grid.Column="1"
+                    />
+               
+            </Grid>
+        </StackLayout>
     </StackLayout>
 </ContentPage>

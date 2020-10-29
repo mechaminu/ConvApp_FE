@@ -6,7 +6,7 @@
     <ContentPage.Content>
         <StackLayout>
             <Button Text="Post add" Clicked="OnPostAdd"/>
-            <ListView  VerticalOptions="Center" x:Name="list" HasUnevenRows="True">
+            <ListView  VerticalOptions="Center" x:Name="list" HasUnevenRows="True" IsPullToRefreshEnabled="True" Refreshing="OnRefresh">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>

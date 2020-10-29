@@ -11,14 +11,19 @@
         </Style>
     </Shell.Resources>
     <TabBar>
-        <Tab Title="레시피">
+        <Tab Title="피드">
             <ShellContent>
                 <views:FeedPage/>
             </ShellContent>
         </Tab>
-        <Tab Title="제품">
+        <Tab Title="검색">
             <ShellContent>
                 <views:ProductList/>
+            </ShellContent>
+        </Tab>
+        <Tab Title="등록">
+            <ShellContent>
+                <views:PostEntryPage/>
             </ShellContent>
         </Tab>
         <Tab Title="랭킹">
