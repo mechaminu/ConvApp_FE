@@ -21,7 +21,7 @@ namespace ConvApp
     public class ApiManager
     {
 
-        private static string EndPointURL = "http://192.168.35.2:8080/api";
+        private static string EndPointURL = "http://convappdev.azurewebsites.net/api";
         private static RestClient client = new RestClient(EndPointURL) { Timeout=-1 }.UseNewtonsoftJson() as RestClient;
 
         #region REST API : 포스트 CRUD 구현
