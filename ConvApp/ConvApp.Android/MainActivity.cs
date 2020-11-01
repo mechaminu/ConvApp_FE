@@ -7,6 +7,7 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 using ImageCircle.Forms.Plugin.Droid;
+using FFImageLoading.Forms.Platform;
 
 namespace ConvApp.Droid
 {
@@ -23,7 +24,6 @@ namespace ConvApp.Droid
 
             // Flag setting
             Xamarin.Forms.Forms.SetFlags(new string[] { "CarouselView_Experimental", "MediaElement_Experimental", "SwipeView_Experimental", "Expander_Experimental" });
-
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             ImageCircleRenderer.Init();

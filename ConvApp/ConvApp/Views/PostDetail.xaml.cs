@@ -1,4 +1,4 @@
-﻿using ConvApp.Model;
+﻿using ConvApp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +22,7 @@ namespace ConvApp.Views
         {
             base.OnAppearing();
 
-            image.Source = ((Post)BindingContext).PostImage;
+            //image.Source = ((Post)BindingContext).PostImage;
         }
     }
 }

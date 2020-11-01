@@ -4,9 +4,11 @@
              x:Class="ConvApp.Views.MyPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="My Page"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <Image x:Name="image"
+                   VerticalOptions="FillAndExpand"
+                   BackgroundColor="Gray"/>
+            <Button Clicked="OnClicked"
+                    VerticalOptions="End"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -9,7 +9,6 @@ namespace ConvApp
         public App()
         {
             InitializeComponent();
-
             MainPage = new AppShell();
         }
 

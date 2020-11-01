@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using Xamarin.Forms;
-using ConvApp.Model;
+using ConvApp.ViewModels;
 
 namespace ConvApp.Views
 {
     public partial class FeedPage : ContentPage
     {
         public static List<Post> posts = new List<Post>();
+        public int currentPage = 0;
 
         public FeedPage()
         {
