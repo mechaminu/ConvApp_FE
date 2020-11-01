@@ -31,7 +31,7 @@ namespace ConvApp.ViewModels
         public string PostTitle { get; set; }       // 25자 미만일 것
         public string PostContent { get; set; }     // 900자 미만일 것
 
-        public List<Stream> PostImage { get; set; } // ImageSource로 전환 가능
+        public List<byte[]> PostImage { get; set; }
         
         // TODO
         // 상품목록, 별점, 조회수

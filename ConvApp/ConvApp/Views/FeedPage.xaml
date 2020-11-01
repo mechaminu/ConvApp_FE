@@ -1,32 +1,52 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:ConvApp.Views"
              xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin"
              x:Class="ConvApp.Views.FeedPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:ImgSrcConverter x:Key="ImgSrcConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout>
-            <Button Text="Post add" Clicked="OnPostAdd"/>
-            <ListView  VerticalOptions="Center" x:Name="list" HasUnevenRows="True">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Text="포스트 추가"
+                    Clicked="OnPostAdd"/>
+                <Button Text="목록 갱신"
+                    Clicked="OnRefreshPage"
+                    Grid.Column="1"/>
+            </Grid>
+            <ListView VerticalOptions="FillAndExpand" x:Name="list" HasUnevenRows="True" SelectionMode="None">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Grid BackgroundColor="black"  >
-                                <StackLayout BackgroundColor="White" Orientation="Vertical">
+                            <ViewCell.View>
+                                <StackLayout BackgroundColor="White" Orientation="Vertical" Margin="0, 15, 0, 15">
                                     <StackLayout Padding="0"  Orientation="Horizontal">
                                         <controls:CircleImage Source="{Binding UserImage}" HeightRequest="30" HorizontalOptions="Start" x:Name="userimage" />
-                                        <Label Text="{Binding UserName}\n{Binding Date}" TextColor="Black" FontSize="10"/>
-                                        <Label Text="{Binding Date}" TextColor="Black" FontSize="10"/>
+                                        <Label Text="{Binding UserName}" TextColor="Black" FontSize="10"/>
+                                        <Label Text="{Binding CreateDate}" TextColor="Black" FontSize="10"/>
                                     </StackLayout>
-                                    <Image Source="{Binding PostImage}"/>
+
+                                    <CarouselView ItemsSource="{Binding PostImage, Converter={StaticResource ImgSrcConverter}}" HeightRequest="400" BackgroundColor="Yellow">
+                                        <CarouselView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Image Source="{Binding}"/>
+                                            </DataTemplate>
+                                        </CarouselView.ItemTemplate>
+                                    </CarouselView>
+
                                     <Label Text="{Binding PostTitle}" FontSize="Title" Padding="30,10,30,10"/>
-                                    <Expander>
-                                        <Expander.Header>
-                                            <Label Text="more" FontSize="7" Padding="30,0,30,0" />
-                                        </Expander.Header>
-                                        <Label Text="{Binding PostContent}" FontSize="16" Padding="30,0,30,0" />
-                                    </Expander>
+                                    <Label Text="{Binding PostContent}" FontSize="16" Padding="30,0,30,0" />
                                 </StackLayout>
-                            </Grid>
+                            </ViewCell.View>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>

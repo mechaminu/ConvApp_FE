@@ -4,6 +4,7 @@ using ConvApp.ViewModels;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using System.Collections.Generic;
+using System.IO;
 
 namespace ConvApp.Views
 {
@@ -17,21 +18,27 @@ namespace ConvApp.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            // Placeholder 이미지를 전시하자
-            image.Source = ImageSource.FromUri(new Uri("https://via.placeholder.com/150"));
+            RefreshList();
+        }
+
+        private void RefreshList()
+        {
+            imageList.ItemsSource = null;
+            imageList.ItemsSource = imgSrcList;
         }
 
         private List<MediaFile> imgList = new List<MediaFile>();
-        private ImageSource imgSrc = null;
+        private List<ImageSource> imgSrcList = new List<ImageSource>();
 
         async private void OnImgAdd(object sender, EventArgs e)
         {
             var photo = await CrossMedia.Current.PickPhotoAsync();  // MediaFile 획득
-
-            imgList.Add(photo);
-            imgSrc = ImageSource.FromStream(() => photo.GetStream());
-            if (imgSrc != null)
-                image.Source = imgSrc;
+            if (photo != null)
+            {
+                imgList.Add(photo);
+                imgSrcList.Add(ImageSource.FromStream(()=>photo.GetStream()));
+                RefreshList();
+            }
         }
 
         async private void OnSave(object sender, EventArgs e)
@@ -40,7 +47,7 @@ namespace ConvApp.Views
             var entry = new PostEntry
             {
                 Type = PostType.UserRecipe,
-                PostTitle = "테스트 제목1234567890",
+                PostTitle = inputTitle.Text,
                 PostContent = inputText.Text,
                 PostImage = imgList
             };
@@ -53,15 +60,6 @@ namespace ConvApp.Views
             {
                 await DisplayAlert("에러", exp.Message, "확인");
             }
-            
-
-            //FeedPage.posts.Add(new Post
-            //{
-            //    PostTitle="testtitle",
-            //    PostImage = imgSrc,
-            //    PostContent = inputText.Text,
-            //    Date = DateTime.Now
-            //});
         }
     }
 }

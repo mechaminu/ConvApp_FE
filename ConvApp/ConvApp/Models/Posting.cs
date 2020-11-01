@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using ConvApp.ViewModels;
 using System.Threading.Tasks;
+using Xamarin.Forms;
+using System.Text;
 
 namespace ConvApp.Models
 {
@@ -22,10 +24,11 @@ namespace ConvApp.Models
 
         public async static Task<Post> ToPost(Posting posting)
         {
-            var imgStreamList = new List<Stream>();
+            var tmpList = new List<byte[]>();
+
             foreach (var e in posting.images.Split(','))
             {
-                imgStreamList.Add(await ApiManager.GetImage(e));
+                tmpList.Add(Encoding.UTF8.GetBytes(await new StreamReader(await ApiManager.GetImage(e)).ReadToEndAsync()));
             }
 
             return new Post(posting.id, posting.create_date, posting.modify_date, "" + posting.create_user_oid, null)
@@ -33,7 +36,7 @@ namespace ConvApp.Models
                 Type = (PostType)posting.pst_type,
                 PostTitle = posting.title,
                 PostContent = posting.text,
-                PostImage = imgStreamList
+                PostImage = tmpList
             };
         }
     }

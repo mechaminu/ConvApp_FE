@@ -18,15 +18,22 @@ namespace ConvApp.Views
 
         public async void OnClicked(object sender, EventArgs e)
         {
-            var btn = sender as Button;
-            btn.IsEnabled = false;
+            try
+            {
+                var btn = sender as Button;
+                btn.IsEnabled = false;
 
-            var st = await ApiManager.GetImage("1wkjcs9rwdfy.jpeg");
+                var st = await ApiManager.GetImage("1wkjcs9rwdfy.jpeg");
 
-            image.Source = null;
-            image.Source = ImageSource.FromStream(()=>st);
+                image.Source = null;
+                image.Source = ImageSource.FromStream(() => st);
 
-            btn.IsEnabled = true;
+                btn.IsEnabled = true;
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("에러", ex.Message, "확인");
+            }
         }
     }
 }

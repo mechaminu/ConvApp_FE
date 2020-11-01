@@ -3,9 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ConvApp.Views.PostEntryPage">
     <StackLayout x:Name="wrapper">
-
-        <Image x:Name="image" HorizontalOptions="Center"/>
-        <Entry x:Name="inputText" Placeholder="Share your experience here..."/>
+        <CarouselView x:Name="imageList" HeightRequest="400" BackgroundColor="Yellow">
+            <CarouselView.ItemTemplate>
+                <DataTemplate>
+                    <Image Source="{Binding}"/>
+                </DataTemplate>
+            </CarouselView.ItemTemplate>
+        </CarouselView>
+        <Entry x:Name="inputTitle" Placeholder="포스트 제목"/>
+        <Editor x:Name="inputText" Placeholder="포스트 내용"/>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
