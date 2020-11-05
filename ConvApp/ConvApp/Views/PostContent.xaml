@@ -6,51 +6,28 @@
     <StackLayout x:Name="wrapper2">
         
         <Button BackgroundColor="White" Text="게시" TextColor="Black" HorizontalOptions="End" Clicked="OnSave"/>
-        
+        <BoxView BackgroundColor="Gray" HeightRequest="1"/>
         <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="4*"/>
-            </Grid.ColumnDefinitions>
+            
             <Grid.RowDefinitions>
-                <RowDefinition Height="160"/>
+                <RowDefinition Height="260"/>
             </Grid.RowDefinitions>
             
-            <Image x:Name="pimage"  Grid.Column ="0" Grid.Row="0"/>
             
-            <cntrols:CustomEditor1 x:Name="recipeText" Placeholder="문구입력" PlaceholderColor="Gray" Grid.Column="1" Grid.Row="0"/>
+            <cntrols:CustomEditor1 x:Name="recipeText" Placeholder="Comment...." PlaceholderColor="Gray"  Grid.Row="0"/>
 
         </Grid>
         <BoxView BackgroundColor="Gray" HeightRequest="1"/>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
-            <Button Text="Select" Grid.Column="0" Clicked="SelectStyle"/>
+            <Button Text="camera"/>
+            <Image x:Name="pimage"  Grid.Column ="1" />
         </Grid>
         
-        <Expander>
-            <Expander.Header>
-                <Label Text="레시피이름" FontSize="16" Padding="30,0,30,0" />
-            </Expander.Header>
-            <Entry x:Name="recipeNameText" Placeholder="레시피이름입력...."/>
-        </Expander>
-        <BoxView BackgroundColor="Gray" HeightRequest="1"/>
-        <Expander>
-            <Expander.Header>
-                <Label Text="재료" FontSize="16" Padding="30,0,30,0" />
-            </Expander.Header>
-            <Entry x:Name="recipeItemText" Placeholder="재료1,재료2......."/>
-        </Expander>
-        <BoxView BackgroundColor="Gray" HeightRequest="1"/>
-        <Expander>
-            <Expander.Header>
-                <Label Text="가격" FontSize="16" Padding="30,0,30,0" />
-            </Expander.Header>
-            <Entry x:Name="recipePriceText" Placeholder="00000원"/>
-        </Expander>
-        <BoxView BackgroundColor="Gray" HeightRequest="1"/>
+     
 
 
 

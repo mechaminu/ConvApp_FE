@@ -7,8 +7,8 @@ namespace ConvApp.Views
 {
     public partial class FeedPage : TabbedPage
     {
-        public static List<Post> posts = new List<Post>();
-
+        //public static List<Post> posts = new List<Post>();
+        public static List<ReviewPost> reviewPosts = new List<ReviewPost>();
         public FeedPage()
         {
             InitializeComponent();
@@ -25,26 +25,32 @@ namespace ConvApp.Views
         private void RefreshList()
         {
             list.ItemsSource = null;
-            list.ItemsSource = posts;
+           // list.ItemsSource = posts;
+            list.ItemsSource = reviewPosts;
+
+            list2.ItemsSource = null;
+            // list.ItemsSource = posts;
+            list2.ItemsSource = reviewPosts;
         }
 
         async private void OnItemSelect(object sender, ItemTappedEventArgs e)
-        {
+        {/*
             await Navigation.PushAsync(new PostDetail
             {
-                BindingContext = posts[e.ItemIndex]
-            });
+                //BindingContext = posts[e.ItemIndex]
+                BindingContext = reviewPosts[e.ItemIndex]
+            });*/
         }
 
         private void OnRefresh(object sender, EventArgs e)
         {
                 var list = (ListView)sender;
                 //put your refreshing logic here
-                var itemList = posts;
-                posts.Clear();
+                var itemList = reviewPosts;
+                reviewPosts.Clear();
                 foreach (var s in itemList)
                 {
-                    posts.Add(s);
+                    reviewPosts.Add(s);
                 }
                 //make sure to end the refresh state
                 list.IsRefreshing = false;

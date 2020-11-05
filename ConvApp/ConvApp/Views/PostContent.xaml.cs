@@ -26,16 +26,13 @@ namespace ConvApp.Views
         async private void OnSave(object sender, EventArgs e)
         {
             // Saves gathered data into new 'Post' class instance and adds into the collection.
-            FeedPage.posts.Add(new Post
+            FeedPage.reviewPosts.Add(new ReviewPost
             {
-                UserName = "honggildong",
-                PostTitle = recipeNameText.Text,
-                UserImage = imgSrc2[0],
-
+                User = App.User,
                 PostImage = imgSrc2,
-                PostContent = $"재료: {recipeItemText.Text}\n가격: {recipePriceText.Text}\n조리방법\n{recipeText.Text}",
+                PostContent =recipeText.Text,
                 Date = DateTime.Now
-            });
+            })  ;
 
           
             //await Navigation.PushAsync(new AppShell());
@@ -45,9 +42,6 @@ namespace ConvApp.Views
             await Navigation.PopAsync();
         }
 
-        async private void SelectStyle(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new PostContentDetail());
-        }
+      
     }
 }
