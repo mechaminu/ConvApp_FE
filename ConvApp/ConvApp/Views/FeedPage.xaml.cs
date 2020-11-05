@@ -5,7 +5,7 @@ using ConvApp.Model;
 
 namespace ConvApp.Views
 {
-    public partial class FeedPage : ContentPage
+    public partial class FeedPage : TabbedPage
     {
         public static List<Post> posts = new List<Post>();
 
@@ -26,12 +26,6 @@ namespace ConvApp.Views
         {
             list.ItemsSource = null;
             list.ItemsSource = posts;
-        }
-
-        async private void OnPostAdd(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new PostEntryPage());
-            RefreshList();
         }
 
         async private void OnItemSelect(object sender, ItemTappedEventArgs e)

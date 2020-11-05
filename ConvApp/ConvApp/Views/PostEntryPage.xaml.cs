@@ -1,8 +1,9 @@
 ﻿using System;
 using Xamarin.Forms;
 using ConvApp.Model;
-using Plugin.Media; 
-
+using Plugin.Media;
+using System.Collections.Generic;
+using Plugin.Media.Abstractions;
 
 namespace ConvApp.Views
 {
@@ -17,17 +18,34 @@ namespace ConvApp.Views
         {
             base.OnAppearing();
             // Placeholder 이미지를 전시하자
-            image.Source = ImageSource.FromUri(new Uri("https://via.placeholder.com/150"));
+            
         }
+
+        private void RefreshList() 
+        {
+            ImageList.ItemsSource = null;
+            ImageList.ItemsSource = ImageSrcList;
+        } 
 
         public ImageSource imgSrc = null;
 
-        async private void OnImgAdd(object sender, EventArgs e)
+        public static List<ImageSource> ImageSrcList = new List<ImageSource>();
+        public static List<MediaFile> ImgList = new List<MediaFile>();
+       async private void OnImgAdd(object sender, EventArgs e)
         {
             var photo = await CrossMedia.Current.PickPhotoAsync();
-            imgSrc = ImageSource.FromStream(() => photo.GetStream());
-            if (imgSrc != null)
-                image.Source = imgSrc;
+            
+
+            if (photo != null)
+            {
+                ImgList.Add(photo);
+               
+                ImageSrcList.Add(ImageSource.FromStream(() => photo.GetStream()));
+                RefreshList();
+
+            }
+           
+          
         }
 
         async private void OnNext(object sender, EventArgs e)
@@ -47,7 +65,7 @@ namespace ConvApp.Views
             ////await Navigation.PopAsync();
             //await Navigation.PushAsync(new FeedPage());
             
-            await Navigation.PushAsync(new PostContent(imgSrc)) ;
+            await Navigation.PushAsync(new PostContent(ImageSrcList) ) ;
         }
     }
 }

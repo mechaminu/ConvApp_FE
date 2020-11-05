@@ -3,13 +3,27 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ConvApp.Views.PostEntryPage">
     <StackLayout x:Name="wrapper">
+
         <Button BackgroundColor="White" Text="다음" TextColor="Black" HorizontalOptions="End" Clicked="OnNext"/>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="100"/>
             </Grid.RowDefinitions>
-            <Image x:Name="image" HorizontalOptions="Center" Grid.Row="0"/>
-        </Grid>
+
+            <CarouselView x:Name="ImageList">
+                <CarouselView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal" />
+                </CarouselView.ItemsLayout>
+                
+                <CarouselView.ItemTemplate>
+                    <DataTemplate>
+                      
+                            <Image Source="{Binding}"  />
+                       
+                    </DataTemplate>
+                 </CarouselView.ItemTemplate>
+             </CarouselView>
+    </Grid>
         <StackLayout>
             <Grid>
                 <Grid.ColumnDefinitions>

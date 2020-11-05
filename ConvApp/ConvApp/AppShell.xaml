@@ -11,7 +11,7 @@
         </Style>
     </Shell.Resources>
     <TabBar>
-        <Tab Title="피드">
+        <Tab Title="피드" Route="page1">
             <ShellContent>
                 <views:FeedPage/>
             </ShellContent>

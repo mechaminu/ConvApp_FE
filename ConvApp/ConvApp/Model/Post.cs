@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Xamarin.Forms;
 
 namespace ConvApp.Model
@@ -11,7 +12,7 @@ namespace ConvApp.Model
 
         public ImageSource UserImage { get; set; }
 
-        public ImageSource PostImage { get; set; }
+        public List<ImageSource> PostImage { get; set; }
 
         public string PostTitle { get; set; }
 

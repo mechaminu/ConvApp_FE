@@ -13,14 +13,14 @@ namespace ConvApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PostContent : ContentPage
     {
-        private ImageSource imgSrc2 = null;
+        private List<ImageSource> imgSrc2 = null;
 
-        public PostContent(ImageSource image)
+        public PostContent(List<ImageSource> image)
         {
             InitializeComponent();
            
             imgSrc2 = image;
-            pimage.Source = imgSrc2;
+            pimage.Source = imgSrc2[0];
         }
         
         async private void OnSave(object sender, EventArgs e)
@@ -30,15 +30,24 @@ namespace ConvApp.Views
             {
                 UserName = "honggildong",
                 PostTitle = recipeNameText.Text,
-                UserImage = imgSrc2,
+                UserImage = imgSrc2[0],
 
-              PostImage = imgSrc2,
-                PostContent = $"재료: {recipeItemText.Text}\n 가격: {recipePriceText.Text}\n 조리방법\n{recipeText.Text}",
+                PostImage = imgSrc2,
+                PostContent = $"재료: {recipeItemText.Text}\n가격: {recipePriceText.Text}\n조리방법\n{recipeText.Text}",
                 Date = DateTime.Now
             });
 
-            //await Navigation.PopAsync();
-            await Navigation.PushAsync(new FeedPage());
+          
+            //await Navigation.PushAsync(new AppShell());
+            
+            await Shell.Current.GoToAsync("//page1");
+            //이전 페이지 삭제 
+            await Navigation.PopAsync();
+        }
+
+        async private void SelectStyle(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new PostContentDetail());
         }
     }
 }
