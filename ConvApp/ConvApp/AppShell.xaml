@@ -23,7 +23,7 @@
         </Tab>
         <Tab Title="등록">
             <ShellContent>
-                <views:PostEntryPage/>
+                <views:RegisterPage/>
             </ShellContent>
         </Tab>
         <Tab Title="랭킹">

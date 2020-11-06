@@ -4,7 +4,13 @@
             xmlns:local="clr-namespace:ConvApp.Views"
             xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin"
             x:Class="ConvApp.Views.FeedPage">
-    <ContentPage Title="Item" BackgroundColor="white" >
+    <ContentPage Title="ALL">
+        <Label Text="blank" FontSize="16" Padding="30,0,30,0" />
+    </ContentPage>
+    
+    
+    
+    <ContentPage Title="Recipe" BackgroundColor="white" >
         <ContentPage.Content>
             <FlexLayout Direction="Column" FlexLayout.Grow="1">
                 <ListView  VerticalOptions="Center" x:Name="list" HasUnevenRows="True" IsPullToRefreshEnabled="True" Refreshing="OnRefresh">
@@ -17,7 +23,10 @@
             </FlexLayout>
         </ContentPage.Content>
     </ContentPage>
-    <ContentPage Title="Category" BackgroundColor="White">
+    
+    
+    
+    <ContentPage Title="Review" BackgroundColor="White">
         <ContentPage.Content>
             <StackLayout Orientation="Horizontal">
                 <ListView  VerticalOptions="Center" x:Name="list2" HasUnevenRows="True" IsPullToRefreshEnabled="True" Refreshing="OnRefresh">
@@ -28,16 +37,15 @@
                                     <StackLayout BackgroundColor="White" Orientation="Vertical">
                                         <StackLayout Padding="0"  Orientation="Horizontal">
                                             <controls:CircleImage x:Name="userimage2" HeightRequest="30" HorizontalOptions="Start"/>
-                                            <Label x:Name="username2" TextColor="Black" FontSize="10"/>
-                                            <Label Text="{Binding Date}" TextColor="Black" FontSize="10"/>
+                                            <Label Text="{Binding User.Name}" TextColor="Black" FontSize="16" FontAttributes="Bold"/>
+                                            <Label Text="{Binding Date}" TextColor="Black" FontSize="16"/>
                                         </StackLayout>
-
+                                        <Label Text="{Binding Rating, StringFormat='별점은 : {0}'}"  FontSize="20" FontAttributes="Bold"/>
                                         <Grid>
                                             <CarouselView ItemsSource="{Binding PostImage}">
                                                 <CarouselView.ItemsLayout>
                                                     <LinearItemsLayout Orientation="Horizontal" />
                                                 </CarouselView.ItemsLayout>
-
                                                 <CarouselView.ItemTemplate>
                                                     <DataTemplate>
                                                         <Image Source="{Binding}"/>
@@ -45,14 +53,8 @@
                                                 </CarouselView.ItemTemplate>
                                             </CarouselView>
                                         </Grid>
+                                        <Label Text="{Binding PostContent}" FontSize="16" />
 
-                                        <Label Text="{Binding PostTitle}" FontSize="Title" Padding="30,10,30,10"/>
-                                        <Expander>
-                                            <Expander.Header>
-                                                <Label Text="more" FontSize="16" Padding="30,0,30,0" />
-                                            </Expander.Header>
-                                            <Label Text="{Binding PostContent}" FontSize="16" Padding="30,0,30,0" />
-                                        </Expander>
                                     </StackLayout>
                                 </Grid>
                             </ViewCell>
@@ -60,11 +62,6 @@
                     </ListView.ItemTemplate>
                 </ListView>
             </StackLayout>
-
-
         </ContentPage.Content>
-
-
-
     </ContentPage>
 </TabbedPage>

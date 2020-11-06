@@ -20,7 +20,22 @@ namespace ConvApp.Views
             InitializeComponent();
            
             imgSrc2 = image;
-            pimage.Source = imgSrc2[0];
+            foreach (ImageSource image1 in imgSrc2)
+            {
+                Image image2 = new Image
+                {
+                    Source = image1,
+                    WidthRequest = 100,
+                    HeightRequest = 100,
+                    
+
+                };
+            flexlayout.Children.Add(image2);
+            }
+
+            //pimage.Source = imgSrc2[0];
+            rating.Value = 5;
+            starrate.Text = rating.Value.ToString();
         }
         
         async private void OnSave(object sender, EventArgs e)
@@ -30,9 +45,10 @@ namespace ConvApp.Views
             {
                 User = App.User,
                 PostImage = imgSrc2,
-                PostContent =recipeText.Text,
+                Rating = rate,
+                PostContent = recipeText.Text,
                 Date = DateTime.Now
-            })  ;
+            }); 
 
           
             //await Navigation.PushAsync(new AppShell());
@@ -41,7 +57,15 @@ namespace ConvApp.Views
             //이전 페이지 삭제 
             await Navigation.PopAsync();
         }
+        double rate = 0;
+        private void starvalue(object sender, ValueChangedEventArgs e)
+        {
+            rate = Math.Round(e.NewValue/0.5)*0.5;
 
-      
+            starrate.Text = rate.ToString();
+
+
+
+        }
     }
 }

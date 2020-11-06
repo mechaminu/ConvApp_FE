@@ -29,23 +29,30 @@ namespace ConvApp.Views
 
         public ImageSource imgSrc = null;
 
-        public static List<ImageSource> ImageSrcList = new List<ImageSource>();
+        public static List<ImageSource?> ImageSrcList = new List<ImageSource?>();
         public static List<MediaFile> ImgList = new List<MediaFile>();
        async private void OnImgAdd(object sender, EventArgs e)
         {
             var photo = await CrossMedia.Current.PickPhotoAsync();
+
             
+                if (photo != null)
+                {
+                    ImgList.Add(photo);
 
-            if (photo != null)
-            {
-                ImgList.Add(photo);
-               
-                ImageSrcList.Add(ImageSource.FromStream(() => photo.GetStream()));
-                RefreshList();
+                    ImageSrcList.Add(ImageSource.FromStream(() => photo.GetStream()));
+                    RefreshList();
 
-            }
-           
+                }
+                else
+                {
+                    ImageSrcList = null;
+
+                }
+            
           
+
+
         }
 
         async private void OnNext(object sender, EventArgs e)

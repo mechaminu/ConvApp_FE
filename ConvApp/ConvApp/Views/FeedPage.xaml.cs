@@ -31,6 +31,7 @@ namespace ConvApp.Views
             list2.ItemsSource = null;
             // list.ItemsSource = posts;
             list2.ItemsSource = reviewPosts;
+            
         }
 
         async private void OnItemSelect(object sender, ItemTappedEventArgs e)
