@@ -41,6 +41,7 @@ namespace ConvApp.Views
                 }
 
                 await Navigation.PushAsync(new RecipeContent(RcpImageList));
+                RcpImageList.Clear();
             }
             catch (Exception ex)
             {

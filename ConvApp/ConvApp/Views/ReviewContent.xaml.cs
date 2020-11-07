@@ -64,8 +64,8 @@ namespace ConvApp.Views
                 });
                 //await Navigation.PushAsync(new AppShell());
                 await Shell.Current.GoToAsync("//page1");
-                //이전 페이지 삭제 
-                await Navigation.PopAsync();
+            //이전 페이지 삭제 
+            await Navigation.PopToRootAsync();
 
             }
 
