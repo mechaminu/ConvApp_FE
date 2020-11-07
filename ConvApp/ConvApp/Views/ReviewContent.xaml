@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:cntrols="clr-namespace:ConvApp.Model"
+             x:Class="ConvApp.Views.ReviewContent">
+    <StackLayout x:Name="wrapper3">
+
+        <Button BackgroundColor="White" Text="게시" TextColor="Black" HorizontalOptions="End" Clicked="OnSave2"/>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Slider x:Name="rating2" Maximum="5" Minimum="0" Grid.Column="0" ValueChanged="starvalue2"/>
+            <Label x:Name="starrate2" FontSize="40" Grid.Column="1" HorizontalOptions="Center"/>
+        </Grid>
+        <BoxView BackgroundColor="Gray" HeightRequest="1"/>
+        <Grid>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="260"/>
+            </Grid.RowDefinitions>
+
+
+            <cntrols:CustomEditor1 x:Name="reviewtext" Placeholder="Comment...." PlaceholderColor="Gray"  Grid.Row="0"/>
+
+        </Grid>
+        <BoxView BackgroundColor="Gray" HeightRequest="1"/>
+        <Button Text="camera2" Grid.Column="0" Clicked="takephoto"/>
+        
+        <ScrollView Grid.Column="1" >
+
+            <FlexLayout x:Name="flexlayout"  Wrap="Wrap" Direction="Row"/>
+
+        </ScrollView>
+    </StackLayout>
+</ContentPage>

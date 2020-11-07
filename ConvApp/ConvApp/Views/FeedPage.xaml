@@ -1,56 +1,83 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:ConvApp.Views"
-             xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin"
-             x:Class="ConvApp.Views.FeedPage">
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <local:ImgSrcConverter x:Key="ImgSrcConverter"/>
-        </ResourceDictionary>
-    </ContentPage.Resources>
-    <ContentPage.Content>
-        <StackLayout>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-
-                <Button Text="포스트 추가"
-                    Clicked="OnPostAdd"/>
-                <Button Text="목록 갱신"
-                    Clicked="OnRefreshPage"
-                    Grid.Column="1"/>
-            </Grid>
-            <ListView VerticalOptions="FillAndExpand" x:Name="list" HasUnevenRows="True" SelectionMode="None">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <ViewCell.View>
-                                <StackLayout BackgroundColor="White" Orientation="Vertical" Margin="0, 15, 0, 15">
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:local="clr-namespace:ConvApp.Views"
+            xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin"
+            x:Class="ConvApp.Views.FeedPage"
+            Shell.NavBarIsVisible="false">
+    <ContentPage Title="Recipe" BackgroundColor="white">
+        <ContentPage.Content>
+            <StackLayout>
+                <ListView VerticalOptions="Center" x:Name="list" HasUnevenRows="True" IsPullToRefreshEnabled="True" Refreshing="OnRefresh">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout>
                                     <StackLayout Padding="0"  Orientation="Horizontal">
-                                        <controls:CircleImage Source="{Binding UserImage}" HeightRequest="30" HorizontalOptions="Start" x:Name="userimage" />
-                                        <Label Text="{Binding UserName}" TextColor="Black" FontSize="10"/>
-                                        <Label Text="{Binding CreateDate}" TextColor="Black" FontSize="10"/>
+                                        <controls:CircleImage x:Name="userimage2" HeightRequest="30" HorizontalOptions="Start"/>
+                                        <Label Text="{Binding User.Name}" TextColor="Black" FontSize="16" FontAttributes="Bold"/>
+                                        <Label Text="{Binding Date}" TextColor="Black" FontSize="16"/>
                                     </StackLayout>
-
-                                    <CarouselView ItemsSource="{Binding PostImage, Converter={StaticResource ImgSrcConverter}}" HeightRequest="400" BackgroundColor="Yellow">
-                                        <CarouselView.ItemTemplate>
-                                            <DataTemplate>
-                                                <Image Source="{Binding}"/>
-                                            </DataTemplate>
-                                        </CarouselView.ItemTemplate>
-                                    </CarouselView>
-
-                                    <Label Text="{Binding PostTitle}" FontSize="Title" Padding="30,10,30,10"/>
-                                    <Label Text="{Binding PostContent}" FontSize="16" Padding="30,0,30,0" />
+                                    <Label Text="{Binding Title}" FontSize="16" />
+                                    <Label Text="{Binding PostContent}" FontSize="16" />
+                                    <Grid>
+                                        <ListView ItemsSource="{Binding RecipeNode}" VerticalOptions="Center" HasUnevenRows="True" IsPullToRefreshEnabled="True" Refreshing="OnRefresh">
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <!--<local:FeedViewCell/>-->
+                                                    <ViewCell>
+                                                        <StackLayout>
+                                                            <Image Source="{Binding NodeImage}"/>
+                                                            <Label Text="{Binding  NodeString}" />
+                                                        </StackLayout>
+                                                    </ViewCell>
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
+                                        </ListView>
+                                    </Grid>
                                 </StackLayout>
-                            </ViewCell.View>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackLayout>
-    </ContentPage.Content>
-</ContentPage>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+        </ContentPage.Content>
+    </ContentPage>
+    <ContentPage Title="Review" BackgroundColor="White">
+        <ContentPage.Content>
+            <StackLayout Orientation="Horizontal">
+                <ListView  VerticalOptions="Center" x:Name="list2" HasUnevenRows="True" IsPullToRefreshEnabled="True" Refreshing="OnRefresh">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid BackgroundColor="black"  >
+                                    <StackLayout BackgroundColor="White" Orientation="Vertical">
+                                        <StackLayout Padding="0"  Orientation="Horizontal">
+                                            <controls:CircleImage x:Name="userimage2" HeightRequest="30" HorizontalOptions="Start"/>
+                                            <Label Text="{Binding User.Name}" TextColor="Black" FontSize="16" FontAttributes="Bold"/>
+                                            <Label Text="{Binding Date}" TextColor="Black" FontSize="16"/>
+                                        </StackLayout>
+                                        <Label Text="{Binding Rating, StringFormat='별점은 : {0}'}"  FontSize="20" FontAttributes="Bold"/>
+                                        <Grid>
+                                            <CarouselView ItemsSource="{Binding PostImage}">
+                                                <CarouselView.ItemsLayout>
+                                                    <LinearItemsLayout Orientation="Horizontal" />
+                                                </CarouselView.ItemsLayout>
+                                                <CarouselView.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Image Source="{Binding}"/>
+                                                    </DataTemplate>
+                                                </CarouselView.ItemTemplate>
+                                            </CarouselView>
+                                        </Grid>
+                                        <Label Text="{Binding PostContent}" FontSize="16" />
+                                    </StackLayout>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+        </ContentPage.Content>
+    </ContentPage>
+</TabbedPage>

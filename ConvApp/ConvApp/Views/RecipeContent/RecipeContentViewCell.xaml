@@ -1,0 +1,12 @@
+﻿<ViewCell  xmlns="http://xamarin.com/schemas/2014/forms" 
+           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+           x:Class="ConvApp.Views.RecipeContentViewCell">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+        <Image Source="{Binding NodeImage}" Grid.Column="0"/>
+        <Editor Placeholder="레시피입력"  Text="{Binding NodeString}"  Grid.Column="1"/>
+    </Grid>
+</ViewCell>

@@ -3,26 +3,41 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ConvApp.Views.PostEntryPage">
     <StackLayout x:Name="wrapper">
-        <CarouselView x:Name="imageList" HeightRequest="400" BackgroundColor="Yellow">
-            <CarouselView.ItemTemplate>
-                <DataTemplate>
-                    <Image Source="{Binding}"/>
-                </DataTemplate>
-            </CarouselView.ItemTemplate>
-        </CarouselView>
-        <Entry x:Name="inputTitle" Placeholder="포스트 제목"/>
-        <Editor x:Name="inputText" Placeholder="포스트 내용"/>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
 
-            <Button Text="이미지 추가"
+        <Button BackgroundColor="White" Text="다음" TextColor="Black" HorizontalOptions="End" Clicked="OnNext"/>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+            </Grid.RowDefinitions>
+
+            <CarouselView x:Name="ImageList">
+                <CarouselView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal" />
+                </CarouselView.ItemsLayout>
+                
+                <CarouselView.ItemTemplate>
+                    <DataTemplate>
+                      
+                            <Image Source="{Binding}"  />
+                       
+                    </DataTemplate>
+                 </CarouselView.ItemTemplate>
+             </CarouselView>
+    </Grid>
+        <StackLayout>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Text="이미지 추가"
                     Clicked="OnImgAdd"/>
-            <Button Text="저장"
-                    Clicked="OnSave"
-                    Grid.Column="1"/>
-        </Grid>
+                <Button Text="카메라"
+                        Grid.Column="1"
+                    />
+               
+            </Grid>
+        </StackLayout>
     </StackLayout>
 </ContentPage>

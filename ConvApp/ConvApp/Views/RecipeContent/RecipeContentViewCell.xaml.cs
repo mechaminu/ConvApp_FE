@@ -1,5 +1,4 @@
-﻿using ConvApp.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,18 +10,11 @@ using Xamarin.Forms.Xaml;
 namespace ConvApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class PostDetail : ContentPage
+    public partial class RecipeContentViewCell : ViewCell
     {
-        public PostDetail()
+        public RecipeContentViewCell()
         {
             InitializeComponent();
-        }
-
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-
-            //image.Source = ((Post)BindingContext).PostImage;
         }
     }
 }

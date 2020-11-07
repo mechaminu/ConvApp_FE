@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using Xamarin.Forms;
-using ConvApp.ViewModels;
-using System.Threading.Tasks;
+using ConvApp.Model;
 
 namespace ConvApp.Views
 {
-    public partial class FeedPage : ContentPage
+    public partial class FeedPage : TabbedPage
     {
-        public static List<Post> posts = new List<Post>();
-        public int currentPage = 0;
-
+        //public static List<Post> posts = new List<Post>();
+        public static List<ReviewPost> reviewPosts = new List<ReviewPost>();
+        public static List<RecipePost> recipePosts = new List<RecipePost>();
         public FeedPage()
         {
             InitializeComponent();
@@ -20,51 +19,46 @@ namespace ConvApp.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            RefreshList();
+            RefreshList();   
         }
 
         // ListView의 ItemsSource를 null로 만들었다 다시 할당하면 목록이 갱신됨!
         private void RefreshList()
         {
-            list.ItemsSource = null;
-            list.ItemsSource = posts;
+           list.ItemsSource = null;
+           ////// list.ItemsSource = posts;
+           list.ItemsSource = recipePosts;
+
+            list2.ItemsSource = null;
+            // list.ItemsSource = posts;
+            list2.ItemsSource = reviewPosts;
+
+          
+            
         }
 
-        async private Task<List<Post>> RefreshPage()
-        {
-            try
-            {
-                return await ApiManager.GetPostingPage(currentPage);
-            }
-            catch (Exception ex)
-            {
-                await DisplayAlert("에러", ex.Message, "확인");
-                return null;
-            }
-        }
-
-        async private void OnPostAdd(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new PostEntryPage());
-            RefreshList();
-        }
-
-        async private void OnItemSelect(object sender, ItemTappedEventArgs e)
-        {
+        private async void OnItemSelect(object sender, ItemTappedEventArgs e)
+        {/*
             await Navigation.PushAsync(new PostDetail
             {
-                BindingContext = posts[e.ItemIndex]
-            });
+                //BindingContext = posts[e.ItemIndex]
+                BindingContext = reviewPosts[e.ItemIndex]
+            });*/
         }
 
-        async private void OnRefreshPage(object sender, EventArgs e)
+        private void OnRefresh(object sender, EventArgs e)
         {
-            var btn = sender as Button;
-            btn.IsEnabled = false;
-            posts = await RefreshPage();
-            RefreshList();
-            btn.IsEnabled = true;
+                var list = (ListView)sender;
+                //put your refreshing logic here
+                var itemList = reviewPosts;
+                reviewPosts.Clear();
+                foreach (var s in itemList)
+                {
+                    reviewPosts.Add(s);
+                }
+                //make sure to end the refresh state
+                list.IsRefreshing = false;
+            
         }
-
     }
 }

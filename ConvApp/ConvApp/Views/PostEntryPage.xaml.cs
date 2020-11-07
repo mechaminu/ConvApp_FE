@@ -1,10 +1,9 @@
 ﻿using System;
 using Xamarin.Forms;
-using ConvApp.ViewModels;
+using ConvApp.Model;
 using Plugin.Media;
-using Plugin.Media.Abstractions;
 using System.Collections.Generic;
-using System.IO;
+using Plugin.Media.Abstractions;
 
 namespace ConvApp.Views
 {
@@ -18,48 +17,62 @@ namespace ConvApp.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            RefreshList();
+            // Placeholder 이미지를 전시하자
+            
         }
 
-        private void RefreshList()
+        private void RefreshList() 
         {
-            imageList.ItemsSource = null;
-            imageList.ItemsSource = imgSrcList;
+            ImageList.ItemsSource = null;
+            ImageList.ItemsSource = ImageSrcList;
+        } 
+
+        public ImageSource imgSrc = null;
+
+        public static List<ImageSource?> ImageSrcList = new List<ImageSource?>();
+        public static List<MediaFile> ImgList = new List<MediaFile>();
+       async private void OnImgAdd(object sender, EventArgs e)
+        {
+            var photo = await CrossMedia.Current.PickPhotoAsync();
+
+            
+                if (photo != null)
+                {
+                    ImgList.Add(photo);
+
+                    ImageSrcList.Add(ImageSource.FromStream(() => photo.GetStream()));
+                    RefreshList();
+
+                }
+                else
+                {
+                    ImageSrcList = null;
+
+                }
+            
+          
+
+
         }
 
-        private List<MediaFile> imgList = new List<MediaFile>();
-        private List<ImageSource> imgSrcList = new List<ImageSource>();
-
-        async private void OnImgAdd(object sender, EventArgs e)
+        async private void OnNext(object sender, EventArgs e)
         {
-            var photo = await CrossMedia.Current.PickPhotoAsync();  // MediaFile 획득
-            if (photo != null)
-            {
-                imgList.Add(photo);
-                imgSrcList.Add(ImageSource.FromStream(()=>photo.GetStream()));
-                RefreshList();
-            }
-        }
+            //// Saves gathered data into new 'Post' class instance and adds into the collection.
+            //FeedPage.posts.Add(new Post
+            //{
+            //    UserName="honggildong",
+            //    PostTitle="testtitle",
+            //    UserImage=null,
 
-        async private void OnSave(object sender, EventArgs e)
-        {
-            // Saves gathered data into new 'Post' class instance and adds into the collection.
-            var entry = new PostEntry
-            {
-                Type = PostType.UserRecipe,
-                PostTitle = inputTitle.Text,
-                PostContent = inputText.Text,
-                PostImage = imgList
-            };
-            try
-            {
-                FeedPage.posts.Add(await ApiManager.UploadPosting(entry));
-                await Navigation.PopAsync();
-            }
-            catch (InvalidOperationException exp)
-            {
-                await DisplayAlert("에러", exp.Message, "확인");
-            }
+            //    PostImage = imgSrc,
+            //    PostContent = inputText.Text,
+            //    Date = DateTime.Now
+            //});
+
+            ////await Navigation.PopAsync();
+            //await Navigation.PushAsync(new FeedPage());
+            
+            await Navigation.PushAsync(new PostContent(ImageSrcList) ) ;
         }
     }
 }
