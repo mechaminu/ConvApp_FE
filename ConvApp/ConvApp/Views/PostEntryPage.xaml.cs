@@ -29,7 +29,7 @@ namespace ConvApp.Views
 
         public ImageSource imgSrc = null;
 
-        public static List<ImageSource?> ImageSrcList = new List<ImageSource?>();
+        public static List<ImageSource> ImageSrcList = new List<ImageSource>();
         public static List<MediaFile> ImgList = new List<MediaFile>();
        async private void OnImgAdd(object sender, EventArgs e)
         {
