@@ -3,29 +3,46 @@
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:local="clr-namespace:ConvApp.Views"
             xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin"
-            x:Class="ConvApp.Views.FeedPage">
-    <ContentPage Title="ALL">
-        <Label Text="blank" FontSize="16" Padding="30,0,30,0" />
-    </ContentPage>
-    
-    
-    
-    <ContentPage Title="Recipe" BackgroundColor="white" >
+            x:Class="ConvApp.Views.FeedPage"
+            Shell.NavBarIsVisible="false">
+    <ContentPage Title="Recipe" BackgroundColor="white">
         <ContentPage.Content>
-            <FlexLayout Direction="Column" FlexLayout.Grow="1">
-                <ListView  VerticalOptions="Center" x:Name="list" HasUnevenRows="True" IsPullToRefreshEnabled="True" Refreshing="OnRefresh">
+            <StackLayout>
+                <ListView VerticalOptions="Center" x:Name="list" HasUnevenRows="True" IsPullToRefreshEnabled="True" Refreshing="OnRefresh">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <local:FeedViewCell/>
+                            <ViewCell>
+                                <StackLayout>
+                                    <StackLayout Padding="0"  Orientation="Horizontal">
+                                        <controls:CircleImage x:Name="userimage2" HeightRequest="30" HorizontalOptions="Start"/>
+                                        <Label Text="{Binding User.Name}" TextColor="Black" FontSize="16" FontAttributes="Bold"/>
+                                        <Label Text="{Binding Date}" TextColor="Black" FontSize="16"/>
+                                    </StackLayout>
+                                    <Label Text="{Binding Title}" FontSize="16" />
+                                    <Label Text="{Binding PostContent}" FontSize="16" />
+                                    <Grid>
+                                        <ListView ItemsSource="{Binding RecipeNode}" VerticalOptions="Center" HasUnevenRows="True" IsPullToRefreshEnabled="True" Refreshing="OnRefresh">
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <!--<local:FeedViewCell/>-->
+                                                    <ViewCell>
+                                                        <StackLayout>
+                                                            <Image Source="{Binding NodeImage}"/>
+                                                            <Label Text="{Binding  NodeString}" />
+                                                        </StackLayout>
+                                                    </ViewCell>
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
+                                        </ListView>
+                                    </Grid>
+                                </StackLayout>
+                            </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-            </FlexLayout>
+            </StackLayout>
         </ContentPage.Content>
     </ContentPage>
-    
-    
-    
     <ContentPage Title="Review" BackgroundColor="White">
         <ContentPage.Content>
             <StackLayout Orientation="Horizontal">
@@ -54,7 +71,6 @@
                                             </CarouselView>
                                         </Grid>
                                         <Label Text="{Binding PostContent}" FontSize="16" />
-
                                     </StackLayout>
                                 </Grid>
                             </ViewCell>

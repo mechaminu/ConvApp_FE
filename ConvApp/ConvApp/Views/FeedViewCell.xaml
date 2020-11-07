@@ -16,7 +16,7 @@
                     <CarouselView ItemsSource="{Binding PostImage}">
                         <CarouselView.ItemsLayout>
                             <LinearItemsLayout Orientation="Horizontal" />
-                        </CarouselView.ItemsLayout>
+                        </CarouselView.ItemsLayout> 
 
                         <CarouselView.ItemTemplate>
                             <DataTemplate>

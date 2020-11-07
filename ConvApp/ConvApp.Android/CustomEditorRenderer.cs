@@ -18,7 +18,6 @@ using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
 [assembly: ExportRenderer(typeof(CustomEditor1), typeof(CustomEditorRenderer))]
-
 namespace ConvApp.Droid
 {
   

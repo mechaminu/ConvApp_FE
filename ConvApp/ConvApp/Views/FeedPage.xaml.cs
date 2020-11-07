@@ -9,6 +9,7 @@ namespace ConvApp.Views
     {
         //public static List<Post> posts = new List<Post>();
         public static List<ReviewPost> reviewPosts = new List<ReviewPost>();
+        public static List<RecipePost> recipePosts = new List<RecipePost>();
         public FeedPage()
         {
             InitializeComponent();
@@ -24,17 +25,19 @@ namespace ConvApp.Views
         // ListView의 ItemsSource를 null로 만들었다 다시 할당하면 목록이 갱신됨!
         private void RefreshList()
         {
-            list.ItemsSource = null;
-           // list.ItemsSource = posts;
-            list.ItemsSource = reviewPosts;
+           list.ItemsSource = null;
+           ////// list.ItemsSource = posts;
+           list.ItemsSource = recipePosts;
 
             list2.ItemsSource = null;
             // list.ItemsSource = posts;
             list2.ItemsSource = reviewPosts;
+
+          
             
         }
 
-        async private void OnItemSelect(object sender, ItemTappedEventArgs e)
+        private async void OnItemSelect(object sender, ItemTappedEventArgs e)
         {/*
             await Navigation.PushAsync(new PostDetail
             {

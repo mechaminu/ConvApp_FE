@@ -5,7 +5,7 @@
     <ContentPage.Content>
         <StackLayout Spacing="0">
             <Button Text="Review" HeightRequest="200" Clicked="PostReview"/>
-            <Button Text="Recipe" HeightRequest="200" />
+            <Button Text="Recipe" HeightRequest="200" Clicked="PostRecipe" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
