@@ -9,9 +9,10 @@ using Xamarin.Forms.Xaml;
 
 namespace ConvApp.Views
 {
-    public partial class RankingPage : ContentPage
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class SearchPage : ContentPage
     {
-        public RankingPage()
+        public SearchPage()
         {
             InitializeComponent();
         }

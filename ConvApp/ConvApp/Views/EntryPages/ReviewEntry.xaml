@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:elems="clr-namespace:ConvApp.ViewElements"
+             x:Class="ConvApp.Views.ReviewEntry">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="게시"
+                     Order="Primary"
+                     Priority="0"
+                     Clicked="OnSave"/>
+    </ContentPage.ToolbarItems>
+
+    <StackLayout>
+
+        <Button Text="상품 선택하기"
+               Margin="10"/>
+
+        <BoxView BackgroundColor="Gray" HeightRequest="1"/>
+        
+        <Label Text="평가"
+               HorizontalOptions="Start"
+               Margin="10,10,10,0"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Slider x:Name="ratingSlider"
+                    Maximum="5" Minimum="0"
+                    Grid.Column="0"
+                    ValueChanged="OnSliderChange"/>
+            <Label x:Name="ratingLabel"
+                   FontSize="40"
+                   Grid.Column="1"
+                   HorizontalOptions="Center"/>
+        </Grid>
+        
+        <BoxView BackgroundColor="Gray" HeightRequest="1"/>
+        
+        <Grid>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="260"/>
+            </Grid.RowDefinitions>
+            <elems:CustomEditor x:Name="reviewContent"
+                                Placeholder="문구 입력..."
+                                PlaceholderColor="Gray"
+                                Grid.Row="0"/>
+
+        </Grid>
+        
+        <BoxView BackgroundColor="Gray" HeightRequest="1"/>
+        <Button Text="이미지 추가" Grid.Column="0" Clicked="AddImage"/>
+
+        <FlexLayout x:Name="flexlayout"
+                    VerticalOptions="FillAndExpand"
+                    Wrap="Wrap"
+                    Direction="Row"
+                    Background="Gray"/>
+    </StackLayout>
+</ContentPage>

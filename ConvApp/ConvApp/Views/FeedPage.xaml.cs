@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using Xamarin.Forms;
-using ConvApp.Model;
+using ConvApp.ViewModels;
 
 namespace ConvApp.Views
 {
     public partial class FeedPage : TabbedPage
     {
-        //public static List<Post> posts = new List<Post>();
         public static List<ReviewPost> reviewPosts = new List<ReviewPost>();
         public static List<RecipePost> recipePosts = new List<RecipePost>();
+
         public FeedPage()
         {
             InitializeComponent();
@@ -25,19 +25,14 @@ namespace ConvApp.Views
         // ListView의 ItemsSource를 null로 만들었다 다시 할당하면 목록이 갱신됨!
         private void RefreshList()
         {
-           list.ItemsSource = null;
-           ////// list.ItemsSource = posts;
-           list.ItemsSource = recipePosts;
+            recipeList.ItemsSource = null;
+            recipeList.ItemsSource = recipePosts;
 
             list2.ItemsSource = null;
-            // list.ItemsSource = posts;
             list2.ItemsSource = reviewPosts;
-
-          
-            
         }
 
-        private async void OnItemSelect(object sender, ItemTappedEventArgs e)
+        private void OnItemSelect(object sender, ItemTappedEventArgs e)
         {/*
             await Navigation.PushAsync(new PostDetail
             {

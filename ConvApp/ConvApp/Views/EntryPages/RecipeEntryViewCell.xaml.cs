@@ -10,9 +10,9 @@ using Xamarin.Forms.Xaml;
 namespace ConvApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class RecipeContentViewCell : ViewCell
+    public partial class RecipeEntryViewCell : ViewCell
     {
-        public RecipeContentViewCell()
+        public RecipeEntryViewCell()
         {
             InitializeComponent();
         }

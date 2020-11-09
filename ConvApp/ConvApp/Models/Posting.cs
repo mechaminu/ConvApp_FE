@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using ConvApp.ViewModels;
-using System.Threading.Tasks;
-using Xamarin.Forms;
 using System.Text;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using ConvApp.ViewModels;
 
 namespace ConvApp.Models
 {

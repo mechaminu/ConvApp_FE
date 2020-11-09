@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Xamarin.Forms;
 
-namespace ConvApp.Model
+namespace ConvApp.Models
 {
-    public class CustomEditor1 : Editor
+    public class ProductNode
     {
     }
 }

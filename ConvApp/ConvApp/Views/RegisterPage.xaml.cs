@@ -19,35 +19,14 @@ namespace ConvApp.Views
             InitializeComponent();
         }
 
-       private async void PostReview(object sender, EventArgs e)
-       {
-            await Navigation.PushAsync(new ReviewContent());
-       }
+        private async void PostReview(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new ReviewEntry());
+        }
 
-       List<ImageSource> RcpImageList = new List<ImageSource>();
-       
         private async void PostRecipe(object sender, EventArgs e)
         {
-            try
-            {
-                var pickedImages = await CrossMedia.Current.PickPhotosAsync();
-
-                if (pickedImages.Count == 0)
-                    return;
-
-                foreach (var photo in pickedImages)
-                {
-                    RcpImageList.Add(ImageSource.FromStream(() => photo.GetStream()));
-                }
-
-                await Navigation.PushAsync(new RecipeContent(RcpImageList));
-                RcpImageList.Clear();
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidOperationException("이미지 추가 과정에서 문제가 발생했습니다", ex);
-            }
-
+            await Navigation.PushAsync(new RecipeEntry());
         }
     }
 }

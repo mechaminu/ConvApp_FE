@@ -22,15 +22,15 @@ namespace ConvApp
     {
 
         private static string EndPointURL = "http://convappdev.azurewebsites.net/api";
-        private static RestClient client = new RestClient(EndPointURL) { Timeout=-1 }.UseNewtonsoftJson() as RestClient;
+        private static RestClient client = new RestClient(EndPointURL){Timeout=-1}.UseNewtonsoftJson() as RestClient;
 
         #region REST API : 포스트 CRUD 구현
         /// <summary>
         /// 포스트엔트리(포스트입력) 뷰모델을 받아 백엔드에 업로드하는 메소드 
         /// </summary>
-        /// <param name="posting">포스트엔트리 객체</param>
+        /// <param name="post">포스트 뷰모델 객체</param>
         /// <returns>포스트 뷰모델 객체</returns>
-        public async static Task<Post> UploadPosting(PostEntry posting)
+        public async static Task<Post> UploadPosting(Post post)
         {
             try
             {

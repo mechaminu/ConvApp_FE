@@ -18,7 +18,7 @@
         </Tab>
         <Tab Title="검색">
             <ShellContent>
-                <views:ProductList/>
+                <views:SearchPage/>
             </ShellContent>
         </Tab>
         <Tab Title="등록">
@@ -28,7 +28,7 @@
         </Tab>
         <Tab Title="랭킹">
             <ShellContent>
-                <views:RankingPage/>
+                <views:CategoryPage/>
             </ShellContent>
         </Tab>
         <Tab Title="내 정보">

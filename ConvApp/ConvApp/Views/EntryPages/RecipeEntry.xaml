@@ -1,0 +1,44 @@
+﻿<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:elems ="clr-namespace:ConvApp.ViewElements"
+             xmlns:local="clr-namespace:ConvApp.Views"
+             x:Class="ConvApp.Views.RecipeEntry">
+    
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="게시"
+                     Order="Primary"
+                     Priority="0"
+                     Clicked="OnSave"/>
+    </ContentPage.ToolbarItems>
+    
+    <StackLayout>
+        <elems:CustomEditor x:Name="recipeTitle"
+                            Placeholder="레시피 이름"
+                            FontSize="Body"
+                            FontAttributes="Bold" />
+        
+        <BoxView BackgroundColor="Gray" HeightRequest="1"/>
+
+        <elems:CustomEditor x:Name ="recipeDescription"
+                             Placeholder="레시피 소개"
+                             FontSize="Body"
+                             FontAttributes="Bold"/>
+
+        <BoxView BackgroundColor="Gray" HeightRequest="1"/>
+        
+        <ListView x:Name="recipeNodeList">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <local:RecipeEntryViewCell/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <BoxView BackgroundColor="Gray" HeightRequest="1"/>
+
+        <Button Text="이미지 추가하기"
+                Grid.Column="1"
+                Clicked="AddNodesFromImage"/>
+
+    </StackLayout>
+</ContentPage>
