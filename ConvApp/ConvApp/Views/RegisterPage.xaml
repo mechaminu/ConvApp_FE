@@ -1,13 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ConvApp.Views.RegisterPage">
+             x:Class="ConvApp.Views.RegisterPage"
+             Shell.NavBarIsVisible="false">
     <ContentPage.Content>
         <StackLayout Orientation="Vertical" Spacing="0">
-            <Button Text="Review"
+            <Button Text="상품평 등록"
+                    FontSize="Large"
                     VerticalOptions="FillAndExpand"
                     Clicked="PostReview"/>
-            <Button Text="Recipe"
+            <Button Text="레시피 등록"
+                    FontSize="Large"
                     VerticalOptions="FillAndExpand"
                     Clicked="PostRecipe" />
         </StackLayout>

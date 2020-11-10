@@ -4,6 +4,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using ConvApp.ViewModels;
+using Xamarin.Forms.Internals;
+using System.Linq;
+using FFImageLoading;
+using FFImageLoading.Work;
+using Xamarin.Forms;
+using FFImageLoading.Forms;
+using ImageSource = Xamarin.Forms.ImageSource;
 
 namespace ConvApp.Models
 {
@@ -11,32 +18,63 @@ namespace ConvApp.Models
     {
         // 포스트 데이터베이스 저장형태 모델
         public long id { get; set; }
+        public long create_user_oid { get; set; }
         public DateTime create_date { get; set; }
         public DateTime modify_date { get; set; }
-        public long create_user_oid { get; set; }
+        public DateTime delete_date { get; set; }
 
-        public byte pst_type { get; set; }
-        public string title { get; set; }
-        public string text { get; set; }
-        public string images { get; set; }
-        public string products { get; set; }
+        public bool is_recipe { get; set; }
+        public List<PostingNodeClient> contentNodes {get; set;}
+        public List<long> products {get; set;}
 
         public async static Task<Post> ToPost(Posting posting)
         {
-            var tmpList = new List<byte[]>();
+            var creator = await ApiManager.GetUserData(posting.create_user_oid);
 
-            foreach (var e in posting.images.Split(','))
+            if (posting.is_recipe)
             {
-                tmpList.Add(Encoding.UTF8.GetBytes(await new StreamReader(await ApiManager.GetImage(e)).ReadToEndAsync()));
+                var tmpDate = posting.modify_date == null ? posting.create_date : posting.modify_date;
+
+                var titleNode = posting.contentNodes[0];
+                var textNode = posting.contentNodes[1];
+
+                var otherNodes = new List<PostContentNode>();
+                foreach (var i in posting.contentNodes.Skip(2))
+                {
+                    foreach(var filename in i.image.Split(';'))
+                    {
+                        var img = (await ApiManager.GetImage(filename)).ToByteArray();
+
+                        otherNodes.Add(new PostContentNode
+                        {
+                            NodeImage = ImageSource.FromStream(() => new MemoryStream(img)),
+                            NodeString = i.text
+                        });
+                    }
+                }
+
+                return new RecipePost
+                {
+                    User = creator,
+                    Date = tmpDate,
+                    IsModified = posting.modify_date == null,
+                    Title = titleNode.text,
+                    PostContent = textNode.text,
+                    RecipeNode = otherNodes
+                };
+            } else
+            {
+                return new ReviewPost
+                {
+
+                };
             }
-
-            return new Post(posting.id, posting.create_date, posting.modify_date, "" + posting.create_user_oid, null)
-            {
-                Type = (PostType)posting.pst_type,
-                PostTitle = posting.title,
-                PostContent = posting.text,
-                PostImage = tmpList
-            };
         }
+    }
+
+    public class PostingNodeClient
+    {
+        public string image { get; set; }
+        public string text { get; set; }
     }
 }

@@ -7,10 +7,16 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="4*"/>
         </Grid.ColumnDefinitions>
-        
-        <Image Source="{Binding NodeImage}"
-               Grid.Column="0"/>
-        <Editor Placeholder="레시피입력"
+
+        <CarouselView ItemsSource="{Binding NodeImage}"
+               Grid.Column="0">
+            <CarouselView.ItemTemplate>
+                <DataTemplate>
+                    <Image Source="{Binding}"/>
+                </DataTemplate>
+            </CarouselView.ItemTemplate>
+        </CarouselView>
+        <Editor Placeholder="레시피 설명 입력"
                 Text="{Binding NodeString}"
                 Grid.Column="1"/>
     </Grid>

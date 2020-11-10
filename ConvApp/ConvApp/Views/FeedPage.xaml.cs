@@ -43,16 +43,16 @@ namespace ConvApp.Views
 
         private void OnRefresh(object sender, EventArgs e)
         {
-                var list = (ListView)sender;
-                //put your refreshing logic here
-                var itemList = reviewPosts;
-                reviewPosts.Clear();
-                foreach (var s in itemList)
-                {
-                    reviewPosts.Add(s);
-                }
-                //make sure to end the refresh state
-                list.IsRefreshing = false;
+            var list = (ListView)sender;
+            //put your refreshing logic here
+            var itemList = reviewPosts;
+            reviewPosts.Clear();
+            foreach (var s in itemList)
+            {
+                reviewPosts.Add(s);
+            }
+            //make sure to end the refresh state
+            list.IsRefreshing = false;
             
         }
     }

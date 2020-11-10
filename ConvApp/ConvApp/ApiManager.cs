@@ -22,7 +22,23 @@ namespace ConvApp
     {
 
         private static string EndPointURL = "http://convappdev.azurewebsites.net/api";
+        private static string ImageEndPointURL = "https://convappdev.blob.core.windows.net/images";
         private static RestClient client = new RestClient(EndPointURL){Timeout=-1}.UseNewtonsoftJson() as RestClient;
+        private static RestClient client_img = new RestClient(ImageEndPointURL) { Timeout = -1 }.UseNewtonsoftJson() as RestClient;
+
+        public async static Task<UserData> GetUserData(long userId)
+        {
+            try
+            {
+                await Task.Delay(100);
+                return App.User;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
 
         #region REST API : 포스트 CRUD 구현
         /// <summary>
@@ -30,20 +46,11 @@ namespace ConvApp
         /// </summary>
         /// <param name="post">포스트 뷰모델 객체</param>
         /// <returns>포스트 뷰모델 객체</returns>
-        public async static Task<Post> UploadPosting(Post post)
+        public async static Task<Post> UploadPosting(Posting post)
         {
             try
             {
-                var payloadObject = new Posting
-                {
-                    pst_type = (byte)posting.Type,
-                    title = posting.PostTitle,
-                    text = posting.PostContent,
-                    images = await UploadImage(posting.PostImage),  // 이미지 업로드
-
-                    create_user_oid = 1234567890,   // dummy data
-                    products = null                 // dummy data
-                };
+                var payloadObject = post;
 
                 try
                 {
@@ -58,7 +65,7 @@ namespace ConvApp
                 }
                 catch (Exception ex)
                 {
-                    payloadObject.images.Split(',').ForEach(async (e) => await DeleteImage(e));
+                    //payloadObject.images.Split(',').ForEach(async (e) => await DeleteImage(e));
                     throw ex;
                 }
             }
@@ -68,58 +75,13 @@ namespace ConvApp
             }
         }
 
-        public async static Task<Posting> GetPostingModel(long id)
-        {
-            try
-            { 
-                return (await client.ExecuteAsync<Posting>(new RestRequest($"postings/{id}", Method.GET))).Data; 
-            }
-            catch (Exception e) { throw e; }
-        }
+        //public async static Task<Post> GetPosting(long id)
+        //{
+        //}
 
-        public async static Task<Post> GetPosting(long id)
-        {
-            try
-            {
-                return await Posting.ToPost(await GetPostingModel(id));
-            }
-            catch (Exception e) { throw e; }
-        }
-
-        public async static Task<List<Post>> GetPostingPage(int id)
-        {
-            try
-            {
-                var resList = new List<Post>();
-                (await client.ExecuteAsync<List<Posting>>(new RestRequest($"postings/page/{id}", Method.GET))).Data.ForEach(async e => resList.Add(await Posting.ToPost(e)));
-                return resList;
-            }
-            catch (Exception e) { throw e; }
-        }
-
-        public async static Task<int> GetPostingLastPage()
-        {
-            try
-            {
-                return (await client.ExecuteAsync<int>(new RestRequest($"postings/page", Method.GET))).Data - 1;
-            }
-            catch (Exception e) { throw e; }
-        }
-
-        public async static Task<bool> DeletePosting(long id)
-        {
-            try
-            {
-                (await GetPostingModel(id)).images.Split(',').ForEach(async e => await DeleteImage(e));     // 이미지 삭제
-                var response = await client.ExecuteAsync(new RestRequest($"postings/{id}", Method.DELETE)); // 포스트 삭제
-                                                                                                            // TODO : 피드백 삭제
-                return response.IsSuccessful;
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-        }
+        //public async static Task<bool> DeletePosting(long id)
+        //{
+        //}
 
         #endregion
 
@@ -156,7 +118,7 @@ namespace ConvApp
         {
             try
             {
-                return new MemoryStream((await client.ExecuteAsync(new RestRequest($"images/{filename.Trim()}", Method.GET))).RawBytes);
+                return new MemoryStream((await client_img.ExecuteAsync(new RestRequest($"images/{filename.Trim()}", Method.GET))).RawBytes);
             } 
             catch (Exception e) { throw e; }
         }

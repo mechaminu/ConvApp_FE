@@ -27,7 +27,10 @@
                                             <DataTemplate>
                                                 <ViewCell>
                                                     <StackLayout>
-                                                        <Image Source="{Binding NodeImage}"/>
+                                                        <CarouselView ItemsSource="{Binding NodeImages}">
+                                                            
+                                                        </CarouselView>
+                                                        <Image Source=""/>
                                                         <Label Text="{Binding NodeString}"/>
                                                     </StackLayout>
                                                 </ViewCell>
