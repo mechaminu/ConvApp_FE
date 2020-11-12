@@ -33,7 +33,7 @@
     </Shell.Resources>
     <TabBar>
         <Tab Title="피드" >
-            <ShellContent Title="ALL"    ContentTemplate="{DataTemplate views:FeedAll}"     Style="{StaticResource FeedShell}" Route="page1"/>
+            <ShellContent Title="ALL" ContentTemplate="{DataTemplate views:FeedAll}" Style="{StaticResource FeedShell}" Route="page1"/>
             <!--<ShellContent Title="Recipe" ContentTemplate="{DataTemplate views:FeedPage}" Style="{StaticResource FeedShell}"/>
             <ShellContent Title="Review" ContentTemplate="{DataTemplate views:FeedPage}" Style="{StaticResource FeedShell}"/>-->
         </Tab>
