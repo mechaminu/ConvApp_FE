@@ -9,8 +9,8 @@ namespace ConvApp.Views
     {
         public static List<ReviewPost> reviewPosts = new List<ReviewPost>();
         public static List<RecipePost> recipePosts = new List<RecipePost>();
-
-        public FeedPage()
+        //public FeedPage(ReviewPost review)
+        public FeedPage(ReviewPost review)
         {
             InitializeComponent();
         }

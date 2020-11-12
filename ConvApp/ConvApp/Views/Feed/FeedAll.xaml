@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ConvApp.Views.FeedAll"
+             Shell.NavBarHasShadow="False"
+             Shell.NavBarIsVisible="False">
+    <StackLayout>
+        <Label x:Name="numfeed"/>
+        <ScrollView >
+            <Grid>
+                <FlexLayout x:Name="LEFT" Grid.Column="0" Direction="Column">
+
+                </FlexLayout>
+
+
+                <FlexLayout x:Name="RIGHT" Grid.Column="1" Direction="Column">
+
+                </FlexLayout>
+            </Grid>
+        </ScrollView>
+    </StackLayout>
+</ContentPage>

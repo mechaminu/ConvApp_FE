@@ -2,37 +2,58 @@
 <Shell xmlns="http://xamarin.com/schemas/2014/forms"
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
        xmlns:views="clr-namespace:ConvApp.Views"
-       x:Class="ConvApp.AppShell">
+       x:Class="ConvApp.AppShell"
+       >
     <Shell.Resources>
         <Style x:Key="BaseStyle"
                TargetType="Element">
             <Setter Property="Shell.TabBarBackgroundColor"
-                    Value="CadetBlue"/>
+                    Value="white"/>
+            <Setter Property="Shell.BackgroundColor"
+                    Value="White"/>
+            <Setter Property="Shell.ForegroundColor"
+                    Value="Transparent" />
+            <Setter Property="Shell.TitleColor"
+                    Value="black"/>
+            <Setter Property="Shell.UnselectedColor" 
+                    Value="Gray"/>
+            <Setter Property="Shell.PresentationMode"
+                    Value="Animated"/>
+            <Setter Property="Shell.NavBarIsVisible"
+                Value="False"/>
         </Style>
+
+        <Style x:Key="FeedShell"
+               TargetType="Element"
+               BasedOn="{StaticResource BaseStyle}">
+            <Setter Property="Shell.NavBarIsVisible"
+                Value="True"/>  
+        </Style>
+        
     </Shell.Resources>
     <TabBar>
-        <Tab Title="피드" Route="page1">
-            <ShellContent>
-                <views:FeedPage/>
-            </ShellContent>
+        <Tab Title="피드" >
+            <ShellContent Title="ALL"    ContentTemplate="{DataTemplate views:FeedAll}"     Style="{StaticResource FeedShell}" Route="page1"/>
+            <!--<ShellContent Title="Recipe" ContentTemplate="{DataTemplate views:FeedPage}" Style="{StaticResource FeedShell}"/>
+            <ShellContent Title="Review" ContentTemplate="{DataTemplate views:FeedPage}" Style="{StaticResource FeedShell}"/>-->
         </Tab>
-        <Tab Title="검색">
-            <ShellContent>
-                <views:SearchPage/>
+        <Tab Title="검색" >
+            <ShellContent Style="{StaticResource BaseStyle}">
+                <views:ProductList/>
             </ShellContent>
         </Tab>
         <Tab Title="등록">
-            <ShellContent>
+            <ShellContent Style="{StaticResource BaseStyle}">
                 <views:RegisterPage/>
             </ShellContent>
         </Tab>
         <Tab Title="랭킹">
-            <ShellContent>
-                <views:CategoryPage/>
+            <ShellContent Style="{StaticResource BaseStyle}">
+                <views:RankingPage/>
             </ShellContent>
         </Tab>
         <Tab Title="내 정보">
-            <ShellContent>
+            <ShellContent Style="{StaticResource BaseStyle}">
                 <views:MyPage/>
             </ShellContent>
         </Tab>
