@@ -25,11 +25,24 @@
                              FontAttributes="Bold"/>
 
         <BoxView BackgroundColor="Gray" HeightRequest="1"/>
-        
+
         <ListView x:Name="recipeNodeList">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <local:RecipeEntryViewCell/>
+                    <ViewCell>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="4*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Image Grid.Column="0"
+                           Source="{Binding NodeImage}"/>
+                            <Editor Placeholder="레시피 설명 입력"
+                            Text="{Binding NodeString}"
+                            Grid.Column="1"/>
+                        </Grid>
+                    </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

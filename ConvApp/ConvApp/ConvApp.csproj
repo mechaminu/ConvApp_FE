@@ -42,9 +42,6 @@
     <Compile Update="Views\MyPage.xaml.cs">
       <DependentUpon>MyPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\RecipeEntryViewCell.xaml.cs">
-      <DependentUpon>RecipeEntryViewCell.xaml</DependentUpon>
-    </Compile>
     <Compile Update="Views\RecipeEntry.xaml.cs">
       <DependentUpon>RecipeEntry.xaml</DependentUpon>
     </Compile>
@@ -67,6 +64,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\PostDetail.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\RecipeEntryListView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\SearchPage.xaml">

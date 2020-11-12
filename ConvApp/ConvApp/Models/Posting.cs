@@ -17,15 +17,16 @@ namespace ConvApp.Models
     public class Posting
     {
         // 포스트 데이터베이스 저장형태 모델
-        public long id { get; set; }
-        public long create_user_oid { get; set; }
+        public int Id { get; set; }
+        public bool IsRecipe { get; set; }
+        public User Creator { get; set; }
+
         public DateTime create_date { get; set; }
         public DateTime modify_date { get; set; }
         public DateTime delete_date { get; set; }
 
-        public bool is_recipe { get; set; }
-        public List<PostingNodeClient> contentNodes {get; set;}
-        public List<long> products {get; set;}
+        public List<PostingNodeClient> PostingNodes {get; set;}
+        //public List<long> products {get; set;}
 
         public async static Task<Post> ToPost(Posting posting)
         {
@@ -35,11 +36,11 @@ namespace ConvApp.Models
             {
                 var tmpDate = posting.modify_date == null ? posting.create_date : posting.modify_date;
 
-                var titleNode = posting.contentNodes[0];
-                var textNode = posting.contentNodes[1];
+                var titleNode = posting.PostingNodes[0];
+                var textNode = posting.PostingNodes[1];
 
                 var otherNodes = new List<PostContentNode>();
-                foreach (var i in posting.contentNodes.Skip(2))
+                foreach (var i in posting.PostingNodes.Skip(2))
                 {
                     foreach(var filename in i.image.Split(';'))
                     {

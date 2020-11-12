@@ -15,13 +15,16 @@ using HeyRed.Mime;
 
 using Plugin.Media.Abstractions;
 using Xamarin.Forms.Internals;
+using Xamarin.Essentials;
+using System.Linq;
 
 namespace ConvApp
 {
     public class ApiManager
     {
 
-        private static string EndPointURL = "http://convappdev.azurewebsites.net/api";
+        //private static string EndPointURL = "http://convappdev.azurewebsites.net/api";
+        private static string EndPointURL = "http://10.0.2.2:8080/api";
         private static string ImageEndPointURL = "https://convappdev.blob.core.windows.net/images";
         private static RestClient client = new RestClient(EndPointURL){Timeout=-1}.UseNewtonsoftJson() as RestClient;
         private static RestClient client_img = new RestClient(ImageEndPointURL) { Timeout = -1 }.UseNewtonsoftJson() as RestClient;
@@ -87,26 +90,25 @@ namespace ConvApp
 
         #region REST API : 이미지 CR(U)D 구현
         // 이미지는 수정이 필요 없음
-        public async static Task<string> UploadImage(List<MediaFile> mediafiles)
+        public async static Task<string> UploadImage(IEnumerable<FileResult> images)
         {
             try
             {
-                if (mediafiles.Count == 0)
+                if (images.Count() == 0)
                     return null;
 
                 var tmpDict = new Dictionary<string, object>();
-                foreach (var img in mediafiles)
+                foreach (var img in images)
                 {
                     tmpDict.Add("file_" + tmpDict.Count, new FormFile
                     {
-                        Name = "uploadedimage",
-                        ContentType = MimeTypesMap.GetMimeType(img.Path),
-                        Stream = img.GetStream()
+                        ContentType = img.ContentType,
+                        Stream = await img.OpenReadAsync()
                     });
                 }
 
                 // 업로드를 통해 생성된 이미지 파일명 목록(Joined with ',') 획득 및 리턴 
-                return await PostMultipart(EndPointURL + "/images", tmpDict);
+                return await PostMultipart(Path.Combine(EndPointURL,"images"), tmpDict);
             }
             catch (Exception e)
             {
