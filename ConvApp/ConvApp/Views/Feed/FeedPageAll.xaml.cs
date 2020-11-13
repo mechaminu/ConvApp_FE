@@ -72,6 +72,8 @@ namespace ConvApp.Views
                     BackgroundColor = Color.Red
                 };
 
+                elem.Margin = 5;
+
                 //var tapGestureRecognizer = new TapGestureRecognizer();
                 //tapGestureRecognizer.Tapped += async (s, e) => {
                 //    await Navigation.PushAsync(new ReviewDetail

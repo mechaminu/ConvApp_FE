@@ -69,6 +69,8 @@ namespace ConvApp.Views
                     Source = post.RecipeNode[0].NodeImage,
                 };
 
+                elem.Margin = 5;
+
                 var tapGestureRecognizer = new TapGestureRecognizer();
                 tapGestureRecognizer.Tapped += async (s, e) => {
                     await Navigation.PushAsync(new RecipeDetail

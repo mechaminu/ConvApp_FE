@@ -25,12 +25,14 @@ namespace ConvApp
         private static RestClient client = new RestClient(EndPointURL){Timeout=-1}.UseNewtonsoftJson() as RestClient;
         private static RestClient client_img = new RestClient(ImageEndPointURL) { Timeout = -1 }.UseNewtonsoftJson() as RestClient;
 
+        // 유저 데이터 획득
         public async static Task<User> GetUserData(int userId)
         {
             try
             {
                 var response = await client.ExecuteAsync<User>(new RestRequest($"users/{userId}", Method.GET));
                 var result = response.Data;
+                result.ProfileImage = Path.Combine(ImageEndPointURL, result.ProfileImage);
                 return result;
             }
             catch (Exception ex)
@@ -67,6 +69,13 @@ namespace ConvApp
             }
         }
 
+        /// <summary>
+        /// 종류에 무방하게 포스팅 객체를 쿼리, 최신 순으로 리스트를 리턴.
+        /// 최신순 정렬된 포스팅 목록에서 일부를 추출하기 위한 순번을 정해야 하며, 목록의 길이는 end-start개가 될 것임 
+        /// </summary>
+        /// <param name="start">시작 순번</param>
+        /// <param name="end">끝 순번</param>
+        /// <returns></returns>
         public async static Task<List<Post>> GetPostings(int start, int end)
         {
             try
@@ -94,6 +103,12 @@ namespace ConvApp
             }
         }
 
+        /// <summary>
+        ///     Recipe 포스팅 객체 목록을 최신순으로 쿼리하여 리턴.
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <returns></returns>
         public async static Task<List<RecipePost>> GetRecipes(int start, int end)
         {
             try
@@ -123,6 +138,12 @@ namespace ConvApp
             }
         }
 
+        /// <summary>
+        ///     Review 포스팅 객체 목록을 최신순으로 쿼리하여 리턴.
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <returns></returns>
         public async static Task<List<ReviewPost>> GetReviews(int start, int end)
         {
             try {
@@ -157,7 +178,7 @@ namespace ConvApp
         #endregion
 
         #region REST API : 이미지 CR(U)D 구현
-        // 이미지는 수정이 필요 없음
+        // 이미지 업로드
         public async static Task<string> UploadImage(IEnumerable<FileResult> images)
         {
             try
@@ -184,6 +205,7 @@ namespace ConvApp
             }
         }
 
+        // 이미지는 직접 이미지 Azure storage로부터 REST API 활용하여 다운로드 가능
         public async static Task<Stream> GetImage(string filename)
         {
             try
