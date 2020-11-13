@@ -3,20 +3,16 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 
 using ConvApp.Models;
 using ConvApp.ViewModels;
 
 using RestSharp;
 using RestSharp.Serializers.NewtonsoftJson;
-using Newtonsoft.Json;
-using HeyRed.Mime;
 
-using Plugin.Media.Abstractions;
-using Xamarin.Forms.Internals;
-using Xamarin.Essentials;
-using System.Linq;
 
 namespace ConvApp
 {
@@ -24,12 +20,12 @@ namespace ConvApp
     {
 
         //private static string EndPointURL = "http://convappdev.azurewebsites.net/api";
-        private static string EndPointURL = "http://10.0.2.2:8080/api";
-        private static string ImageEndPointURL = "https://convappdev.blob.core.windows.net/images";
+        private static string EndPointURL = "http://minuuoo.ddns.net:5000/api";
+        public static string ImageEndPointURL = "https://convappdev.blob.core.windows.net/images";
         private static RestClient client = new RestClient(EndPointURL){Timeout=-1}.UseNewtonsoftJson() as RestClient;
         private static RestClient client_img = new RestClient(ImageEndPointURL) { Timeout = -1 }.UseNewtonsoftJson() as RestClient;
 
-        public async static Task<UserData> GetUserData(long userId)
+        public async static Task<User> GetUserData(int userId)
         {
             try
             {
@@ -64,7 +60,7 @@ namespace ConvApp
                     if (!response.IsSuccessful)
                         throw new InvalidOperationException("포스팅 실패");
                     
-                    return await Posting.ToPost(response.Data); // 응답으로 전달받은 포스트 모델 -> 뷰모델 변환하여 리턴
+                    return Posting.ToPost(response.Data); // 응답으로 전달받은 포스트 모델 -> 뷰모델 변환하여 리턴
                 }
                 catch (Exception ex)
                 {
@@ -78,9 +74,58 @@ namespace ConvApp
             }
         }
 
-        //public async static Task<Post> GetPosting(long id)
-        //{
-        //}
+        public async static Task<List<Post>> GetPostings()
+        {
+            try
+            {
+                var request = new RestRequest("postings", Method.GET);
+
+                var response = await client.ExecuteAsync<List<Posting>>(request);
+
+                if (!response.IsSuccessful)
+                    throw new InvalidOperationException("Request Failed!");
+
+                var result = new List<Post>();
+                foreach (var rawPosting in response.Data)
+                {
+                    result.Add(Posting.ToPost(rawPosting));
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async static Task<List<Post>> GetPostingRange(int start, int end, bool isRecipe = false)
+        {
+            try {
+
+                var request = new RestRequest("postings", Method.GET)
+                    .AddParameter("start", start, ParameterType.QueryString)
+                    .AddParameter("end", end, ParameterType.QueryString)
+                    .AddParameter("isRecipe", isRecipe, ParameterType.QueryString);
+
+                var response = await client.ExecuteAsync<List<Posting>>(request);
+
+                if (!response.IsSuccessful)
+                    throw new InvalidOperationException("Request Failed!");
+
+                var result = new List<Post>();
+                foreach(var rawPosting in response.Data)
+                {
+                    result.Add(Posting.ToPost(rawPosting));
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
         //public async static Task<bool> DeletePosting(long id)
         //{

@@ -7,7 +7,7 @@ namespace ConvApp.ViewModels
 {
    public class PostContentNode
     {
-        public ImageSource NodeImage { get; set; }  // 이미지
+        public string NodeImage { get; set; }       // 이미지 Url
         public string NodeString { get; set; }      // 이미지 에대한 설명
     }
 }

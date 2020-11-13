@@ -18,7 +18,7 @@ namespace ConvApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RecipeEntry : ContentPage
     {
-        private List<PostContentNode> nodes = new List<PostContentNode>();
+        private List<EntryNode> nodes = new List<EntryNode>();
         private List<FileResult> images = new List<FileResult>();
 
         public RecipeEntry()
@@ -50,11 +50,12 @@ namespace ConvApp.Views
                         photo.ContentType = MimeTypesMap.GetMimeType(photo.FileName);
                         images.Add(photo);
 
-                        var bytes = (await photo.OpenReadAsync()).ToByteArray();
-                        nodes.Add(new PostContentNode
+                        var stream = await photo.OpenReadAsync();
+
+                        nodes.Add(new EntryNode
                         {
-                            NodeImage = ImageSource.FromStream(() => new MemoryStream(bytes)),
-                            NodeString = string.Empty
+                            image = ImageSource.FromStream(() => stream),
+                            text = string.Empty
                         });
                     }
 
@@ -89,10 +90,10 @@ namespace ConvApp.Views
                         images.Add(photo);
 
                         var bytes = (await photo.OpenReadAsync()).ToByteArray();
-                        nodes.Add(new PostContentNode
+                        nodes.Add(new EntryNode
                         {
-                            NodeImage = ImageSource.FromStream(() => new MemoryStream(bytes)),
-                            NodeString = string.Empty
+                            image = ImageSource.FromStream(() => new MemoryStream(bytes)),
+                            text = string.Empty
                         });
                     }
 
@@ -114,32 +115,23 @@ namespace ConvApp.Views
        {
             try
             {
-                var modelNodes = new List<PostingNodeClient>();
+                var modelNodes = new List<PostingNode>();
 
-                modelNodes.Add(new PostingNodeClient { text = recipeTitle.Text });
-                modelNodes.Add(new PostingNodeClient { text = recipeDescription.Text });
+                modelNodes.Add(new PostingNode { Text = recipeTitle.Text });
+                modelNodes.Add(new PostingNode { Text = recipeDescription.Text });
 
                 var strArr = (await ApiManager.UploadImage(images)).Split(';');
                 foreach (var i in strArr)
                 {
-                    modelNodes.Add(new PostingNodeClient { image = i, text = nodes[strArr.IndexOf(i)].NodeString });
+                    modelNodes.Add(new PostingNode { ImageFilename = i, Text = nodes[strArr.IndexOf(i)].text });
                 }
 
                 // 이미지 업로드
                 await ApiManager.UploadPosting(new Posting
                 {
-                    create_user_oid = App.User.Id,
-                    is_recipe = true,
+                    Creator = App.User,
+                    IsRecipe = true,
                     PostingNodes = modelNodes
-                });
-
-                FeedPage.recipePosts.Add(new RecipePost
-                {
-                    User = App.User,
-                    Date = DateTime.Now,
-                    Title = recipeTitle.Text,
-                    PostContent = recipeDescription.Text,
-                    RecipeNode = nodes
                 });
 
                 await Navigation.PopToRootAsync();
@@ -149,6 +141,13 @@ namespace ConvApp.Views
             {
                 await DisplayAlert("에러", ex.Message, "확인");
             }
-        }
+       }
     }
+
+    public class EntryNode
+    {
+        public ImageSource image { get; set; }
+        public string text { get; set; }
+    }
+
 }

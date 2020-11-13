@@ -19,6 +19,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Feed\ReviewFeed.xaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="Views\Feed\ReviewFeed.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Models\NewFile1.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MimeTypesMap" Version="1.0.8" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="RestSharp" Version="106.11.8-alpha.0.7" />
@@ -39,43 +51,61 @@
     <Compile Update="AppShell.xaml.cs">
       <DependentUpon>AppShell.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\MyPage.xaml.cs">
+    <Compile Update="Views\EmptyViews\MyPage.xaml.cs">
       <DependentUpon>MyPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\RecipeEntry.xaml.cs">
+    <Compile Update="Views\Feed\FeedPageAll.xaml.cs">
+      <DependentUpon>FeedPageAll.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Feed\FeedPageReview.xaml.cs">
+      <DependentUpon>FeedPageReview.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Feed\FeedPageRecipe.xaml.cs">
+      <DependentUpon>FeedPageRecipe.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Feed\ReviewDetail.xaml.cs">
+      <DependentUpon>ReviewDetail.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Register\RecipeEntry.xaml.cs">
       <DependentUpon>RecipeEntry.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\ReviewEntry.xaml.cs">
+    <Compile Update="Views\Register\ReviewEntry.xaml.cs">
       <DependentUpon>ReviewEntry.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\CategoryPage.xaml.cs">
+    <Compile Update="Views\EmptyViews\CategoryPage.xaml.cs">
       <DependentUpon>CategoryPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\SearchPage.xaml.cs">
+    <Compile Update="Views\EmptyViews\SearchPage.xaml.cs">
       <DependentUpon>SearchPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Views\Feed\FeedAll.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\FeedPage.xaml">
+    <EmbeddedResource Update="Views\EmptyViews\FeedPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="AppShell.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\Feed\ShowReview.xaml">
+    <EmbeddedResource Update="Views\Feed\FeedPageReview.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Feed\FeedPageRecipe.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Feed\RecipeDetail.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Feed\ReviewDetail.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\PostDetail.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\RecipeEntryListView.xaml">
+    <EmbeddedResource Update="Views\Register\RecipeEntryListView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\SearchPage.xaml">
+    <EmbeddedResource Update="Views\EmptyViews\SearchPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

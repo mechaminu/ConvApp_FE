@@ -33,23 +33,22 @@
     </Shell.Resources>
     <TabBar>
         <Tab Title="피드" >
-            <ShellContent Title="ALL" ContentTemplate="{DataTemplate views:FeedAll}" Style="{StaticResource FeedShell}" Route="page1"/>
-            <!--<ShellContent Title="Recipe" ContentTemplate="{DataTemplate views:FeedPage}" Style="{StaticResource FeedShell}"/>
-            <ShellContent Title="Review" ContentTemplate="{DataTemplate views:FeedPage}" Style="{StaticResource FeedShell}"/>-->
+            <ShellContent Title="All" ContentTemplate="{DataTemplate views:FeedPageAll}" Style="{StaticResource FeedShell}" Route="pageAllFeed"/>
+            <ShellContent Title="Review" ContentTemplate="{DataTemplate views:FeedPageReview}" Style="{StaticResource FeedShell}" Route="pageReviewFeed"/>
+            <ShellContent Title="Recipe" ContentTemplate="{DataTemplate views:FeedPageRecipe}" Style="{StaticResource FeedShell}" Route="pageRecipeFeed"/>
         </Tab>
         <Tab Title="검색" >
             <ShellContent Style="{StaticResource BaseStyle}">
-                <views:ProductList/>
+                <views:SearchPage/>
             </ShellContent>
         </Tab>
         <Tab Title="등록">
-            <ShellContent Style="{StaticResource BaseStyle}">
-                <views:RegisterPage/>
-            </ShellContent>
+            <ShellContent Title="Review" ContentTemplate="{DataTemplate views:ReviewEntry}" Style="{StaticResource FeedShell}" />
+            <ShellContent Title="Recipe" ContentTemplate="{DataTemplate views:RecipeEntry}" Style="{StaticResource FeedShell}" />
         </Tab>
         <Tab Title="랭킹">
             <ShellContent Style="{StaticResource BaseStyle}">
-                <views:RankingPage/>
+                <views:CategoryPage/>
             </ShellContent>
         </Tab>
         <Tab Title="내 정보">

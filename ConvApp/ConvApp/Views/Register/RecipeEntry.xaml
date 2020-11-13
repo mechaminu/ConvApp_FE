@@ -2,7 +2,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:elems ="clr-namespace:ConvApp.ViewElements"
              xmlns:local="clr-namespace:ConvApp.Views"
-             x:Class="ConvApp.Views.RecipeEntry">
+             x:Class="ConvApp.Views.RecipeEntry"
+             Shell.NavBarIsVisible="False">
     
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="게시"
