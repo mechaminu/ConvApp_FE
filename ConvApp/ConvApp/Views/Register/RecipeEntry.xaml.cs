@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -20,6 +21,7 @@ namespace ConvApp.Views
     {
         private List<EntryNode> nodes = new List<EntryNode>();
         private List<FileResult> images = new List<FileResult>();
+        private bool isSelecting = false;
 
         public RecipeEntry()
         {
@@ -33,39 +35,29 @@ namespace ConvApp.Views
             recipeNodeList.ItemsSource = nodes;
         }
 
-        protected async override void OnAppearing()
+        private async Task AddImage()
         {
-            base.OnAppearing();
             try
             {
-                try
+                var pickResults = await FilePicker.PickMultipleAsync(new PickOptions { PickerTitle = "사진 선택", FileTypes = FilePickerFileType.Images });
+
+                if (pickResults.Count() == 0)
+                    throw new InvalidOperationException("이미지를 선택하지 않았습니다");
+
+                foreach (var photo in pickResults)
                 {
-                    var pickResults = await FilePicker.PickMultipleAsync(new PickOptions { PickerTitle = "사진 선택", FileTypes = FilePickerFileType.Images });
+                    photo.ContentType = MimeTypesMap.GetMimeType(photo.FileName);
+                    images.Add(photo);
 
-                    if (pickResults.Count() == 0)
-                        return;
+                    var bytes = (await photo.OpenReadAsync()).ToByteArray();
 
-                    foreach (var photo in pickResults)
+                    nodes.Add(new EntryNode
                     {
-                        photo.ContentType = MimeTypesMap.GetMimeType(photo.FileName);
-                        images.Add(photo);
-
-                        var stream = await photo.OpenReadAsync();
-
-                        nodes.Add(new EntryNode
-                        {
-                            image = ImageSource.FromStream(() => stream),
-                            text = string.Empty
-                        });
-                    }
-
-                    RefreshList();
-
+                        image = ImageSource.FromStream(() => new MemoryStream(bytes)),
+                        text = string.Empty
+                    });
                 }
-                catch (Exception ex)
-                {
-                    throw new InvalidOperationException("이미지 추가 과정에서 문제가 발생했습니다", ex);
-                }
+                RefreshList();
             }
             catch (Exception ex)
             {
@@ -73,46 +65,18 @@ namespace ConvApp.Views
             }
         }
 
-       async private void AddNodesFromImage(object sender, EventArgs e)
+        async private void AddNodesFromImage(object sender, EventArgs e)
         {
-            try
+            if (!isSelecting)
             {
-                try
-                {
-                    var pickResults = await FilePicker.PickMultipleAsync(new PickOptions { PickerTitle = "사진 선택", FileTypes = FilePickerFileType.Images });
-
-                    if (pickResults.Count() == 0)
-                        return;
-
-                    foreach (var photo in pickResults)
-                    {
-                        photo.ContentType = MimeTypesMap.GetMimeType(photo.FileName);
-                        images.Add(photo);
-
-                        var bytes = (await photo.OpenReadAsync()).ToByteArray();
-                        nodes.Add(new EntryNode
-                        {
-                            image = ImageSource.FromStream(() => new MemoryStream(bytes)),
-                            text = string.Empty
-                        });
-                    }
-
-                    RefreshList();
-
-                }
-                catch (Exception ex)
-                {
-                    throw new InvalidOperationException("이미지 추가 과정에서 문제가 발생했습니다", ex);
-                }
-            }
-            catch (Exception ex)
-            {
-                await DisplayAlert("에러", ex.Message, "확인");
+                isSelecting = true;
+                await AddImage();
+                isSelecting = false;
             }
         }
 
-       private async void OnSave(object sender, EventArgs e)
-       {
+        private async void OnSave(object sender, EventArgs e)
+        {
             try
             {
                 var modelNodes = new List<PostingNode>();
@@ -129,19 +93,19 @@ namespace ConvApp.Views
                 // 이미지 업로드
                 await ApiManager.UploadPosting(new Posting
                 {
-                   // Creator = App.User,
+                    // Creator = App.User,
                     IsRecipe = true,
                     PostingNodes = modelNodes
                 });
 
                 await Navigation.PopToRootAsync();
-                await Shell.Current.GoToAsync("//page1");
+                await Shell.Current.GoToAsync("//pageRecipeFeed");
             }
             catch (Exception ex)
             {
                 await DisplayAlert("에러", ex.Message, "확인");
             }
-       }
+        }
     }
 
     public class EntryNode

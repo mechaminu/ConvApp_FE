@@ -5,54 +5,54 @@
              x:Class="ConvApp.Views.RecipeEntry"
              Shell.NavBarIsVisible="False">
     
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="게시"
-                     Order="Primary"
-                     Priority="0"
-                     Clicked="OnSave"/>
-    </ContentPage.ToolbarItems>
-    
-    <StackLayout>
-        <elems:CustomEditor x:Name="recipeTitle"
-                            Placeholder="레시피 이름"
-                            FontSize="Body"
-                            FontAttributes="Bold" />
-        
-        <BoxView BackgroundColor="Gray" HeightRequest="1"/>
+        <StackLayout>
+            <Button Text="게시" Clicked="OnSave"/>
+            <elems:CustomEditor x:Name="recipeTitle"
+                                Placeholder="레시피 이름"
+                                FontSize="Body"
+                                FontAttributes="Bold" />
 
-        <elems:CustomEditor x:Name ="recipeDescription"
-                             Placeholder="레시피 소개"
-                             FontSize="Body"
-                             FontAttributes="Bold"/>
+            <BoxView BackgroundColor="Gray"
+                     HeightRequest="1"/>
 
-        <BoxView BackgroundColor="Gray" HeightRequest="1"/>
+            <elems:CustomEditor x:Name ="recipeDescription"
+                                Placeholder="레시피 소개"
+                                FontSize="Body"
+                                FontAttributes="Bold"/>
 
-        <ListView x:Name="recipeNodeList">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <Grid>
+            <BoxView BackgroundColor="Gray"
+                     HeightRequest="1"/>
+
+            <ListView x:Name="recipeNodeList">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                        <StackLayout>
+                            <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="4*"/>
-                            </Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="4*"/>
+                                </Grid.ColumnDefinitions>
 
-                            <Image Grid.Column="0"
-                           Source="{Binding NodeImage}"/>
-                            <Editor Placeholder="레시피 설명 입력"
-                            Text="{Binding NodeString}"
+                                <Image Grid.Column="0"
+                                       Source="{Binding image}"/>
+                                <Editor Placeholder="레시피 설명 입력"
+                            Text="{Binding text}"
                             Grid.Column="1"/>
-                        </Grid>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+                            </Grid>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
 
-        <BoxView BackgroundColor="Gray" HeightRequest="1"/>
+            <BoxView BackgroundColor="Gray"
+                     HeightRequest="1"/>
 
-        <Button Text="이미지 추가하기"
-                Grid.Column="1"
-                Clicked="AddNodesFromImage"/>
+            <Button Text="이미지 추가하기"
+                    Grid.Column="1"
+                    Clicked="AddNodesFromImage"/>
 
-    </StackLayout>
+        </StackLayout>
+   
 </ContentPage>

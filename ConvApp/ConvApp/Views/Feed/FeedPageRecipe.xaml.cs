@@ -15,38 +15,48 @@ namespace ConvApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class FeedPageRecipe : ContentPage
     {
-        public static List<RecipePost> recipeposts = new List<RecipePost>();
-      
+        public List<RecipePost> recipeposts = new List<RecipePost>();
+
         public FeedPageRecipe()
         {
             InitializeComponent();
         }
 
-        protected override void OnAppearing()
+        protected async override void OnAppearing()
         {
             base.OnAppearing();
-
-
+            await FillRecipes();
             numfeed.Text = recipeposts.Count().ToString();
-
-            FillRecipes();
-
             ShowRecipes();
 
         }
 
-        private async void FillRecipes()
+        protected override void OnDisappearing()
         {
-            var list = await ApiManager.GetPostingRange(1, 20, true);
+            base.OnDisappearing();
+            refresh();
+        }
 
-            foreach (var post in list)
-            recipeposts.Add((RecipePost)post);
+        private async Task FillRecipes()
+        {
+            recipeposts.Clear();
 
+            try
+            {
+                var list = await ApiManager.GetPostingRange(0, 20, true);
+                foreach (var post in list)
+                {
+                    recipeposts.Add((RecipePost)post);
+                }
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("에러", ex.Message, "확인");
+            }
         }
 
         private void ShowRecipes()
         {
-            refresh();
             foreach (var post in recipeposts)
             {
                 var elem = new CachedImage()
@@ -54,23 +64,25 @@ namespace ConvApp.Views
                     HorizontalOptions = LayoutOptions.Center,
                     VerticalOptions = LayoutOptions.Center,
                     Aspect = Aspect.AspectFill,
-                    CacheDuration = TimeSpan.FromMinutes(5),
+                    CacheDuration = TimeSpan.FromDays(1),
                     DownsampleToViewSize = true,
-                    RetryCount = 0,
-                    RetryDelay = 250,
                     BitmapOptimizations = true,
-                    Source = post.RecipeNode[0].NodeImage
+                    RetryCount = 4,
+                    RetryDelay = 250,
+                    Source = post.RecipeNode[0].NodeImage,
+                    BackgroundColor = Color.Red
+
                 };
 
                 var tapGestureRecognizer = new TapGestureRecognizer();
                 tapGestureRecognizer.Tapped += async (s, e) => {
-                    await Navigation.PushAsync(new RecipeDetail
+                    await Navigation.PushAsync(new ReviewDetail
                     {
                         BindingContext = post
                     });
                 };
-
                 elem.GestureRecognizers.Add(tapGestureRecognizer);
+
 
                 if (recipeposts.IndexOf(post) % 2 == 0)
                 {
@@ -82,11 +94,11 @@ namespace ConvApp.Views
                 }
             }
         }
+
         void refresh()
         {
             LEFT.Children.Clear();
             RIGHT.Children.Clear();
         }
-
     }
 }

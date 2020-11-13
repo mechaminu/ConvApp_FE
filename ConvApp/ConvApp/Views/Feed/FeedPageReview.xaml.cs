@@ -20,27 +20,32 @@ namespace ConvApp.Views
         public FeedPageReview()
         {
             InitializeComponent();
-            numfeed.Text = reviewposts.Count().ToString();
-            FillReviews();
-            ShowReviews();
+            
         }
 
-        protected override void OnAppearing()
+        protected async override void OnAppearing()
         {
             base.OnAppearing();
+            await FillReviews();
             numfeed.Text = reviewposts.Count().ToString();
-            FillReviews();
+           
             ShowReviews();
 
         }
 
-        private async void FillReviews()
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            refresh();
+        }
+
+        private async Task FillReviews()
         {
             reviewposts.Clear();
 
             try
             {
-                var list = await ApiManager.GetPostingRange(0, 10, false);
+                var list = await ApiManager.GetPostingRange(0, 20, false);
                 foreach (var post in list)
                 {
                     reviewposts.Add((ReviewPost)post);
@@ -55,8 +60,6 @@ namespace ConvApp.Views
 
         private void ShowReviews()
         {
-            refresh();
-
             foreach (var post in reviewposts)
             {
                 var elem = new CachedImage()
@@ -67,9 +70,11 @@ namespace ConvApp.Views
                     CacheDuration = TimeSpan.FromDays(1),
                     DownsampleToViewSize = true,
                     BitmapOptimizations = true,
-                    LoadingDelay = 1,
-                    InvalidateLayoutAfterLoaded = false,
-                    Source = post.PostImage
+                    RetryCount = 4,
+                    RetryDelay = 250,        
+                    Source = post.PostImage,
+                    BackgroundColor = Color.Red
+  
                 };
 
                 var tapGestureRecognizer = new TapGestureRecognizer();
@@ -81,6 +86,7 @@ namespace ConvApp.Views
                 };
                 elem.GestureRecognizers.Add(tapGestureRecognizer);
 
+                
                 if (reviewposts.IndexOf(post) % 2 == 0)
                 {
                     LEFT.Children.Add(elem);
