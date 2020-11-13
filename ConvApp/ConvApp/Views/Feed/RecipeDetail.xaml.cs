@@ -16,10 +16,5 @@ namespace ConvApp.Views.Feed
         {
             InitializeComponent();
         }
-
-
-
-
-        
     }
 }

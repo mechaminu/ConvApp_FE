@@ -93,7 +93,7 @@ namespace ConvApp.Views
                 // 이미지 업로드
                 await ApiManager.UploadPosting(new Posting
                 {
-                    // Creator = App.User,
+                    CreatorId = App.User.Id,
                     IsRecipe = true,
                     PostingNodes = modelNodes
                 });

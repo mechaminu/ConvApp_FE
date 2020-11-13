@@ -5,9 +5,13 @@
              Shell.NavBarHasShadow="False"
              Shell.NavBarIsVisible="False">
     <StackLayout>
-        <Label x:Name="numfeed"/>
         <ScrollView>
-            <Grid>
+            <Grid Margin="10,10,10,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                
                 <FlexLayout x:Name="LEFT" Grid.Column="0" Direction="Column"/>
                 <FlexLayout x:Name="RIGHT" Grid.Column="1" Direction="Column"/>
             </Grid>

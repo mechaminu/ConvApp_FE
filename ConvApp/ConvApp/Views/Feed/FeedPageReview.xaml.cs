@@ -15,40 +15,37 @@ namespace ConvApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class FeedPageReview : ContentPage
     {
-        public List<ReviewPost> reviewposts = new List<ReviewPost>();
+        public List<ReviewPost> postList = new List<ReviewPost>();
 
         public FeedPageReview()
         {
             InitializeComponent();
-            
         }
 
         protected async override void OnAppearing()
         {
             base.OnAppearing();
-            await FillReviews();
-            numfeed.Text = reviewposts.Count().ToString();
-           
-            ShowReviews();
-
+            await GetData();
+            Show();
         }
 
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
-            refresh();
+            Clear();
         }
 
-        private async Task FillReviews()
+        private async Task GetData()
         {
-            reviewposts.Clear();
-
             try
             {
-                var list = await ApiManager.GetPostingRange(0, 20, false);
+                var list = await ApiManager.GetReviews(0, 20);
+
+                postList.Clear();
+
                 foreach (var post in list)
                 {
-                    reviewposts.Add((ReviewPost)post);
+                    postList.Add((ReviewPost)post);
                 }
             }
             catch (Exception ex)
@@ -58,9 +55,9 @@ namespace ConvApp.Views
         }
 
 
-        private void ShowReviews()
+        private void Show()
         {
-            foreach (var post in reviewposts)
+            foreach (var post in postList)
             {
                 var elem = new CachedImage()
                 {
@@ -69,12 +66,9 @@ namespace ConvApp.Views
                     Aspect = Aspect.AspectFill,
                     CacheDuration = TimeSpan.FromDays(1),
                     DownsampleToViewSize = true,
-                    BitmapOptimizations = true,
-                    RetryCount = 4,
-                    RetryDelay = 250,        
+                    BitmapOptimizations = true,  
                     Source = post.PostImage,
                     BackgroundColor = Color.Red
-  
                 };
 
                 var tapGestureRecognizer = new TapGestureRecognizer();
@@ -87,7 +81,7 @@ namespace ConvApp.Views
                 elem.GestureRecognizers.Add(tapGestureRecognizer);
 
                 
-                if (reviewposts.IndexOf(post) % 2 == 0)
+                if (postList.IndexOf(post) % 2 == 0)
                 {
                     LEFT.Children.Add(elem);
                 }
@@ -97,14 +91,11 @@ namespace ConvApp.Views
                 }
             }
         }
-        void refresh()
+
+        void Clear()
         {
             LEFT.Children.Clear();
             RIGHT.Children.Clear();
         }
     }
-
-
-
-
 }

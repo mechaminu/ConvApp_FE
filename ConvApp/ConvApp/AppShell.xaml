@@ -8,34 +8,48 @@
         <Style x:Key="BaseStyle"
                TargetType="Element">
             <Setter Property="Shell.TabBarBackgroundColor"
-                    Value="white"/>
+                    Value="#512da8"/>
             <Setter Property="Shell.BackgroundColor"
-                    Value="BlueViolet"/>
-            <Setter Property="Shell.ForegroundColor"
-                    Value="Transparent" />
+                    Value="#512da8"/>
             <Setter Property="Shell.TitleColor"
-                    Value="black"/>
+                    Value="White"/>
             <Setter Property="Shell.UnselectedColor" 
                     Value="Gray"/>
             <Setter Property="Shell.PresentationMode"
                     Value="Animated"/>
             <Setter Property="Shell.NavBarIsVisible"
-                Value="False"/>
+                    Value="False"/>
         </Style>
 
         <Style x:Key="FeedShell"
                TargetType="Element"
                BasedOn="{StaticResource BaseStyle}">
             <Setter Property="Shell.NavBarIsVisible"
-                Value="True"/>  
+                    Value="True"/>  
         </Style>
-        
+
+        <Style x:Key="EntryShell"
+               TargetType="Element"
+               BasedOn="{StaticResource BaseStyle}">
+            <Setter Property="Shell.NavBarIsVisible"
+                    Value="True"/>
+        </Style>
+
     </Shell.Resources>
     <TabBar>
         <Tab Title="피드" >
-            <ShellContent Title="All" ContentTemplate="{DataTemplate views:FeedPageAll}" Style="{StaticResource FeedShell}" Route="pageAllFeed"/>
-            <ShellContent Title="Review" ContentTemplate="{DataTemplate views:FeedPageReview}" Style="{StaticResource FeedShell}" Route="pageReviewFeed"/>
-            <ShellContent Title="Recipe" ContentTemplate="{DataTemplate views:FeedPageRecipe}" Style="{StaticResource FeedShell}" Route="pageRecipeFeed"/>
+            <ShellContent Title="All"
+                          ContentTemplate="{DataTemplate views:FeedPageAll}"
+                          Style="{StaticResource FeedShell}"
+                          Route="pageAllFeed"/>
+            <ShellContent Title="Review"
+                          ContentTemplate="{DataTemplate views:FeedPageReview}"
+                          Style="{StaticResource FeedShell}"
+                          Route="pageReviewFeed"/>
+            <ShellContent Title="Recipe"
+                          ContentTemplate="{DataTemplate views:FeedPageRecipe}"
+                          Style="{StaticResource FeedShell}"
+                          Route="pageRecipeFeed"/>
         </Tab>
         <Tab Title="검색" >
             <ShellContent Style="{StaticResource BaseStyle}">
@@ -43,8 +57,15 @@
             </ShellContent>
         </Tab>
         <Tab Title="등록">
-            <ShellContent Title="Review" ContentTemplate="{DataTemplate views:ReviewEntry}" Style="{StaticResource FeedShell}" />
-            <ShellContent Title="Recipe" ContentTemplate="{DataTemplate views:RecipeEntry}" Style="{StaticResource FeedShell}" />
+            <ShellContent Style="{StaticResource FeedShell}">
+                <views:EntrySelection/>
+            </ShellContent>
+            <!--<ShellContent Title="Review"
+                          ContentTemplate="{DataTemplate views:ReviewEntry}"
+                          Style="{StaticResource EntryShell}" />
+            <ShellContent Title="Recipe"
+                          ContentTemplate="{DataTemplate views:RecipeEntry}"
+                          Style="{StaticResource EntryShell}" />-->
         </Tab>
         <Tab Title="랭킹">
             <ShellContent Style="{StaticResource BaseStyle}">

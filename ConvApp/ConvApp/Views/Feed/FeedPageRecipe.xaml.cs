@@ -15,7 +15,7 @@ namespace ConvApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class FeedPageRecipe : ContentPage
     {
-        public List<RecipePost> recipeposts = new List<RecipePost>();
+        public List<RecipePost> postList = new List<RecipePost>();
 
         public FeedPageRecipe()
         {
@@ -25,28 +25,27 @@ namespace ConvApp.Views
         protected async override void OnAppearing()
         {
             base.OnAppearing();
-            await FillRecipes();
-            numfeed.Text = recipeposts.Count().ToString();
-            ShowRecipes();
-
+            await Fill();
+            Show();
         }
 
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
-            refresh();
+            Clear();
         }
 
-        private async Task FillRecipes()
+        private async Task Fill()
         {
-            recipeposts.Clear();
-
             try
             {
-                var list = await ApiManager.GetPostingRange(0, 20, true);
+                var list = await ApiManager.GetRecipes(0, 20);
+
+                postList.Clear();
+
                 foreach (var post in list)
                 {
-                    recipeposts.Add((RecipePost)post);
+                    postList.Add(post);
                 }
             }
             catch (Exception ex)
@@ -55,9 +54,9 @@ namespace ConvApp.Views
             }
         }
 
-        private void ShowRecipes()
+        private void Show()
         {
-            foreach (var post in recipeposts)
+            foreach (var post in postList)
             {
                 var elem = new CachedImage()
                 {
@@ -67,11 +66,7 @@ namespace ConvApp.Views
                     CacheDuration = TimeSpan.FromDays(1),
                     DownsampleToViewSize = true,
                     BitmapOptimizations = true,
-                    RetryCount = 4,
-                    RetryDelay = 250,
                     Source = post.RecipeNode[0].NodeImage,
-                    BackgroundColor = Color.Red
-
                 };
 
                 var tapGestureRecognizer = new TapGestureRecognizer();
@@ -83,8 +78,7 @@ namespace ConvApp.Views
                 };
                 elem.GestureRecognizers.Add(tapGestureRecognizer);
 
-
-                if (recipeposts.IndexOf(post) % 2 == 0)
+                if (postList.IndexOf(post) % 2 == 0)
                 {
                     LEFT.Children.Add(elem);
                 }
@@ -95,7 +89,7 @@ namespace ConvApp.Views
             }
         }
 
-        void refresh()
+        void Clear()
         {
             LEFT.Children.Clear();
             RIGHT.Children.Clear();
