@@ -11,6 +11,12 @@ namespace ConvApp.ViewModels
         public FeedBack FeedbackData { get; set; }
     }
 
+    public class PostNode
+    {
+        public string NodeImage { get; set; }       // 이미지 Url
+        public string NodeString { get; set; }      // 이미지 에대한 설명
+    }
+
     public class ReviewPost : Post
     {
         public double Rating { get; set; }                  // 평점 (0 ~ 10, 정수 >> 0 ~ 5, 0.5단위 소수)
@@ -22,7 +28,7 @@ namespace ConvApp.ViewModels
     {
         public string Title { get; set; }                       // 레시피 이름
         public string PostContent { get; set; }                 // 레시피 소개
-        public List<PostContentNode> RecipeNode { get; set; }   // 이미지 노드들
+        public List<PostNode> RecipeNode { get; set; }   // 이미지 노드들
         public List<Product> ProductList { get; set; }          // 상품 목록들
     }
 }
