@@ -13,7 +13,7 @@ namespace ConvApp.Models
         // 포스트 데이터베이스 저장형태 모델
         public int Id { get; set; }
         public bool IsRecipe { get; set; }
-        public User Creator { get; set; }
+        //public User Creator { get; set; }
 
         public DateTime Created { get; set; }
         public List<PostingNode> PostingNodes {get; set;}
@@ -39,7 +39,6 @@ namespace ConvApp.Models
                 return new RecipePost
                 {
                     //User = posting.Creator,
-                    User = App.User,
                     Date = posting.Created,
                     Title = titleNode.Text,
                     PostContent = textNode.Text,
@@ -54,7 +53,7 @@ namespace ConvApp.Models
 
                 return new ReviewPost
                 {
-                    User = posting.Creator,
+                    //User = posting.Creator,
                     Date = posting.Created,
                     Rating = double.Parse(ratingNode.Text),
                     PostContent = textNode.Text,

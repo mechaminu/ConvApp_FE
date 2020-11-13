@@ -10,7 +10,7 @@
             <Setter Property="Shell.TabBarBackgroundColor"
                     Value="white"/>
             <Setter Property="Shell.BackgroundColor"
-                    Value="White"/>
+                    Value="BlueViolet"/>
             <Setter Property="Shell.ForegroundColor"
                     Value="Transparent" />
             <Setter Property="Shell.TitleColor"

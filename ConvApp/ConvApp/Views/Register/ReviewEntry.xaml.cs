@@ -64,7 +64,7 @@ namespace ConvApp.Views
                 });
 
                 await Navigation.PopToRootAsync();
-                await Shell.Current.GoToAsync("//pageAllFeed");
+                await Shell.Current.GoToAsync("//pageReviewFeed");
             }
             catch (Exception ex)
             {

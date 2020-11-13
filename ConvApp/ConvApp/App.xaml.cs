@@ -18,7 +18,7 @@ namespace ConvApp
             // 더미 유저 데이터. 이후 로그인 과정을 통해 이를 받아오도록 해야 할 것임.
             User = new User
             {
-                Id = 1234567890,
+               // Id = 1234567890,
                 Name = "John Doe",
                 ProfileImage = "https://convappdev.blob.core.windows.net/images/KurYIbkH0ie_0tQ"
             };
