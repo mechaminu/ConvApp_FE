@@ -39,7 +39,7 @@ namespace ConvApp.Views
         {
             try
             {
-                var list = await ApiManager.GetReviews(0, 20);
+                var list = await ApiManager.GetReviews(0, 100);
 
                 postList.Clear();
 

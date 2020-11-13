@@ -57,7 +57,7 @@
             </ShellContent>
         </Tab>
         <Tab Title="등록">
-            <ShellContent Style="{StaticResource FeedShell}">
+            <ShellContent Style="{StaticResource BaseStyle}">
                 <views:EntrySelection/>
             </ShellContent>
             <!--<ShellContent Title="Review"

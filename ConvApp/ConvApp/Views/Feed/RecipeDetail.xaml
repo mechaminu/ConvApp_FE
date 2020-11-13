@@ -13,23 +13,25 @@
                FontAttributes="Bold"/>
         <StackLayout Padding="0"  Orientation="Horizontal">
             <ff:CachedImage WidthRequest="30"
-                                HeightRequest="30"
-                                DownsampleToViewSize="true"
-                                Source="{Binding User.ProfileImage}"/>
+                            HeightRequest="30"
+                            DownsampleToViewSize="true"
+                            Source="{Binding User.ProfileImage}"/>
             <Label Text="{Binding User.Name}" TextColor="Black" FontSize="16" FontAttributes="Bold"/>
             <Label Text="{Binding Created}" TextColor="Black" FontSize="16"/>
         </StackLayout>
         <Label Text="{Binding PostContent}" FontSize="16" />
-        <ListView>
+        <ListView ItemsSource="{Binding RecipeNode}"
+                  SelectionMode="None"
+                  HasUnevenRows="True">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
                         <StackLayout>
-                            <ff:CachedImage WidthRequest="30"
-                                HeightRequest="30"
-                                DownsampleToViewSize="true"
-                                Source="{Binding RecipeNode.NodeImage}"/>
-                            <Label Text="{Binding RecipeNode.NodeString}"
+                            <ff:CachedImage MinimumHeightRequest="100"
+                                            Aspect="AspectFill"
+                                            DownsampleToViewSize="true"
+                                            Source="{Binding NodeImage}"/>
+                            <Label Text="{Binding NodeString}"
                                    FontSize="16"
                                    HorizontalTextAlignment="Center"/>
                         </StackLayout>

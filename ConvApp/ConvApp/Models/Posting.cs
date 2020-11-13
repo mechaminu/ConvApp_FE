@@ -26,10 +26,10 @@ namespace ConvApp.Models
                 var titleNode = posting.PostingNodes[0];
                 var textNode = posting.PostingNodes[1];
 
-                var otherNodes = new List<PostContentNode>();
+                var otherNodes = new List<PostNode>();
                 foreach (var node in posting.PostingNodes.Skip(2))
                 {
-                    otherNodes.Add(new PostContentNode
+                    otherNodes.Add(new PostNode
                     {
                         NodeImage = Path.Combine(ApiManager.ImageEndPointURL,node.ImageFilename),
                         NodeString = node.Text

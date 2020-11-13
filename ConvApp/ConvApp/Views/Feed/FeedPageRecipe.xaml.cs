@@ -39,7 +39,7 @@ namespace ConvApp.Views
         {
             try
             {
-                var list = await ApiManager.GetRecipes(0, 20);
+                var list = await ApiManager.GetRecipes(0, 100);
 
                 postList.Clear();
 
@@ -71,7 +71,7 @@ namespace ConvApp.Views
 
                 var tapGestureRecognizer = new TapGestureRecognizer();
                 tapGestureRecognizer.Tapped += async (s, e) => {
-                    await Navigation.PushAsync(new ReviewDetail
+                    await Navigation.PushAsync(new RecipeDetail
                     {
                         BindingContext = post
                     });
