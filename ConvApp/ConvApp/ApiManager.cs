@@ -29,8 +29,9 @@ namespace ConvApp
         {
             try
             {
-                await Task.Delay(100);
-                return App.User;
+                var response = await client.ExecuteAsync<User>(new RestRequest($"users/{userId}", Method.GET));
+                var result = response.Data;
+                return result;
             }
             catch (Exception ex)
             {
@@ -47,26 +48,18 @@ namespace ConvApp
         /// <returns>포스트 뷰모델 객체</returns>
         public async static Task<Post> UploadPosting(Posting post)
         {
+            var payloadObject = post;
+
             try
             {
-                var payloadObject = post;
+                var request = new RestRequest("postings", Method.POST)
+                    .AddJsonBody(payloadObject);
+                var response = await client.ExecuteAsync<Posting>(request);
 
-                try
-                {
-                    var request = new RestRequest("postings",Method.POST)
-                        .AddJsonBody(payloadObject);
-                    var response = await client.ExecuteAsync<Posting>(request);
+                if (!response.IsSuccessful)
+                    throw new InvalidOperationException("포스팅 실패");
 
-                    if (!response.IsSuccessful)
-                        throw new InvalidOperationException("포스팅 실패");
-                    
-                    return Posting.ToPost(response.Data); // 응답으로 전달받은 포스트 모델 -> 뷰모델 변환하여 리턴
-                }
-                catch (Exception ex)
-                {
-                    //payloadObject.images.Split(',').ForEach(async (e) => await DeleteImage(e));
-                    throw ex;
-                }
+                return await Posting.ToPost(response.Data);
             }
             catch (Exception ex)
             {
@@ -74,21 +67,23 @@ namespace ConvApp
             }
         }
 
-        public async static Task<List<Post>> GetPostings()
+        public async static Task<List<Post>> GetPostings(int start, int end)
         {
             try
             {
-                var request = new RestRequest("postings", Method.GET);
+                var request = new RestRequest("postings/all", Method.GET)
+                    .AddParameter("start", start, ParameterType.QueryString)
+                    .AddParameter("end", end, ParameterType.QueryString);
 
                 var response = await client.ExecuteAsync<List<Posting>>(request);
 
                 if (!response.IsSuccessful)
-                    throw new InvalidOperationException("Request Failed!");
+                    throw new InvalidOperationException($"Request Failed - CODE : {response.StatusCode}");
 
                 var result = new List<Post>();
                 foreach (var rawPosting in response.Data)
                 {
-                    result.Add(Posting.ToPost(rawPosting));
+                    result.Add(await Posting.ToPost(rawPosting));
                 }
 
                 return result;
@@ -99,24 +94,52 @@ namespace ConvApp
             }
         }
 
-        public async static Task<List<Post>> GetPostingRange(int start, int end, bool isRecipe = false)
+        public async static Task<List<RecipePost>> GetRecipes(int start, int end)
         {
-            try {
+            try
+            {
 
                 var request = new RestRequest("postings", Method.GET)
                     .AddParameter("start", start, ParameterType.QueryString)
                     .AddParameter("end", end, ParameterType.QueryString)
-                    .AddParameter("isRecipe", isRecipe, ParameterType.QueryString);
+                    .AddParameter("isRecipe", true, ParameterType.QueryString);
 
                 var response = await client.ExecuteAsync<List<Posting>>(request);
 
                 if (!response.IsSuccessful)
-                    throw new InvalidOperationException("Request Failed!");
+                    throw new InvalidOperationException($"Request Failed - CODE : {response.StatusCode}");
 
-                var result = new List<Post>();
+                var result = new List<RecipePost>();
+                foreach (var rawPosting in response.Data)
+                {
+                    result.Add((RecipePost)await Posting.ToPost(rawPosting));
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async static Task<List<ReviewPost>> GetReviews(int start, int end)
+        {
+            try {
+                var request = new RestRequest("postings", Method.GET)
+                    .AddParameter("start", start, ParameterType.QueryString)
+                    .AddParameter("end", end, ParameterType.QueryString)
+                    .AddParameter("isRecipe", false, ParameterType.QueryString);
+
+                var response = await client.ExecuteAsync<List<Posting>>(request);
+
+                if (!response.IsSuccessful)
+                    throw new InvalidOperationException($"Request Failed - CODE : {response.StatusCode}");
+
+                var result = new List<ReviewPost>();
                 foreach(var rawPosting in response.Data)
                 {
-                    result.Add(Posting.ToPost(rawPosting));
+                    result.Add((ReviewPost)await Posting.ToPost(rawPosting));
                 }
 
                 return result;

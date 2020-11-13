@@ -14,28 +14,15 @@ namespace ConvApp
         public App()
         {
             InitializeComponent();
-            
-            // 더미 유저 데이터. 이후 로그인 과정을 통해 이를 받아오도록 해야 할 것임.
-            User = new User
-            {
-               // Id = 1234567890,
-                Name = "John Doe",
-                ProfileImage = "https://convappdev.blob.core.windows.net/images/KurYIbkH0ie_0tQ"
-            };
+
+            GetUser();  // 이후 로그인으로 대체
 
             MainPage = new AppShell();
         }
 
-        protected override void OnStart()
+        private async void GetUser()
         {
-        }
-
-        protected override void OnSleep()
-        {
-        }
-
-        protected override void OnResume()
-        {
+            User = await ApiManager.GetUserData(1);
         }
     }
 }
