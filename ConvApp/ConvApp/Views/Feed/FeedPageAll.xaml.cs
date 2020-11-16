@@ -17,6 +17,7 @@ namespace ConvApp.Views
     public partial class FeedPageAll : ContentPage
     {
         public List<Post> postList = new List<Post>();
+        public bool populated = false;
 
         public FeedPageAll()
         {
@@ -26,14 +27,23 @@ namespace ConvApp.Views
         protected async override void OnAppearing()
         {
             base.OnAppearing();
-            await GetData();
-            Show();
+            if (!populated)
+            {
+                populated = true;
+                await Refresh();
+            }
         }
 
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
-            Clear();
+        }
+
+        private async Task Refresh()
+        {
+            await Clear();
+            await GetData();
+            await Show();
         }
 
         private async Task GetData()
@@ -56,21 +66,44 @@ namespace ConvApp.Views
         }
 
 
-        private void Show()
+        private async Task Show()
         {
             foreach (var post in postList)
             {
-                var elem = new CachedImage()
+                View elem;
+
+                var imgUrl = (post is ReviewPost ? (post as ReviewPost).PostImage : (post as RecipePost).RecipeNode[0].NodeImage).Split(';')[0];
+                if (imgUrl != string.Empty)
                 {
-                    HorizontalOptions = LayoutOptions.Center,
-                    VerticalOptions = LayoutOptions.Center,
-                    Aspect = Aspect.AspectFill,
-                    CacheDuration = TimeSpan.FromDays(1),
-                    DownsampleToViewSize = true,
-                    BitmapOptimizations = true,
-                    Source = post is ReviewPost ? (post as ReviewPost).PostImage : (post as RecipePost).RecipeNode[0].NodeImage,
-                    BackgroundColor = Color.Red
-                };
+                    var imgElem = await (new Task(() => new CachedImage()
+                    {
+                        HorizontalOptions = LayoutOptions.Center,
+                        VerticalOptions = LayoutOptions.Center,
+                        Aspect = Aspect.AspectFill,
+                        CacheDuration = TimeSpan.FromDays(1),
+                        DownsampleToViewSize = true,
+                        BitmapOptimizations = true,
+                        SuccessCommand = new Command(() => resolve.Yield())
+                        Source = imgUrl,
+                        BackgroundColor = Color.Red
+                    }));
+
+                    elem = new Frame()
+                    {
+                        CornerRadius = 5,
+                        VerticalOptions = LayoutOptions.FillAndExpand,
+                        Content = imgElem
+                    };
+                }
+                else
+                {
+                    elem = new Frame()
+                    {
+                        CornerRadius = 5,
+                        HeightRequest = 150,
+                        Content = new Label { Text = "No image" }
+                    };
+                }
 
                 elem.Margin = 5;
 
@@ -92,13 +125,23 @@ namespace ConvApp.Views
                 {
                     RIGHT.Children.Add(elem);
                 }
+
+                await Task.Delay(100);
             }
         }
 
-        void Clear()
+        private async Task Clear()
         {
             LEFT.Children.Clear();
             RIGHT.Children.Clear();
+            await Task.Delay(100);
+        }
+
+        private async void RefreshView_Refreshing(object sender, EventArgs e)
+        {
+            var elem = (RefreshView)sender;
+            await Refresh();
+            elem.IsRefreshing = false;
         }
     }
 }

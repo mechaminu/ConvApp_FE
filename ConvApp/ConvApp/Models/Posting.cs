@@ -39,7 +39,7 @@ namespace ConvApp.Models
                     {
                         otherNodes.Add(new PostNode
                         {
-                            NodeImage = Path.Combine(ApiManager.ImageEndPointURL,node.Image),
+                            NodeImage = node.Image != null ? Path.Combine(ApiManager.ImageEndPointURL,node.Image) : string.Empty,
                             NodeString = node.Text
                         });
                     }
@@ -62,7 +62,7 @@ namespace ConvApp.Models
                         Date = posting.ModifiedDate,
                         Rating = double.Parse(posting.PostingNodes[0].Text),
                         PostContent = posting.PostingNodes[1].Text,
-                        PostImage = Path.Combine(ApiManager.ImageEndPointURL, posting.PostingNodes[2].Image)
+                        PostImage = posting.PostingNodes[2].Image != null ? Path.Combine(ApiManager.ImageEndPointURL, posting.PostingNodes[2].Image) : string.Empty
                     };
             }
         }
