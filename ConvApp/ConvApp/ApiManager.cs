@@ -16,11 +16,12 @@ using RestSharp.Serializers.NewtonsoftJson;
 
 namespace ConvApp
 {
+    // Repository pattern 적용사례에 해당되는듯?
     public class ApiManager
     {
 
-        //private static string EndPointURL = "http://minuuoo.ddns.net:5000/api";
-        private static string EndPointURL = "http://convappdev.azurewebsites.net/api";
+        private static string EndPointURL = "http://minuuoo.ddns.net:5000/api";
+        //private static string EndPointURL = "http://convappdev.azurewebsites.net/api";
         public static string ImageEndPointURL = "https://convappdev.blob.core.windows.net/images";
         private static RestClient client = new RestClient(EndPointURL){Timeout=-1}.UseNewtonsoftJson() as RestClient;
         private static RestClient client_img = new RestClient(ImageEndPointURL) { Timeout = -1 }.UseNewtonsoftJson() as RestClient;
@@ -51,7 +52,6 @@ namespace ConvApp
         public async static Task<Post> UploadPosting(Posting post)
         {
             var payloadObject = post;
-
             try
             {
                 var request = new RestRequest("postings", Method.POST)
@@ -76,16 +76,16 @@ namespace ConvApp
         /// <param name="start">시작 순번</param>
         /// <param name="end">끝 순번</param>
         /// <returns></returns>
-        public async static Task<List<Post>> GetPostings(int start, int end)
+        public async static Task<List<Post>> GetPostings(byte? type = null)
         {
             try
             {
-                var request = new RestRequest("postings/all", Method.GET)
-                    .AddParameter("start", start, ParameterType.QueryString)
-                    .AddParameter("end", end, ParameterType.QueryString);
+                var request = new RestRequest("postings", Method.GET);
+
+                if (type != null)
+                    request.AddParameter("type", type, ParameterType.QueryString);
 
                 var response = await client.ExecuteAsync<List<Posting>>(request);
-
                 if (!response.IsSuccessful)
                     throw new InvalidOperationException($"Request Failed - CODE : {response.StatusCode}");
 
@@ -102,79 +102,6 @@ namespace ConvApp
                 throw ex;
             }
         }
-
-        /// <summary>
-        ///     Recipe 포스팅 객체 목록을 최신순으로 쿼리하여 리턴.
-        /// </summary>
-        /// <param name="start"></param>
-        /// <param name="end"></param>
-        /// <returns></returns>
-        public async static Task<List<RecipePost>> GetRecipes(int start, int end)
-        {
-            try
-            {
-
-                var request = new RestRequest("postings", Method.GET)
-                    .AddParameter("start", start, ParameterType.QueryString)
-                    .AddParameter("end", end, ParameterType.QueryString)
-                    .AddParameter("isRecipe", true, ParameterType.QueryString);
-
-                var response = await client.ExecuteAsync<List<Posting>>(request);
-
-                if (!response.IsSuccessful)
-                    throw new InvalidOperationException($"Request Failed - CODE : {response.StatusCode}");
-
-                var result = new List<RecipePost>();
-                foreach (var rawPosting in response.Data)
-                {
-                    result.Add((RecipePost)await Posting.ToPost(rawPosting));
-                }
-
-                return result;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        /// <summary>
-        ///     Review 포스팅 객체 목록을 최신순으로 쿼리하여 리턴.
-        /// </summary>
-        /// <param name="start"></param>
-        /// <param name="end"></param>
-        /// <returns></returns>
-        public async static Task<List<ReviewPost>> GetReviews(int start, int end)
-        {
-            try {
-                var request = new RestRequest("postings", Method.GET)
-                    .AddParameter("start", start, ParameterType.QueryString)
-                    .AddParameter("end", end, ParameterType.QueryString)
-                    .AddParameter("isRecipe", false, ParameterType.QueryString);
-
-                var response = await client.ExecuteAsync<List<Posting>>(request);
-
-                if (!response.IsSuccessful)
-                    throw new InvalidOperationException($"Request Failed - CODE : {response.StatusCode}");
-
-                var result = new List<ReviewPost>();
-                foreach(var rawPosting in response.Data)
-                {
-                    result.Add((ReviewPost)await Posting.ToPost(rawPosting));
-                }
-
-                return result;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        //public async static Task<bool> DeletePosting(long id)
-        //{
-        //}
-
         #endregion
 
         #region REST API : 이미지 CR(U)D 구현

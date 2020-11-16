@@ -8,7 +8,6 @@ namespace ConvApp.ViewModels
     {
         public User User { get; set; }
         public DateTime Date { get; set; }
-        public FeedBack FeedbackData { get; set; }
     }
 
     public class PostNode

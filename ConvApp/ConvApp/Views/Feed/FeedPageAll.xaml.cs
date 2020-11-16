@@ -1,6 +1,6 @@
 ﻿using ConvApp.Models;
 using ConvApp.ViewModels;
-using ConvApp.Views.Feed;
+using ConvApp.Views;
 using FFImageLoading.Forms;
 using System;
 using System.Collections.Generic;
@@ -41,7 +41,7 @@ namespace ConvApp.Views
         {
             try
             {
-                var list = await ApiManager.GetPostings(0, 100);
+                var list = await ApiManager.GetPostings();
 
                 postList.Clear();
 

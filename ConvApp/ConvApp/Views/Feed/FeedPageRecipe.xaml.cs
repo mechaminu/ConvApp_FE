@@ -1,10 +1,8 @@
-﻿using ConvApp.ViewModels;
-using ConvApp.Views.Feed;
+﻿using ConvApp.Models;
+using ConvApp.ViewModels;
 using FFImageLoading.Forms;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 using Xamarin.Forms;
@@ -39,13 +37,13 @@ namespace ConvApp.Views
         {
             try
             {
-                var list = await ApiManager.GetRecipes(0, 100);
+                var list = await ApiManager.GetPostings((byte)PostingTypes.RECIPE);
 
                 postList.Clear();
 
                 foreach (var post in list)
                 {
-                    postList.Add(post);
+                    postList.Add((RecipePost)post);
                 }
             }
             catch (Exception ex)

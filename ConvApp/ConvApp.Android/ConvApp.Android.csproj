@@ -38,9 +38,10 @@
     <EnableLLVM>false</EnableLLVM>
     <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
     <BundleAssemblies>false</BundleAssemblies>
+    <AndroidEnableMultiDex>true</AndroidEnableMultiDex>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
+    <DebugSymbols>false</DebugSymbols>
     <DebugType>portable</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release</OutputPath>
@@ -49,6 +50,15 @@
     <AndroidManagedSymbols>true</AndroidManagedSymbols>
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
     <LangVersion>8.0</LangVersion>
+    <AotAssemblies>false</AotAssemblies>
+    <EnableLLVM>false</EnableLLVM>
+    <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
+    <BundleAssemblies>false</BundleAssemblies>
+    <AndroidLinkTool>r8</AndroidLinkTool>
+    <AndroidEnableMultiDex>true</AndroidEnableMultiDex>
+    <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
+    <MandroidI18n />
+    <AndroidKeyStore>false</AndroidKeyStore>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />
