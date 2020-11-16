@@ -57,9 +57,10 @@
             </ShellContent>
         </Tab>
         <Tab Title="등록">
-            <ShellContent Style="{StaticResource BaseStyle}">
-                <views:EntrySelection/>
-            </ShellContent>
+            <ShellContent Title="Category" 
+                          ContentTemplate="{DataTemplate views:CategoryPage}" 
+                          Style="{StaticResource BaseStyle}"/>
+
             <!--<ShellContent Title="Review"
                           ContentTemplate="{DataTemplate views:ReviewEntry}"
                           Style="{StaticResource EntryShell}" />

@@ -44,7 +44,7 @@
         <Grid>
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="100"/>
+                <RowDefinition Height="170"/>
             </Grid.RowDefinitions>
             <elems:CustomEditor x:Name="reviewContent"
                                 Placeholder="문구 입력..."

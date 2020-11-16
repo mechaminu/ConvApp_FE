@@ -28,6 +28,7 @@ namespace ConvApp.Views
             base.OnAppearing();
             await GetData();
             Show();
+
         }
 
         protected override void OnDisappearing()
