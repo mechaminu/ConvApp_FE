@@ -20,8 +20,8 @@ namespace ConvApp
     public class ApiManager
     {
 
-        private static string EndPointURL = "http://minuuoo.ddns.net:5000/api";
-        //private static string EndPointURL = "http://convappdev.azurewebsites.net/api";
+        //private static string EndPointURL = "http://minuuoo.ddns.net:5000/api";
+        private static string EndPointURL = "http://convappdev.azurewebsites.net/api";
         public static string ImageEndPointURL = "https://convappdev.blob.core.windows.net/images";
         private static RestClient client = new RestClient(EndPointURL){Timeout=-1}.UseNewtonsoftJson() as RestClient;
         private static RestClient client_img = new RestClient(ImageEndPointURL) { Timeout = -1 }.UseNewtonsoftJson() as RestClient;
@@ -49,7 +49,7 @@ namespace ConvApp
         /// </summary>
         /// <param name="post">포스트 뷰모델 객체</param>
         /// <returns>포스트 뷰모델 객체</returns>
-        public async static Task<Post> UploadPosting(Posting post)
+        public async static Task UploadPosting(Posting post)
         {
             var payloadObject = post;
             try
@@ -61,7 +61,7 @@ namespace ConvApp
                 if (!response.IsSuccessful)
                     throw new InvalidOperationException("포스팅 실패");
 
-                return await Posting.ToPost(response.Data);
+                //return await Posting.ToPost(response.Data);
             }
             catch (Exception ex)
             {

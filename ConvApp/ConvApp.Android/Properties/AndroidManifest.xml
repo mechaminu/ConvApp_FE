@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.companyname.convapp" android:installLocation="auto">
-	<uses-sdk android:minSdkVersion="27" android:targetSdkVersion="29" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.paloaltoinfo.convapp" android:installLocation="auto">
+	<uses-sdk android:minSdkVersion="19" android:targetSdkVersion="29" />
 	<application android:label="편의점달인" android:theme="@style/MainTheme" android:icon="@mipmap/icon">
 		<provider android:name="androidx.core.content.FileProvider" android:authorities="${applicationId}.fileprovider" android:exported="false" android:grantUriPermissions="true">
 			<meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/file_paths" />
