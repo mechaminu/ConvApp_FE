@@ -54,7 +54,7 @@
                                 <Label Text="{Binding 유저코멘트}"/>
                                 
                                 <StackLayout Orientation="Horizontal">
-                                    <Label Text="{Binding, StringFormat='Likes {0}'}"/>
+                                    <Label Text="{Binding eb2j, StringFormat='Likes {0}'}"/>
                                     <Button Text="댓글달기"/>
                                 </StackLayout>
                                 

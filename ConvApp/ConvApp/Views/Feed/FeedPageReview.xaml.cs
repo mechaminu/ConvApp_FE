@@ -39,7 +39,7 @@ namespace ConvApp.Views
         {
             try
             {
-                var list = await ApiManager.GetReviews(0, 100);
+                var list = await ApiManager.GetReviews(0, 10);
 
                 postList.Clear();
 
@@ -60,38 +60,64 @@ namespace ConvApp.Views
             {
                 // 현재로서는 직접 View element를 C#으로만 생성
                 // 추후 별개 Xaml 파일로 선언된 element를 여기서 인스턴스화해서 List에 추가해주는 것이 좋을 듯.
-                var elem = new CachedImage()
+
+                Frame Frame = new Frame()
                 {
-                    HorizontalOptions = LayoutOptions.Center,
-                    VerticalOptions = LayoutOptions.Center,
-                    Aspect = Aspect.AspectFill,
-                    CacheDuration = TimeSpan.FromDays(1),   // 무슨 역할을 하는지 모르겠음
-                    DownsampleToViewSize = true,
-                    BitmapOptimizations = true,  
-                    Source = post.PostImage,
-                    BackgroundColor = Color.Red
+                    Content = new CachedImage()
+                    {
+                        HorizontalOptions = LayoutOptions.Center,
+                        VerticalOptions = LayoutOptions.Center,
+                        Aspect = Aspect.AspectFill,
+                        CacheDuration = TimeSpan.FromDays(1),   // 무슨 역할을 하는지 모르겠음
+                        DownsampleToViewSize = true,
+                        BitmapOptimizations = true,
+                        Source = post.PostImage,
+                        BackgroundColor = Color.Red
+                    }
+
                 };
-
-                elem.Margin = 5;
-
                 var tapGestureRecognizer = new TapGestureRecognizer();
-                tapGestureRecognizer.Tapped += async (s, e) => {
+                tapGestureRecognizer.Tapped += async (s, e) =>
+                {
                     await Navigation.PushAsync(new ReviewDetail
                     {
                         BindingContext = post
                     });
                 };
-                elem.GestureRecognizers.Add(tapGestureRecognizer);
+                Frame.GestureRecognizers.Add(tapGestureRecognizer);
+
+                //var elem = new CachedImage()
+                //{
+                //    HorizontalOptions = LayoutOptions.Center,
+                //    VerticalOptions = LayoutOptions.Center,
+                //    Aspect = Aspect.AspectFill,
+                //    CacheDuration = TimeSpan.FromDays(1),   // 무슨 역할을 하는지 모르겠음
+                //    DownsampleToViewSize = true,
+                //    BitmapOptimizations = true,  
+                //    Source = post.PostImage,
+                //    BackgroundColor = Color.Red
+                //};
+
+                //elem.Margin = 5;
+
+                //var tapGestureRecognizer = new TapGestureRecognizer();
+                //tapGestureRecognizer.Tapped += async (s, e) => {
+                //    await Navigation.PushAsync(new ReviewDetail
+                //    {
+                //        BindingContext = post
+                //    });
+                //};
+                //elem.GestureRecognizers.Add(tapGestureRecognizer);
 
                 // 강제로 좌,우 교대하여 입력하지 말고, 가장 마지막 요소의 높이가 좀 더 위에 있는 열을 감지해서 그 열에 새 요소를 넣어주는 로직이 바람직할 듯.
                 // ㄴ> 요소의 높이를 파악하기가 쉽지 않다...
                 if (postList.IndexOf(post) % 2 == 0)
                 {
-                    LEFT.Children.Add(elem);
+                    LEFT.Children.Add(Frame);
                 }
                 else
                 {
-                    RIGHT.Children.Add(elem);
+                    RIGHT.Children.Add(Frame);
                 }
             }
         }
