@@ -75,7 +75,7 @@ namespace ConvApp.Views
                 var imgUrl = (post is ReviewPost ? (post as ReviewPost).PostImage : (post as RecipePost).RecipeNode[0].NodeImage).Split(';')[0];
                 if (imgUrl != string.Empty)
                 {
-                    var imgElem = await (new Task(() => new CachedImage()
+                    var imgElem = new CachedImage()
                     {
                         HorizontalOptions = LayoutOptions.Center,
                         VerticalOptions = LayoutOptions.Center,
@@ -83,10 +83,9 @@ namespace ConvApp.Views
                         CacheDuration = TimeSpan.FromDays(1),
                         DownsampleToViewSize = true,
                         BitmapOptimizations = true,
-                        SuccessCommand = new Command(() => resolve.Yield())
                         Source = imgUrl,
                         BackgroundColor = Color.Red
-                    }));
+                    };
 
                     elem = new Frame()
                     {

@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ConvApp.Views.CategoryPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="By Stores" FontAttributes="Bold" FontSize="Body" Padding="20"/>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="100"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Text="GS25" Grid.Row="0" Grid.Column="0"/>
+                <Button Text="CU" Grid.Row="0" Grid.Column="1"/>
+                <Button Text="7-Eleven" Grid.Row="0" Grid.Column="2"/>
+                <Button Text="emart 24" Grid.Row="1" Grid.Column="0"/>
+                <Button Text="ministop" Grid.Row="1" Grid.Column="1"/>
+                <Button Text="기타" Grid.Row="1" Grid.Column="2"/>
+            </Grid>
+            <Label Text="By Categories" FontAttributes="Bold" FontSize="Body" Padding="20"/>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="100"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Text="도시락" Grid.Row="0" Grid.Column="0"/>
+                <Button Text="라면" Grid.Row="0" Grid.Column="1"/>
+                <Button Text="샌드위치" Grid.Row="0" Grid.Column="2"/>
+                <Button Text="김밥" Grid.Row="1" Grid.Column="0"/>
+                <Button Text="과자" Grid.Row="1" Grid.Column="1"/>
+                <Button Text="음료" Grid.Row="1" Grid.Column="2"/>
+                <Button Text="생필품" Grid.Row="2" Grid.Column="0"/>
+                <Button Text="알콜" Grid.Row="2" Grid.Column="1"/>
+                <Button Text="기타" Grid.Row="2" Grid.Column="2"/>
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

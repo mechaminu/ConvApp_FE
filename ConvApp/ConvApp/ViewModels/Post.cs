@@ -8,6 +8,8 @@ namespace ConvApp.ViewModels
     {
         public User User { get; set; }
         public DateTime Date { get; set; }
+
+        public List<Comment> Comments { get; set; }
     }
 
     public class PostNode

@@ -7,11 +7,9 @@
              xmlns:elems ="clr-namespace:ConvApp.ViewElements"
              xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin">
 
-    
-        <ScrollView>
-        <ContentPage.BindingContext>
-            <local:ReviewPost/>
-        </ContentPage.BindingContext>
+
+    <ScrollView>
+
         <StackLayout  BackgroundColor="White" Orientation="Vertical">
             <StackLayout Padding="0"  Orientation="Horizontal">
                 <ff:CachedImage WidthRequest="30"
@@ -41,20 +39,19 @@
             <Label Text="{Binding PostContent}" FontSize="16" />
 
      
-            <ListView>
+            <ListView ItemsSource="{Binding Comments}" HasUnevenRows="true" RowHeight="100">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <StackLayout>
                                 <StackLayout Orientation="Horizontal">
-                                    <Image Source="{Binding 유저이미지}"/>
-                                    <Label Text="{Binding 유저아이디}"/>
+                                    <Image Source="{Binding Creator.ProfileImage}"/>
+                                    <Label Text="{Binding Creator.Name}"/>
                                 </StackLayout>
-                                
-                                <Label Text="{Binding 유저코멘트}"/>
+                                <Label Text="{Binding Text}"/>
                                 
                                 <StackLayout Orientation="Horizontal">
-                                    <Label Text="{Binding, StringFormat='Likes {0}'}"/>
+                                    <!--<Label Text="{Binding, StringFormat='Likes {0}'}"/>-->
                                     <Button Text="댓글달기"/>
                                 </StackLayout>
                                 

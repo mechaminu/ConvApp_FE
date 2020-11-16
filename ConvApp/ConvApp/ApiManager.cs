@@ -20,8 +20,8 @@ namespace ConvApp
     public class ApiManager
     {
 
-        //private static string EndPointURL = "http://minuuoo.ddns.net:5000/api";
-        private static string EndPointURL = "http://convappdev.azurewebsites.net/api";
+        private static string EndPointURL = "http://minuuoo.ddns.net:5000/api";
+        //private static string EndPointURL = "http://convappdev.azurewebsites.net/api";
         public static string ImageEndPointURL = "https://convappdev.blob.core.windows.net/images";
         private static RestClient client = new RestClient(EndPointURL){Timeout=-1}.UseNewtonsoftJson() as RestClient;
         private static RestClient client_img = new RestClient(ImageEndPointURL) { Timeout = -1 }.UseNewtonsoftJson() as RestClient;
@@ -92,7 +92,9 @@ namespace ConvApp
                 var result = new List<Post>();
                 foreach (var rawPosting in response.Data)
                 {
-                    result.Add(await Posting.ToPost(rawPosting));
+                    var gogo = await Posting.ToPost(rawPosting);
+                    gogo.Comments = await ApiManager.GetComments(rawPosting.Id);
+                    result.Add(gogo);
                 }
 
                 return result;
@@ -101,6 +103,22 @@ namespace ConvApp
             {
                 throw ex;
             }
+        }
+
+        private async static Task<List<Comment>> GetComments(int id)
+        {
+            var request = new RestRequest($"postings/{id}/comment", Method.GET);
+            var response = await client.ExecuteAsync<List<Comment>>(request);
+            var list = new List<Comment>();
+            foreach(var elem in response.Data)
+            {
+                list.Add(new Comment
+                {
+                    Creator = await ApiManager.GetUserData(elem.CreatorId),
+                    Text = elem.Text
+                });
+            }
+            return list;
         }
         #endregion
 

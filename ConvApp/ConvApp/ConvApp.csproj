@@ -76,9 +76,6 @@
     <Compile Update="Views\Register\ReviewEntry.xaml.cs">
       <DependentUpon>ReviewEntry.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\EmptyViews\CategoryPage.xaml.cs">
-      <DependentUpon>CategoryPage.xaml</DependentUpon>
-    </Compile>
     <Compile Update="Views\EmptyViews\SearchPage.xaml.cs">
       <DependentUpon>SearchPage.xaml</DependentUpon>
     </Compile>
