@@ -87,14 +87,14 @@ namespace ConvApp.Views
                 var strArr = (await ApiManager.UploadImage(images)).Split(';');
                 foreach (var i in strArr)
                 {
-                    modelNodes.Add(new PostingNode { ImageFilename = i, Text = nodes[strArr.IndexOf(i)].text });
+                    modelNodes.Add(new PostingNode { Image = i, Text = nodes[strArr.IndexOf(i)].text });
                 }
 
                 // 이미지 업로드
                 await ApiManager.UploadPosting(new Posting
                 {
                     CreatorId = App.User.Id,
-                    IsRecipe = true,
+                    PostingType = (byte)PostingTypes.RECIPE,
                     PostingNodes = modelNodes
                 });
 

@@ -54,12 +54,12 @@ namespace ConvApp.Views
                 modelNodes.Add(new PostingNode { Text = reviewContent.Text });
 
                 var imageFilename = await ApiManager.UploadImage(resultList);
-                modelNodes.Add(new PostingNode { ImageFilename = imageFilename });
+                modelNodes.Add(new PostingNode { Image = imageFilename });
 
                 await ApiManager.UploadPosting(new Posting  // 이미지 업로드
                 {
                     CreatorId = App.User.Id,
-                    IsRecipe = false,
+                    PostingType = (byte)PostingTypes.REVIEW,
                     PostingNodes = modelNodes
                 });
 
