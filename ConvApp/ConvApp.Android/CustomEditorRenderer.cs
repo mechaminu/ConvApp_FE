@@ -13,11 +13,11 @@ using Android.Text;
 using Android.Views;
 using Android.Widget;
 using ConvApp.Droid;
-using ConvApp.Model;
+using ConvApp.ViewElements;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
-[assembly: ExportRenderer(typeof(CustomEditor1), typeof(CustomEditorRenderer))]
+[assembly: ExportRenderer(typeof(CustomEditor), typeof(CustomEditorRenderer))]
 namespace ConvApp.Droid
 {
   
@@ -33,11 +33,8 @@ namespace ConvApp.Droid
 
                 if (Control != null)
                 {
-                GradientDrawable gd = new GradientDrawable();
-                    gd.SetColor(global::Android.Graphics.Color.Transparent);
-                    this.Control.SetBackgroundDrawable(gd);
-                    this.Control.SetRawInputType(InputTypes.TextFlagNoSuggestions);
-                    Control.SetHintTextColor(ColorStateList.ValueOf(global::Android.Graphics.Color.Black));
+                     Control.Background = new ColorDrawable(Android.Graphics.Color.Transparent);
+                    
                 }
             }
         }

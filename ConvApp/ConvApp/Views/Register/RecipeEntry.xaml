@@ -12,7 +12,8 @@
 
     <StackLayout>
         <elems:CustomEditor x:Name="recipeTitle"
-                            Placeholder="레시피 이름"
+                            Placeholder="Title"
+                            PlaceholderColor="Gray"
                             FontSize="Body"
                             FontAttributes="Bold" />
 
@@ -20,7 +21,9 @@
                     HeightRequest="1"/>
 
         <elems:CustomEditor x:Name ="recipeDescription"
+                            HeightRequest="150"
                             Placeholder="레시피 소개"
+                            PlaceholderColor="Gray"
                             FontSize="Body"
                             FontAttributes="Bold"/>
 
@@ -38,11 +41,12 @@
                                     <ColumnDefinition Width="4*"/>
                                 </Grid.ColumnDefinitions>
 
-                                <Image Grid.Column="0"
-                                    Source="{Binding image}"/>
-                                <Editor Placeholder="레시피 설명 입력"
-                        Text="{Binding text}"
-                        Grid.Column="1"/>
+                                <Image Grid.Column="0" 
+                                       Source="{Binding image}"/>
+                                <elems:CustomEditor Placeholder="레시피 설명 입력"
+                                                    PlaceholderColor="Gray"
+                                                    Text="{Binding text}"
+                                                    Grid.Column="1" />
                             </Grid>
                         </StackLayout>
                     </ViewCell>

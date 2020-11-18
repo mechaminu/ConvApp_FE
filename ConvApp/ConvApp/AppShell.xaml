@@ -57,9 +57,9 @@
             </ShellContent>
         </Tab>
         <Tab Title="등록">
-            <ShellContent Style="{StaticResource BaseStyle}">
-                <views:EntrySelection/>
-            </ShellContent>
+            <ShellContent Title="Category" 
+                          ContentTemplate="{DataTemplate views:EntrySelection}" 
+                          Style="{StaticResource BaseStyle}"/>
             <!--<ShellContent Title="Review"
                           ContentTemplate="{DataTemplate views:ReviewEntry}"
                           Style="{StaticResource EntryShell}" />
@@ -68,9 +68,10 @@
                           Style="{StaticResource EntryShell}" />-->
         </Tab>
         <Tab Title="랭킹">
-            <ShellContent Style="{StaticResource BaseStyle}">
-                <views:CategoryPage/>
-            </ShellContent>
+            <ShellContent Title="Category" 
+                          ContentTemplate="{DataTemplate views:CategoryPage}" 
+                          Style="{StaticResource BaseStyle}"/>
+            
         </Tab>
         <Tab Title="내 정보">
             <ShellContent Style="{StaticResource BaseStyle}">
