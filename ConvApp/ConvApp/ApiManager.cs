@@ -33,7 +33,7 @@ namespace ConvApp
             {
                 var response = await client.ExecuteAsync<User>(new RestRequest($"users/{userId}", Method.GET));
                 var result = response.Data;
-                result.ProfileImage = Path.Combine(ImageEndPointURL, result.ProfileImage);
+                result.ProfileImage = result.ProfileImage != null ? Path.Combine(ImageEndPointURL, result.ProfileImage) : null;
                 return result;
             }
             catch (Exception ex)
@@ -120,6 +120,16 @@ namespace ConvApp
             }
             return list;
         }
+
+        public async static Task UploadComment(int id, CommentDTO comment)
+        {
+            var request = new RestRequest($"postings/{id}/comment", Method.POST)
+                .AddJsonBody(comment);
+
+            var response = await client.ExecuteAsync(request);
+
+
+        } 
         #endregion
 
         #region REST API : 이미지 CR(U)D 구현

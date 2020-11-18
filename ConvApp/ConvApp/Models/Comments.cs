@@ -4,18 +4,21 @@ using System.Text;
 
 namespace ConvApp.Models
 {
-    public class Comment
+    public class Comment : CommentDTO
+    {
+        public User Creator { get; set; }
+    }
+
+    public class CommentDTO
     {
         public int CreatorId { get; set; }
-        public User Creator { get; set; }
+        public DateTime CreatedDate { get; set; }
         public string Text { get; set; }
-
-        public List<Comment> Comments { get; set; }
-        public List<Likes> Likes { get; set; }
     }
 
     public class Likes
     {
-
+        public int CreatorId { get; set; }
+        public DateTime CreatedDate { get; set; }
     }
 }

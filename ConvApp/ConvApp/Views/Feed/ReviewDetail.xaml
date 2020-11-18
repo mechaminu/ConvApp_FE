@@ -19,23 +19,13 @@
                 <Label Text="{Binding User.Name}" TextColor="Black" FontSize="16" FontAttributes="Bold"/>
                 <Label Text="{Binding Created}" TextColor="Black" FontSize="16"/>
             </StackLayout>
-            <Label Text="{Binding Rating, StringFormat='별점은 : {0}'}"  FontSize="20" FontAttributes="Bold"/>
+            
             <ff:CachedImage WidthRequest="300"
                             HeightRequest="300"
                             DownsampleToViewSize="true"
                             Source="{Binding PostImage}"/>
-            <!--<Grid>
-                <CarouselView x:Name="postimage" ItemsSource="{Binding PostImage}">
-                    <CarouselView.ItemsLayout>
-                        <LinearItemsLayout Orientation="Horizontal" />
-                    </CarouselView.ItemsLayout>
-                    <CarouselView.ItemTemplate>
-                        <DataTemplate>
-                            <Image Source="{Binding}"/>
-                        </DataTemplate>
-                    </CarouselView.ItemTemplate>
-                </CarouselView>
-            </Grid>-->
+            
+            <Label Text="{Binding Rating, StringFormat='별점 : {0}'}"  FontSize="20" FontAttributes="Bold"/>
             <Label Text="{Binding PostContent}" FontSize="16" />
 
      
@@ -45,7 +35,7 @@
                         <ViewCell>
                             <StackLayout>
                                 <StackLayout Orientation="Horizontal">
-                                    <Image Source="{Binding Creator.ProfileImage}"/>
+                                    <ff:CachedImage Source="{Binding Creator.ProfileImage}"/>
                                     <Label Text="{Binding Creator.Name}"/>
                                 </StackLayout>
                                 <Label Text="{Binding Text}"/>
@@ -68,7 +58,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <elems:CustomEditor x:Name="comment" Placeholder="Add a comment.." PlaceholderColor="Gray" Grid.Column="0"/>
-                <Button Text="게시" Grid.Column="1" />
+                <Button Text="게시" Clicked="OnPostComment" Grid.Column="1" />
             </Grid>
 
         </StackLayout>

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using static FFImageLoading.Forms.CachedImageEvents;
 
 namespace ConvApp.Views
 {
@@ -41,9 +42,13 @@ namespace ConvApp.Views
 
         private async Task Refresh()
         {
+            populated = false;
+
             await Clear();
             await GetData();
             await Show();
+
+            populated = true;
         }
 
         private async Task GetData()
@@ -70,62 +75,49 @@ namespace ConvApp.Views
         {
             foreach (var post in postList)
             {
-                View elem;
-
                 var imgUrl = (post is ReviewPost ? (post as ReviewPost).PostImage : (post as RecipePost).RecipeNode[0].NodeImage).Split(';')[0];
-                if (imgUrl != string.Empty)
+
+                var layout = new StackLayout();
+                var elem = new Frame()
                 {
-                    var imgElem = new CachedImage()
+                    CornerRadius = 5,
+                    Content = layout
+                };
+
+                elem.BackgroundColor = Color.Green;
+                elem.Padding = 0;
+                layout.BackgroundColor = Color.Blue;
+                layout.VerticalOptions = LayoutOptions.Center;
+                LEFT.Children.Add(elem);
+
+                var tcs1 = new TaskCompletionSource<SuccessEventArgs>();
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+                Task.Factory.StartNew(() =>
+                {
+                    Console.WriteLine("hello");
+                    layout.Children.Add(new CachedImage()
                     {
+                        WidthRequest = elem.Width,
+                        Aspect = Aspect.AspectFill,
                         HorizontalOptions = LayoutOptions.Center,
                         VerticalOptions = LayoutOptions.Center,
-                        Aspect = Aspect.AspectFill,
                         CacheDuration = TimeSpan.FromDays(1),
                         DownsampleToViewSize = true,
                         BitmapOptimizations = true,
+                        SuccessCommand = new Command<SuccessEventArgs>((SuccessEventArgs e) =>
+                        {
+                            Console.WriteLine("world");
+                            tcs1.TrySetResult(e);
+                        }),
                         Source = imgUrl,
                         BackgroundColor = Color.Red
-                    };
+                    });
+                });
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 
-                    elem = new Frame()
-                    {
-                        CornerRadius = 5,
-                        VerticalOptions = LayoutOptions.FillAndExpand,
-                        Content = imgElem
-                    };
-                }
-                else
-                {
-                    elem = new Frame()
-                    {
-                        CornerRadius = 5,
-                        HeightRequest = 150,
-                        Content = new Label { Text = "No image" }
-                    };
-                }
-
-                elem.Margin = 5;
-
-                //var tapGestureRecognizer = new TapGestureRecognizer();
-                //tapGestureRecognizer.Tapped += async (s, e) => {
-                //    await Navigation.PushAsync(new ReviewDetail
-                //    {
-                //        BindingContext = post
-                //    });
-                //};
-                //elem.GestureRecognizers.Add(tapGestureRecognizer);
-
-
-                if (postList.IndexOf(post) % 2 == 0)
-                {
-                    LEFT.Children.Add(elem);
-                }
-                else
-                {
-                    RIGHT.Children.Add(elem);
-                }
-
-                await Task.Delay(100);
+                var myVar1 = await tcs1.Task;
+                elem.HeightRequest = myVar1.ImageInformation.CurrentHeight;
+                layout.HeightRequest = myVar1.ImageInformation.CurrentHeight;
             }
         }
 
