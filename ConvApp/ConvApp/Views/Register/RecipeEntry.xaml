@@ -57,6 +57,7 @@
         <BoxView BackgroundColor="Gray"
                     HeightRequest="1"/>
 
+        <Button Text="상품추가하기"/>
         <Button Text="이미지 추가하기"
                 Grid.Column="1"
                 Clicked="AddNodesFromImage"/>

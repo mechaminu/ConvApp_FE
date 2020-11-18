@@ -64,7 +64,7 @@ namespace ConvApp.Views
 
                 Frame FrameRecipe = new Frame()
                 {
-                    BackgroundColor = Color.Gray,
+                    BackgroundColor = Color.White,
                     Padding = 0,
                     CornerRadius = 20,
                     Content = new StackLayout
@@ -75,15 +75,17 @@ namespace ConvApp.Views
                             {
                                 HorizontalOptions = LayoutOptions.Center,
                                 VerticalOptions = LayoutOptions.Center,
-                                Aspect = Aspect.Fill,
+                                Aspect = Aspect.AspectFill,
                                 CacheDuration = TimeSpan.FromDays(1),   // 무슨 역할을 하는지 모르겠음
-                                //DownsampleToViewSize = true,
-                                
-                                BitmapOptimizations = true,
+                                //DownsampleToViewSize = true,   
+                                //BitmapOptimizations = true,
+                                BitmapOptimizations = false,
                                 Source = post.PostImage,
-                                BackgroundColor = Color.Red
                             },
-                            new Label { Text = "???????"}
+                            new Label 
+                            { Text = "???????" ,
+                            HorizontalTextAlignment = TextAlignment.Center
+                            }
                         }
                     }
                 };

@@ -57,6 +57,7 @@
         <Image x:Name="imageView"
                Aspect="AspectFit"
                VerticalOptions="FillAndExpand"/>
+        <Button Text="상품추가하기"/>
         <Button Text="이미지 추가"
                 VerticalOptions="End"
                 CornerRadius="5"
