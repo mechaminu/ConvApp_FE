@@ -64,6 +64,7 @@ namespace ConvApp.Views
 
                 Frame Frame = new Frame()
                 {
+                    HeightRequest = 100,
                     Content = new CachedImage()
                     {
                         HorizontalOptions = LayoutOptions.Center,
