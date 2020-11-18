@@ -4,7 +4,7 @@
              x:Class="ConvApp.Views.CategoryRanking">
     <ContentPage.Content>
         <StackLayout>
-            <ListView ItemsSource="{Binding}">
+            <ListView ItemsSource="{Binding}" ItemSelected="OnClick_CategoryDetail">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -17,7 +17,9 @@
                                     <RowDefinition Height="*"/>
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
-                                <Image Source="{Binding Image}" Grid.Column="0"/>
+                                <Image Source="{Binding Image}" 
+                                       Grid.Column="0" Grid.RowSpan="2"
+                                       Aspect="AspectFill"/>
                                 <Label Text="{Binding Name}" Grid.Column="1" Grid.Row="0"/>
                             </Grid>
                         </ViewCell>

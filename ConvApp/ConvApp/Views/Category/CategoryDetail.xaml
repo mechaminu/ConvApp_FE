@@ -1,12 +1,80 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ff1="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              x:Class="ConvApp.Views.CategoryDetail">
-    <ContentPage.Content>
+    <ScrollView>
+        
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <Image Source="{Binding Image}"
+               Aspect="AspectFill"/>
+
+            <Grid Padding="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label Text="{Binding Name}" 
+                   Grid.Row="0" Grid.Column="0" 
+                   FontSize="16" FontAttributes="Bold"/>
+                <Label Text="{Binding Price ,StringFormat='{0}원'}" 
+                   Grid.Row="2" Grid.Column="0"
+                   FontSize="16"/>
+                <Button Text="LOVE" 
+                    Grid.Row="0" Grid.Column="1"/>
+                <Label Text="{Binding Likes,StringFormat='{0} Likes'}"
+                   Grid.Row="1" Grid.Column="1"/>
+                <Button Text="후기"
+                    Grid.RowSpan="2" Grid.Column="2"/>
+            </Grid>
+            <BoxView BackgroundColor="Gray" HeightRequest="1"/>
+            <Grid Padding="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="4*"/>
+                </Grid.ColumnDefinitions>
+                <Label Text="칼로리" 
+                   Grid.Row="0" Grid.Column="0" 
+                   FontSize="10" FontAttributes="Bold"/>
+                <Label Text="랭킹" 
+                   Grid.Row="1" Grid.Column="0"
+                   FontSize="10"/>
+                <Label Text="별점" 
+                   Grid.Row="2" Grid.Column="0"
+                   FontSize="10"/>
+            </Grid>
+
+            <ListView ItemsSource="{Binding REVIEW}"
+                  SelectionMode="None"
+                  HasUnevenRows="True">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout>
+                                <ff1:CachedImage MinimumHeightRequest="100"
+                                            Aspect="AspectFill"
+                                            DownsampleToViewSize="true"
+                                            Source="{Binding NodeImage}"/>
+                                <Label Text="{Binding NodeString}"
+                                   FontSize="16"
+                                   HorizontalTextAlignment="Center"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
         </StackLayout>
-    </ContentPage.Content>
+    </ScrollView>
 </ContentPage>
