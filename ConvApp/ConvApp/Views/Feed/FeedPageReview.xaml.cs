@@ -62,22 +62,32 @@ namespace ConvApp.Views
                 // 현재로서는 직접 View element를 C#으로만 생성
                 // 추후 별개 Xaml 파일로 선언된 element를 여기서 인스턴스화해서 List에 추가해주는 것이 좋을 듯.
 
-                Frame Frame = new Frame()
+                Frame FrameRecipe = new Frame()
                 {
-                    HeightRequest = 100,
-                    Content = new CachedImage()
+                    BackgroundColor = Color.Gray,
+                    Padding = 0,
+                    CornerRadius = 20,
+                    Content = new StackLayout
                     {
-                        HorizontalOptions = LayoutOptions.Center,
-                        VerticalOptions = LayoutOptions.Center,
-                        Aspect = Aspect.AspectFill,
-                        CacheDuration = TimeSpan.FromDays(1),   // 무슨 역할을 하는지 모르겠음
-                        DownsampleToViewSize = true,
-                        BitmapOptimizations = true,
-                        Source = post.PostImage,
-                        BackgroundColor = Color.Red
+                        Children = 
+                        {
+                            new CachedImage
+                            {
+                                HorizontalOptions = LayoutOptions.Center,
+                                VerticalOptions = LayoutOptions.Center,
+                                Aspect = Aspect.Fill,
+                                CacheDuration = TimeSpan.FromDays(1),   // 무슨 역할을 하는지 모르겠음
+                                //DownsampleToViewSize = true,
+                                
+                                BitmapOptimizations = true,
+                                Source = post.PostImage,
+                                BackgroundColor = Color.Red
+                            },
+                            new Label { Text = "???????"}
+                        }
                     }
-
                 };
+
                 var tapGestureRecognizer = new TapGestureRecognizer();
                 tapGestureRecognizer.Tapped += async (s, e) =>
                 {
@@ -86,7 +96,7 @@ namespace ConvApp.Views
                         BindingContext = post
                     });
                 };
-                Frame.GestureRecognizers.Add(tapGestureRecognizer);
+                FrameRecipe.GestureRecognizers.Add(tapGestureRecognizer);
 
                 //var elem = new CachedImage()
                 //{
@@ -115,11 +125,11 @@ namespace ConvApp.Views
                 // ㄴ> 요소의 높이를 파악하기가 쉽지 않다...
                 if (postList.IndexOf(post) % 2 == 0)
                 {
-                    LEFT.Children.Add(Frame);
+                    LEFT.Children.Add(FrameRecipe);
                 }
                 else
                 {
-                    RIGHT.Children.Add(Frame);
+                    RIGHT.Children.Add(FrameRecipe);
                 }
             }
         }
