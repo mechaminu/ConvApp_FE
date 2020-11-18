@@ -20,8 +20,8 @@ namespace ConvApp
     public class ApiManager
     {
 
-        //private static string EndPointURL = "http://minuuoo.ddns.net:5000/api";
-        private static string EndPointURL = "http://convappdev.azurewebsites.net/api";
+        private static string EndPointURL = "http://minuuoo.ddns.net:5000/api";
+        //private static string EndPointURL = "http://convappdev.azurewebsites.net/api";
         public static string ImageEndPointURL = "https://convappdev.blob.core.windows.net/images";
         private static RestClient client = new RestClient(EndPointURL){Timeout=-1}.UseNewtonsoftJson() as RestClient;
         private static RestClient client_img = new RestClient(ImageEndPointURL) { Timeout = -1 }.UseNewtonsoftJson() as RestClient;
