@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace ConvApp.Views.Category
+namespace ConvApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RankingList : ContentPage
@@ -22,20 +22,12 @@ namespace ConvApp.Views.Category
         protected override void OnAppearing()
         {
             base.OnAppearing();
-
-
-
-
-
         }
 
-        void refresh() 
+        void Refresh() 
         {
             ranklist.ItemsSource = null;
             ranklist.ItemsSource = products;
-
         }
-
-
     }
 }
