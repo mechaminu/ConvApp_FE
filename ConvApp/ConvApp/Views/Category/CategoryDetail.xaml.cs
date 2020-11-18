@@ -10,9 +10,9 @@ using Xamarin.Forms.Xaml;
 namespace ConvApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ProductDetail : ContentPage
+    public partial class CategortDetail : ContentPage
     {
-        public ProductDetail()
+        public CategoryDetail()
         {
             InitializeComponent();
         }

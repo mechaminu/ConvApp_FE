@@ -42,6 +42,17 @@ namespace ConvApp
             }
         }
 
+        public async static Task<List<Product>> GetProducts(int? store = null, int? category = null)
+        {
+            var request = new RestRequest("products", Method.GET);
+
+            if (store != null)
+                request.AddQueryParameter("store", store + "");
+            if (category != null)
+                request.AddQueryParameter("category", category + "");
+
+            return (await client.ExecuteAsync<List<Product>>(request)).Data;
+        }
 
         #region REST API : 포스트 CRUD 구현
         /// <summary>
