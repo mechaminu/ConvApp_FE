@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ff1="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:helper ="clr-namespace:ConvApp.Helper;assembly = ConvApp"
              x:Class="ConvApp.Views.CategoryDetail">
     <ScrollView>
         
@@ -9,9 +10,9 @@
             <Image Source="{Binding Image}"
                Aspect="AspectFill"/>
 
-            <Grid Padding="10">
+            <Grid Padding="10" HeightRequest="100">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*" />
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
@@ -26,8 +27,13 @@
                 <Label Text="{Binding Price ,StringFormat='{0}원'}" 
                    Grid.Row="2" Grid.Column="0"
                    FontSize="16"/>
-                <Button Text="LOVE" 
-                    Grid.Row="0" Grid.Column="1"/>
+                
+                <ImageButton Source="{helper:ImageResource ConvApp.IMAGES.heart.png}"
+                             Aspect="AspectFit"
+                             BackgroundColor="White"
+                             x:Name="btn_love"
+                             Grid.Row="0" Grid.Column="1"
+                             Clicked="OnClick_love"/>
                 <Label Text="{Binding Likes,StringFormat='{0} Likes'}"
                    Grid.Row="1" Grid.Column="1"/>
                 <Button Text="후기"

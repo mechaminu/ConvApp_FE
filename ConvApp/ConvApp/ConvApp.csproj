@@ -28,7 +28,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="IMAGES\heart.png" />
+    <None Remove="IMAGES\heartfilled.png" />
+    <None Remove="IMAGES\P1.jpg" />
     <None Remove="Models\NewFile1.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="IMAGES\heart.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IMAGES\heartfilled.png" />
+    <EmbeddedResource Include="IMAGES\P1.jpg" />
   </ItemGroup>
 
   <ItemGroup>
