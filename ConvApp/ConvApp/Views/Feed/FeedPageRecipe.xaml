@@ -5,16 +5,17 @@
              Shell.NavBarHasShadow="False"
              Shell.NavBarIsVisible="False">
     <StackLayout>
-        <ScrollView>
-            <Grid Margin="10,10,10,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-
-                <FlexLayout x:Name="LEFT" Grid.Column="0" Direction="Column"/>
-                <FlexLayout x:Name="RIGHT" Grid.Column="1" Direction="Column"/>
-            </Grid>
-        </ScrollView>
+        <RefreshView Refreshing="RefreshView_Refreshing">
+            <ScrollView>
+                <Grid Margin="5,5,5,0" ColumnSpacing="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <FlexLayout x:Name="LEFT" Grid.Column="0" Direction="Column" Margin="0"/>
+                    <FlexLayout x:Name="RIGHT" Grid.Column="1" Direction="Column" Margin="0"/>
+                </Grid>
+            </ScrollView>
+        </RefreshView>
     </StackLayout>
 </ContentPage>

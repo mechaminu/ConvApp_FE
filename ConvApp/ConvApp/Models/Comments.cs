@@ -16,7 +16,7 @@ namespace ConvApp.Models
         public string Text { get; set; }
     }
 
-    public class Likes
+    public class Like
     {
         public int CreatorId { get; set; }
         public DateTime CreatedDate { get; set; }

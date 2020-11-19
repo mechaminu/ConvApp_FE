@@ -56,7 +56,7 @@ namespace ConvApp.Views
                 var imageFilename = await ApiManager.UploadImage(resultList);
                 modelNodes.Add(new PostingNode { Image = imageFilename });
 
-                await ApiManager.UploadPosting(new Posting  // 이미지 업로드
+                await ApiManager.PostPosting(new Posting  // 이미지 업로드
                 {
                     CreatorId = App.User.Id,
                     PostingType = (byte)PostingTypes.REVIEW,

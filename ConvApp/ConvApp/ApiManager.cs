@@ -19,7 +19,6 @@ namespace ConvApp
     // Repository pattern 적용사례에 해당되는듯?
     public class ApiManager
     {
-
         //private static string EndPointURL = "http://minuuoo.ddns.net:5000/api";
         private static string EndPointURL = "http://convappdev.azurewebsites.net/api";
         public static string ImageEndPointURL = "https://convappdev.blob.core.windows.net/images";
@@ -60,7 +59,7 @@ namespace ConvApp
         /// </summary>
         /// <param name="post">포스트 뷰모델 객체</param>
         /// <returns>포스트 뷰모델 객체</returns>
-        public async static Task UploadPosting(Posting post)
+        public async static Task PostPosting(Posting post)
         {
             var payloadObject = post;
             try
@@ -132,7 +131,7 @@ namespace ConvApp
             return list;
         }
 
-        public async static Task UploadComment(int id, CommentDTO comment)
+        public async static Task PostComment(int id, CommentDTO comment)
         {
             var request = new RestRequest($"postings/{id}/comment", Method.POST)
                 .AddJsonBody(comment);

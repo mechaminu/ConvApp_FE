@@ -18,15 +18,9 @@ namespace ConvApp.Views
             InitializeComponent();
         }
 
-        private void OnPostComment (object sender, EventArgs e)
+        public async void OnPostComment(object sender, EventArgs e)
         {
-
-        }
-
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-
+            await ApiManager.PostComment(1, new Models.CommentDTO { CreatorId = App.User.Id, Text = comment.Text });
         }
     }
 }

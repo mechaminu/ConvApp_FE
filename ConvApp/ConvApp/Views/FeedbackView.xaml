@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             x:Class="ConvApp.Views.FeedbackView">
+  <ContentView.Content>
+        <StackLayout>
+            <Button Text="좋아요"/>
+            <Label Text="{Binding LikeCount}"/>
+            <ListView ItemsSource="{Binding Comments}" SelectionMode="None">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout>
+                                <ff:CachedImage Source="{Binding Creator.ProfileImage}"/>
+                                <Label Text="{Binding Creator.Name}"/>
+                                <Label Text="{Binding CreatedDate}"/>
+                                <Label Text="{Binding Text}"/>
+                                <Button Text="대댓글"/>
+                                <Button Text="좋아요"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Entry Placeholder="댓글 작성하기..."/>
+            <Button Text="게시"/>
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>

@@ -24,9 +24,6 @@ namespace ConvApp.Models
         public byte PostingType { get; set; }
         public int CreatorId { get; set; }
 
-        public List<Comment> Comments { get; set; }
-        public List<Likes> Likes { get; set; }
-
         public List<Product> Products { get; set; }
         public List<PostingNode> PostingNodes {get; set;}
 

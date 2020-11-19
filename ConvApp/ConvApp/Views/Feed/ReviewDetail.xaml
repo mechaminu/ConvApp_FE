@@ -2,15 +2,10 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ConvApp.Views.ReviewDetail"
-             xmlns:local="clr-namespace:ConvApp.ViewModels"
              xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
-             xmlns:elems ="clr-namespace:ConvApp.ViewElements"
-             xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin">
-
-
+             xmlns:elems ="clr-namespace:ConvApp.ViewElements">
     <ScrollView>
-
-        <StackLayout  BackgroundColor="White" Orientation="Vertical">
+        <StackLayout Orientation="Vertical">
             <StackLayout Padding="0"  Orientation="Horizontal">
                 <ff:CachedImage WidthRequest="30"
                                 HeightRequest="30"
@@ -26,40 +21,40 @@
                             Source="{Binding PostImage}"/>
             
             <Label Text="{Binding Rating, StringFormat='별점 : {0}'}"  FontSize="20" FontAttributes="Bold"/>
-            <Label Text="{Binding PostContent}" FontSize="16" />
+            <Label Text="{Binding PostContent}" Padding ="10" FontSize="16" />
 
-     
-            <ListView ItemsSource="{Binding Comments}" HasUnevenRows="true" RowHeight="100">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <StackLayout>
-                                <StackLayout Orientation="Horizontal">
-                                    <ff:CachedImage Source="{Binding Creator.ProfileImage}"/>
-                                    <Label Text="{Binding Creator.Name}"/>
+            <StackLayout BackgroundColor="Yellow">
+                <Button Text="좋아요"/>
+                <Label Text="{Binding LikeCount}"/>
+                <ListView ItemsSource="{Binding Comments}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout>
+                                    <StackLayout Orientation="Horizontal">
+                                        <ff:CachedImage Source="{Binding Creator.ProfileImage}"/>
+                                        <Label Text="{Binding Creator.Name}"/>
+                                    </StackLayout>
+                                    <Label Text="{Binding Text}"/>
+
+                                    <StackLayout Orientation="Horizontal">
+                                        <Button Text="댓글달기"/>
+                                    </StackLayout>
                                 </StackLayout>
-                                <Label Text="{Binding Text}"/>
-                                
-                                <StackLayout Orientation="Horizontal">
-                                    <!--<Label Text="{Binding, StringFormat='Likes {0}'}"/>-->
-                                    <Button Text="댓글달기"/>
-                                </StackLayout>
-                                
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <elems:CustomEditor x:Name="comment" Placeholder="Add a comment.." PlaceholderColor="Gray" Grid.Column="0"/>
+                    <Button Text="게시" Clicked="OnPostComment" Grid.Column="1" />
+                </Grid>
+            </StackLayout>
             
-            
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="4*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <elems:CustomEditor x:Name="comment" Placeholder="Add a comment.." PlaceholderColor="Gray" Grid.Column="0"/>
-                <Button Text="게시" Clicked="OnPostComment" Grid.Column="1" />
-            </Grid>
 
         </StackLayout>
     </ScrollView>
