@@ -28,18 +28,26 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="IMAGES\bronze_2.png" />
+    <None Remove="IMAGES\gold_2.png" />
     <None Remove="IMAGES\heart.png" />
     <None Remove="IMAGES\heartfilled.png" />
     <None Remove="IMAGES\P1.jpg" />
+    <None Remove="IMAGES\silver_2.png" />
+    <None Remove="IMAGES\trophy.png" />
     <None Remove="Models\NewFile1.txt" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="IMAGES\bronze_2.png" />
+    <EmbeddedResource Include="IMAGES\gold_2.png" />
     <EmbeddedResource Include="IMAGES\heart.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="IMAGES\heartfilled.png" />
     <EmbeddedResource Include="IMAGES\P1.jpg" />
+    <EmbeddedResource Include="IMAGES\silver_2.png" />
+    <EmbeddedResource Include="IMAGES\trophy.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -103,6 +111,12 @@
 
   <ItemGroup>
     <EmbeddedResource Update="Views\Category\CategoryDetail.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Category\ReviewRanking.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Category\TEST.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\EmptyViews\FeedPage.xaml">

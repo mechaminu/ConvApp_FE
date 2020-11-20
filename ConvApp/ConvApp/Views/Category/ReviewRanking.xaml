@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:helper ="clr-namespace:ConvApp.Helper;assembly=ConvApp"
+             x:Class="ConvApp.Views.ReviewRanking">
+    <ContentPage.Content>
+        <StackLayout>
+            <Image Source="{helper:ImageResource ConvApp.IMAGES.trophy.png}" HeightRequest="100"/>
+           
+            
+            <ListView ItemsSource="{Binding}" ItemSelected="OnClick_CategoryDetail">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="4*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Image Source="{Binding Image}" 
+                                       Grid.Column="1" Grid.RowSpan="2"
+                                       Aspect="AspectFill"/>
+                                <Label Text="{Binding Name}" Grid.Column="2" Grid.Row="0"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
