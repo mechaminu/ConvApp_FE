@@ -17,10 +17,5 @@ namespace ConvApp.Views
         {
             InitializeComponent();
         }
-
-        public async void OnPostComment(object sender, EventArgs e)
-        {
-            await ApiManager.PostComment(1, new Models.CommentDTO { CreatorId = App.User.Id, Text = comment.Text });
-        }
     }
 }

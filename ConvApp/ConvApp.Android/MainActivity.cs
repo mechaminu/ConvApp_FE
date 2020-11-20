@@ -21,8 +21,7 @@ namespace ConvApp.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
-            global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
-            ImageCircleRenderer.Init();
+            Xamarin.Forms.Forms.Init(this, savedInstanceState);
 
             CachedImageRenderer.Init(true);
             CachedImageRenderer.InitImageViewHandler();

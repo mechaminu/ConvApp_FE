@@ -13,21 +13,19 @@ namespace ConvApp.Models
         RECIPE
     }
 
-    public class Posting
+    public class PostingDTO
     {
-        // 포스트 데이터베이스 저장형태 모델
         public int Id { get; set; }
-
         public DateTime CreatedDate { get; set; }
         public DateTime ModifiedDate { get; set; }
 
         public byte PostingType { get; set; }
         public int CreatorId { get; set; }
 
-        public List<Product> Products { get; set; }
+        public List<ProductDTO> Products { get; set; }
         public List<PostingNode> PostingNodes {get; set;}
 
-        public async static Task<Post> ToPost(Posting posting)
+        public async static Task<Post> PopulateDTO(PostingDTO posting)
         {
             switch (posting.PostingType)
             {
@@ -50,7 +48,8 @@ namespace ConvApp.Models
                         Date = posting.ModifiedDate,
                         Title = posting.PostingNodes[0].Text,
                         PostContent = posting.PostingNodes[1].Text,
-                        RecipeNode = otherNodes
+                        RecipeNode = otherNodes,
+                        Feedback = await ApiManager.GetFeedback(0,posting.Id)
                     };
 
                 //case (byte)PostingTypes.REVIEW:
@@ -62,7 +61,8 @@ namespace ConvApp.Models
                         Date = posting.ModifiedDate,
                         Rating = double.Parse(posting.PostingNodes[0].Text),
                         PostContent = posting.PostingNodes[1].Text,
-                        PostImage = posting.PostingNodes[2].Image != null ? Path.Combine(ApiManager.ImageEndPointURL, posting.PostingNodes[2].Image) : string.Empty
+                        PostImage = posting.PostingNodes[2].Image != null ? Path.Combine(ApiManager.ImageEndPointURL, posting.PostingNodes[2].Image) : string.Empty,
+                        Feedback = await ApiManager.GetFeedback(0,posting.Id)
                     };
             }
         }

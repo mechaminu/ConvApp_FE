@@ -20,7 +20,6 @@ namespace ConvApp.Views
             InitializeComponent();
         }
 
-
         private void OnClick_love(object sender, EventArgs e)
         {
             if (btn_count ==0)
@@ -33,7 +32,6 @@ namespace ConvApp.Views
                 btn_love.Source = ImageSource.FromResource("ConvApp.IMAGES.heart.png"); 
                 btn_count--;
             }
-
         }
     }
 }

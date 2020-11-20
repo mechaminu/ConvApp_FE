@@ -3,60 +3,49 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ConvApp.Views.ReviewDetail"
              xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
-             xmlns:elems ="clr-namespace:ConvApp.ViewElements">
-    <ScrollView>
-        <StackLayout Orientation="Vertical">
-            <StackLayout Padding="0"  Orientation="Horizontal">
-                <ff:CachedImage WidthRequest="30"
+             xmlns:local ="clr-namespace:ConvApp.Views">
+    <StackLayout>
+        <ScrollView>
+            <StackLayout Orientation="Vertical">
+                <StackLayout Padding="0"
+                             Orientation="Horizontal">
+                    <ff:CachedImage WidthRequest="30"
                                 HeightRequest="30"
                                 DownsampleToViewSize="true"
                                 Source="{Binding User.ProfileImage}"/>
-                <Label Text="{Binding User.Name}" TextColor="Black" FontSize="16" FontAttributes="Bold"/>
-                <Label Text="{Binding Created}" TextColor="Black" FontSize="16"/>
-            </StackLayout>
-            
-            <ff:CachedImage WidthRequest="300"
+                    <Label Text="{Binding User.Name}" TextColor="Black" FontSize="16" FontAttributes="Bold"/>
+                    <Label Text="{Binding Date}" TextColor="Black" FontSize="16"/>
+                </StackLayout>
+
+                <ff:CachedImage WidthRequest="300"
                             HeightRequest="300"
                             DownsampleToViewSize="true"
                             Source="{Binding PostImage}"/>
-            
-            <Label Text="{Binding Rating, StringFormat='별점 : {0}'}"  FontSize="20" FontAttributes="Bold"/>
-            <Label Text="{Binding PostContent}" Padding ="10" FontSize="16" />
 
-            <StackLayout BackgroundColor="Yellow">
-                <Button Text="좋아요"/>
-                <Label Text="{Binding LikeCount}"/>
-                <ListView ItemsSource="{Binding Comments}">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <StackLayout>
-                                    <StackLayout Orientation="Horizontal">
-                                        <ff:CachedImage Source="{Binding Creator.ProfileImage}"/>
-                                        <Label Text="{Binding Creator.Name}"/>
-                                    </StackLayout>
-                                    <Label Text="{Binding Text}"/>
-
-                                    <StackLayout Orientation="Horizontal">
-                                        <Button Text="댓글달기"/>
-                                    </StackLayout>
-                                </StackLayout>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="4*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <elems:CustomEditor x:Name="comment" Placeholder="Add a comment.." PlaceholderColor="Gray" Grid.Column="0"/>
-                    <Button Text="게시" Clicked="OnPostComment" Grid.Column="1" />
-                </Grid>
+                <Label Text="{Binding Rating, StringFormat='별점 : {0}'}"  FontSize="20" FontAttributes="Bold"/>
+                <Label Text="{Binding PostContent}" Padding ="10" FontSize="16" />
+                <local:FeedbackView BindingContext="{Binding Feedback}"/>
             </StackLayout>
-            
-
-        </StackLayout>
-    </ScrollView>
+        </ScrollView>
+        <Frame VerticalOptions="End"
+               Padding="0">
+            <Grid Padding="0"
+                  ColumnSpacing="0"
+                  MinimumHeightRequest="100">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Editor Placeholder="댓글 입력..."
+                        AutoSize="TextChanges"
+                        Grid.Column="0"/>
+                <Button Text="게시"
+                        Grid.Column="1"/>
+            </Grid>
+        </Frame>
+        
+        
+    </StackLayout>
+    
 
 </ContentPage>

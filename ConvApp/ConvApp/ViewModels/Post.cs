@@ -8,8 +8,9 @@ namespace ConvApp.ViewModels
     {
         public User User { get; set; }
         public DateTime Date { get; set; }
-
         public List<Comment> Comments { get; set; }
+
+        public Feedback Feedback { get; set; }
     }
 
     public class PostNode
@@ -30,6 +31,6 @@ namespace ConvApp.ViewModels
         public string Title { get; set; }                       // 레시피 이름
         public string PostContent { get; set; }                 // 레시피 소개
         public List<PostNode> RecipeNode { get; set; }   // 이미지 노드들
-        public List<Product> ProductList { get; set; }          // 상품 목록들
+        public List<ProductDTO> ProductList { get; set; }          // 상품 목록들
     }
 }

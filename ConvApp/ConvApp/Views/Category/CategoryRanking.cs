@@ -13,7 +13,7 @@ namespace ConvApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CategoryRanking : ContentPage
     {
-        private List<Product> products = new List<Product>();
+        private List<ProductDTO> products = new List<ProductDTO>();
 
         public CategoryRanking()
         {
@@ -24,7 +24,7 @@ namespace ConvApp.Views
         {
             base.OnAppearing();
 
-            products = (List<Product>)BindingContext;
+            products = (List<ProductDTO>)BindingContext;
         }
 
         private async void OnClick_CategoryDetail(object sender, SelectedItemChangedEventArgs e)

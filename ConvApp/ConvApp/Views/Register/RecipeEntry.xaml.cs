@@ -91,7 +91,7 @@ namespace ConvApp.Views
                 }
 
                 // 이미지 업로드
-                await ApiManager.PostPosting(new Posting
+                await ApiManager.PostPosting(new PostingDTO
                 {
                     CreatorId = App.User.Id,
                     PostingType = (byte)PostingTypes.RECIPE,

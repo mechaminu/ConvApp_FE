@@ -67,7 +67,6 @@ namespace ConvApp.Views
             }
         }
 
-
         private async Task Show()
         {
             foreach (var post in postList)
@@ -91,32 +90,31 @@ namespace ConvApp.Views
                 ? LEFT : RIGHT)
                     .Children.Add(elem);
 
-                var tcs1 = new TaskCompletionSource<SuccessEventArgs>();
-#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-                Task.Factory.StartNew(() =>
+                layout.Children.Add(new CachedImage()
                 {
-                    MainThread.BeginInvokeOnMainThread(() =>
-                    {
-                        var img = new CachedImage()
-                        {
-                            WidthRequest = elem.Width,
-                            Aspect = Aspect.AspectFill,
-                            CacheDuration = TimeSpan.FromDays(1),
-                            DownsampleToViewSize = true,
-                            BitmapOptimizations = true,
-                            SuccessCommand = new Command<SuccessEventArgs>((SuccessEventArgs e) =>
-                            {
-                                tcs1.SetResult(e);
-                            }),
-                            Source = imgUrl
-                        };
-
-                        layout.Children.Add(img);
-                    });
+                    WidthRequest = elem.Width,
+                    Aspect = Aspect.AspectFill,
+                    CacheDuration = TimeSpan.FromDays(1),
+                    DownsampleToViewSize = true,
+                    BitmapOptimizations = true,
+                    Source = imgUrl
                 });
-#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 
-                await tcs1.Task;
+                var tap = new TapGestureRecognizer();
+
+                tap.Tapped += async (s, e) =>
+                {
+                    Page targetPage;
+
+                    if (post is ReviewPost)
+                        targetPage = new ReviewDetail { BindingContext = post};
+                    else
+                        targetPage = new RecipeDetail { BindingContext = post};
+
+                    await Navigation.PushAsync(targetPage);
+                };
+
+                elem.GestureRecognizers.Add(tap);
             }
         }
 

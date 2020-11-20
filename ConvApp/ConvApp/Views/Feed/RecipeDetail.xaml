@@ -2,11 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
-             xmlns:local="clr-namespace:ConvApp.ViewModels"
+             xmlns:local="clr-namespace:ConvApp.Views"
              x:Class="ConvApp.Views.RecipeDetail">
-    <ContentPage.BindingContext>
-        <local:RecipePost/>
-    </ContentPage.BindingContext>
     <StackLayout>
         <Label Text="{Binding Title}" 
                FontSize="20"
@@ -17,7 +14,7 @@
                             DownsampleToViewSize="true"
                             Source="{Binding User.ProfileImage}"/>
             <Label Text="{Binding User.Name}" TextColor="Black" FontSize="16" FontAttributes="Bold"/>
-            <Label Text="{Binding Created}" TextColor="Black" FontSize="16"/>
+            <Label Text="{Binding Date}" TextColor="Black" FontSize="16"/>
         </StackLayout>
         <Label Text="{Binding PostContent}" FontSize="16" />
         <ListView ItemsSource="{Binding RecipeNode}"
@@ -39,5 +36,6 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <local:FeedbackView BindingContext="{Binding Feedback}"/>
     </StackLayout>
 </ContentPage>
