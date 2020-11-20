@@ -19,11 +19,58 @@ namespace ConvApp
     // Repository pattern 적용사례에 해당되는듯?
     public class ApiManager
     {
-        //private static string EndPointURL = "http://minuuoo.ddns.net:5000/api";
-        private static string EndPointURL = "http://convappdev.azurewebsites.net/api";
+        private static string EndPointURL = "http://minuuoo.ddns.net:5000/api";
+        //private static string EndPointURL = "http://convappdev.azurewebsites.net/api";
         public static string ImageEndPointURL = "https://convappdev.blob.core.windows.net/images";
         private static RestClient client = new RestClient(EndPointURL){Timeout=-1}.UseNewtonsoftJson() as RestClient;
         private static RestClient client_img = new RestClient(ImageEndPointURL) { Timeout = -1 }.UseNewtonsoftJson() as RestClient;
+
+        public async static Task<ProductInformation> GetProductInformation(int id)
+        {
+            var product = await GetProduct(id);
+            var reviews = await GetPostings((byte)PostingTypes.REVIEW);
+
+            var l = new List<ReviewPost>();
+            reviews.ForEach(e => l.Add((ReviewPost)e));
+
+            return new ProductInformation
+            {
+                Id = product.Id,
+                CreatedDate = product.CreatedDate,
+                ModifiedDate = product.ModifiedDate,
+                Image = product.Image,
+                Name = product.Name,
+                Price = product.Price,
+                Rank = "123123",
+                Rate = "4.5",
+                Calory = "9999",
+                Reviewpostlist = l
+            };
+        }
+
+        public async static Task<List<ProductDTO>> GetProducts(int? store = null, int? category = null)
+        {
+            var request = new RestRequest("products", Method.GET);
+
+            if (store != null)
+                request.AddQueryParameter("store", store + "");
+            if (category != null)
+                request.AddQueryParameter("category", category + "");
+
+            return (await client.ExecuteAsync<List<ProductDTO>>(request)).Data;
+        }
+
+        public async static Task<ProductDTO> GetProduct(int id)
+        {
+            var request = new RestRequest($"products/{id}", Method.GET);
+
+            var response = await client.ExecuteAsync<ProductDTO>(request);
+
+            if (!response.IsSuccessful)
+                return null;
+
+            return response.Data;
+        }
 
         #region FEEDBACK API
         public async static Task<Feedback> GetFeedback(byte type, int id)
@@ -138,18 +185,6 @@ namespace ConvApp
                 throw ex;
             }
         }
-
-        public async static Task<List<ProductDTO>> GetProducts(int? store = null, int? category = null)
-        {
-            var request = new RestRequest("products", Method.GET);
-
-            if (store != null)
-                request.AddQueryParameter("store", store + "");
-            if (category != null)
-                request.AddQueryParameter("category", category + "");
-
-            return (await client.ExecuteAsync<List<ProductDTO>>(request)).Data;
-        }
         #endregion
 
         #region POSTING API
@@ -192,7 +227,7 @@ namespace ConvApp
                 var request = new RestRequest("postings", Method.GET);
 
                 if (type != null)
-                    request.AddParameter("type", type, ParameterType.QueryString);
+                    request.AddQueryParameter("type", $"{type}");
 
                 var response = await client.ExecuteAsync<List<PostingDTO>>(request);
                 if (!response.IsSuccessful)

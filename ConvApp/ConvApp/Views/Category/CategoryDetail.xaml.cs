@@ -19,7 +19,6 @@ namespace ConvApp.Views
         {
             InitializeComponent();
         }
-
         private void OnClick_love(object sender, EventArgs e)
         {
             if (btn_count ==0)

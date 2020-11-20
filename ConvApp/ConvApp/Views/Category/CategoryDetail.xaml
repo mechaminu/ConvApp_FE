@@ -50,18 +50,54 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="4*"/>
                 </Grid.ColumnDefinitions>
-                <Label Text="칼로리" 
+                <Label Text="{Binding Calory, StringFormat='칼로리 {0}Kcal'}" 
                    Grid.Row="0" Grid.Column="0" 
                    FontSize="10" FontAttributes="Bold"/>
-                <Label Text="랭킹" 
+                <Label Text="{Binding Rank, StringFormat='랭킹 {0}등'}" 
                    Grid.Row="1" Grid.Column="0"
                    FontSize="10"/>
-                <Label Text="별점" 
+                <Label x:Name="rate" Text="{Binding Rate, StringFormat='평점 {0}'}" 
                    Grid.Row="2" Grid.Column="0"
                    FontSize="10"/>
+                <!--<Slider Value="{x:Reference rate}" 
+                        Grid.Row="2" Grid.Column="1"/>-->
             </Grid>
 
-            <ListView ItemsSource="{Binding REVIEW}"
+
+            <ListView ItemsSource="{Binding Reviewpostlist}"
+                  SelectionMode="None"
+                  HasUnevenRows="True">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="4*"/>
+                                </Grid.ColumnDefinitions>
+                                <ff1:CachedImage MinimumHeightRequest="40"
+                                            Aspect="AspectFill"
+                                            Grid.Column="0"
+                                            DownsampleToViewSize="true"
+                                            Source="{Binding User.ProfileImage}"/>
+
+                                <ff1:CachedImage MinimumHeightRequest="40"
+                                            Aspect="AspectFill"
+                                            Grid.Column="1"
+                                            DownsampleToViewSize="true"
+                                            Source="{Binding PostImage}"/>
+                                <Label Text="{Binding PostContent}"
+                                       Grid.Column="2"
+                                       FontSize="10"
+                                       HorizontalTextAlignment="Center"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <!--<ListView ItemsSource="{Binding REVIEW}"
                   SelectionMode="None"
                   HasUnevenRows="True">
                 <ListView.ItemTemplate>
@@ -79,7 +115,7 @@
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-            </ListView>
+            </ListView>-->
 
         </StackLayout>
     </ScrollView>

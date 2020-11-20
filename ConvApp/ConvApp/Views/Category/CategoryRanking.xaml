@@ -5,6 +5,7 @@
              x:Class="ConvApp.Views.CategoryRanking">
     <ContentPage.Content>
         <StackLayout>
+            <Image Source="{helper:ImageResource ConvApp.IMAGES.trophy.png}" HeightRequest="100"/>
             <Grid >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="40"/>

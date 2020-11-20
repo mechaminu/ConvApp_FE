@@ -6,7 +6,7 @@ namespace ConvApp.Models
     {
         public int Id { get; set; }
         public DateTime CreatedDate { get; set; }
-        public DateTime ModifedDate { get; set; }
+        public DateTime ModifiedDate { get; set; }
 
         public string Name { get; set; }
         public int Price { get; set; }
