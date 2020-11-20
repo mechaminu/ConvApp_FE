@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using static FFImageLoading.Forms.CachedImageEvents;
@@ -70,7 +70,6 @@ namespace ConvApp.Views
             }
         }
 
-
         private async Task Show()
         {
             foreach (var post in postList)
@@ -80,44 +79,45 @@ namespace ConvApp.Views
                 var layout = new StackLayout();
                 var elem = new Frame()
                 {
-                    CornerRadius = 5,
+                    CornerRadius = 10,
                     Content = layout
                 };
 
                 elem.BackgroundColor = Color.Green;
                 elem.Padding = 0;
+                elem.Margin = new Thickness { Top = 0, Bottom = 5, Left = 0, Right = 0};
                 layout.BackgroundColor = Color.Blue;
-                layout.VerticalOptions = LayoutOptions.Center;
-                LEFT.Children.Add(elem);
+                (LEFT.Children.Count == 0 ||
+                (RIGHT.Children.Count != 0 && 
+                    (LEFT.Children.Last().Y + LEFT.Children.Last().Height) < (RIGHT.Children.Last().Y + RIGHT.Children.Last().Height))
+                ? LEFT : RIGHT)
+                    .Children.Add(elem);
 
-                var tcs1 = new TaskCompletionSource<SuccessEventArgs>();
-#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-                Task.Factory.StartNew(() =>
+                layout.Children.Add(new CachedImage()
                 {
-                    Console.WriteLine("hello");
-                    layout.Children.Add(new CachedImage()
-                    {
-                        WidthRequest = elem.Width,
-                        Aspect = Aspect.AspectFill,
-                        HorizontalOptions = LayoutOptions.Center,
-                        VerticalOptions = LayoutOptions.Center,
-                        CacheDuration = TimeSpan.FromDays(1),
-                        DownsampleToViewSize = true,
-                        BitmapOptimizations = true,
-                        SuccessCommand = new Command<SuccessEventArgs>((SuccessEventArgs e) =>
-                        {
-                            Console.WriteLine("world");
-                            tcs1.TrySetResult(e);
-                        }),
-                        Source = imgUrl,
-                        BackgroundColor = Color.Red
-                    });
+                    WidthRequest = elem.Width,
+                    Aspect = Aspect.AspectFill,
+                    CacheDuration = TimeSpan.FromDays(1),
+                    DownsampleToViewSize = true,
+                    BitmapOptimizations = true,
+                    Source = imgUrl
                 });
-#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 
-                var myVar1 = await tcs1.Task;
-                elem.HeightRequest = myVar1.ImageInformation.CurrentHeight;
-                layout.HeightRequest = myVar1.ImageInformation.CurrentHeight;
+                var tap = new TapGestureRecognizer();
+
+                tap.Tapped += async (s, e) =>
+                {
+                    Page targetPage;
+
+                    if (post is ReviewPost)
+                        targetPage = new ReviewDetail { BindingContext = post };
+                    else
+                        targetPage = new RecipeDetail { BindingContext = post };
+
+                    await Navigation.PushAsync(targetPage);
+                };
+
+                elem.GestureRecognizers.Add(tap);
             }
         }
 

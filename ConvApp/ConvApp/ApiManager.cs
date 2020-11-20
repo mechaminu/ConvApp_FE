@@ -19,13 +19,110 @@ namespace ConvApp
     // Repository pattern 적용사례에 해당되는듯?
     public class ApiManager
     {
-
         //private static string EndPointURL = "http://minuuoo.ddns.net:5000/api";
         private static string EndPointURL = "http://convappdev.azurewebsites.net/api";
         public static string ImageEndPointURL = "https://convappdev.blob.core.windows.net/images";
         private static RestClient client = new RestClient(EndPointURL){Timeout=-1}.UseNewtonsoftJson() as RestClient;
         private static RestClient client_img = new RestClient(ImageEndPointURL) { Timeout = -1 }.UseNewtonsoftJson() as RestClient;
 
+        #region FEEDBACK API
+        public async static Task<Feedback> GetFeedback(byte type, int id)
+        {
+            var request = new RestRequest($"feedbacks", Method.GET)
+                .AddQueryParameter("type", $"{type}")
+                .AddQueryParameter("id", $"{id}")
+                .AddQueryParameter("time", $"{DateTime.UtcNow}");
+
+            var response = await client.ExecuteAsync<FeedbackDTO>(request);
+
+            var comments = new List<Comment>();
+
+            foreach (var c in response.Data.comments)
+            {
+                comments.Add(await c.PopulateDTO());
+            }
+
+            var likes = new List<Like>();
+
+            foreach (var l in response.Data.likes)
+            {
+                likes.Add(await l.PopulateDTO());
+            }
+
+            return new Feedback
+            {
+                Type = 0,
+                Id = id,
+                Comments = comments,
+                Likes = likes
+            };
+        }
+
+        public async static Task<List<Like>> GetLikes(byte type, int id)
+        {
+            var request = new RestRequest("feedbacks/like", Method.GET)
+                    .AddQueryParameter("type", $"{type}")
+                    .AddQueryParameter("id", $"{id}");
+
+            var likes = new List<Like>();
+            (await client.ExecuteAsync<List<LikeDTO>>(request)).Data
+                .ForEach(async e => likes.Add(await e.PopulateDTO()));
+
+            return likes;
+        }
+
+        public async static Task<List<Like>> PostLike(byte type, int id)
+        {
+            var request = new RestRequest("feedbacks/like", Method.POST)
+                    .AddQueryParameter("type", $"{type}")
+                    .AddQueryParameter("id", $"{id}")
+                    .AddJsonBody(new LikeDTO { CreatorId = App.User.Id });
+
+            var response = await client.ExecuteAsync<List<LikeDTO>>(request);
+
+            var likes = new List<Like>();
+            response.Data.ForEach(async e => likes.Add(await e.PopulateDTO()));
+
+            return likes;
+        }
+
+        public async static Task<List<Like>> DeleteLike(byte type, int id)
+        {
+            var request = new RestRequest("feedbacks/like", Method.DELETE)
+                .AddQueryParameter("type", $"{type}")
+                .AddQueryParameter("id", $"{id}")
+                .AddJsonBody(new LikeDTO { CreatorId = App.User.Id } );
+
+            var likes = new List<Like>();
+            (await client.ExecuteAsync<List<LikeDTO>>(request)).Data
+                .ForEach(async e => likes.Add(await e.PopulateDTO()));
+
+            return likes;
+        }
+
+        public async static Task<List<Comment>> GetComments(byte type, int id, DateTime time, int page)
+        {
+            var request = new RestRequest("feedbacks/like", Method.GET)
+                    .AddQueryParameter("type", $"{type}")
+                    .AddQueryParameter("id", $"{id}")
+                    .AddQueryParameter("time", $"{time}")
+                    .AddQueryParameter("page", $"{page}");
+
+            var comments = new List<Comment>();
+            (await client.ExecuteAsync<List<CommentDTO>>(request)).Data
+                .ForEach(async e => comments.Add(await e.PopulateDTO()));
+
+            return comments;
+        }
+
+        class FeedbackDTO
+        {
+            public List<CommentDTO> comments { get; set; }
+            public List<LikeDTO> likes { get; set; }
+        }
+        #endregion
+
+        #region USER API
         // 유저 데이터 획득
         public async static Task<User> GetUserData(int userId)
         {
@@ -42,7 +139,7 @@ namespace ConvApp
             }
         }
 
-        public async static Task<List<Product>> GetProducts(int? store = null, int? category = null)
+        public async static Task<List<ProductDTO>> GetProducts(int? store = null, int? category = null)
         {
             var request = new RestRequest("products", Method.GET);
 
@@ -51,23 +148,24 @@ namespace ConvApp
             if (category != null)
                 request.AddQueryParameter("category", category + "");
 
-            return (await client.ExecuteAsync<List<Product>>(request)).Data;
+            return (await client.ExecuteAsync<List<ProductDTO>>(request)).Data;
         }
+        #endregion
 
-        #region REST API : 포스트 CRUD 구현
+        #region POSTING API
         /// <summary>
         /// 포스트엔트리(포스트입력) 뷰모델을 받아 백엔드에 업로드하는 메소드 
         /// </summary>
         /// <param name="post">포스트 뷰모델 객체</param>
         /// <returns>포스트 뷰모델 객체</returns>
-        public async static Task UploadPosting(Posting post)
+        public async static Task PostPosting(PostingDTO post)
         {
             var payloadObject = post;
             try
             {
                 var request = new RestRequest("postings", Method.POST)
                     .AddJsonBody(payloadObject);
-                var response = await client.ExecuteAsync<Posting>(request);
+                var response = await client.ExecuteAsync<PostingDTO>(request);
 
                 if (!response.IsSuccessful)
                     throw new InvalidOperationException("포스팅 실패");
@@ -96,18 +194,15 @@ namespace ConvApp
                 if (type != null)
                     request.AddParameter("type", type, ParameterType.QueryString);
 
-                var response = await client.ExecuteAsync<List<Posting>>(request);
+                var response = await client.ExecuteAsync<List<PostingDTO>>(request);
                 if (!response.IsSuccessful)
                     throw new InvalidOperationException($"Request Failed - CODE : {response.StatusCode}");
 
                 var result = new List<Post>();
                 foreach (var rawPosting in response.Data)
                 {
-                    var gogo = await Posting.ToPost(rawPosting);
-                    gogo.Comments = await ApiManager.GetComments(rawPosting.Id);
-                    result.Add(gogo);
+                    result.Add(await PostingDTO.PopulateDTO(rawPosting));
                 }
-
                 return result;
             }
             catch (Exception ex)
@@ -115,35 +210,9 @@ namespace ConvApp
                 throw ex;
             }
         }
-
-        private async static Task<List<Comment>> GetComments(int id)
-        {
-            var request = new RestRequest($"postings/{id}/comment", Method.GET);
-            var response = await client.ExecuteAsync<List<Comment>>(request);
-            var list = new List<Comment>();
-            foreach(var elem in response.Data)
-            {
-                list.Add(new Comment
-                {
-                    Creator = await ApiManager.GetUserData(elem.CreatorId),
-                    Text = elem.Text
-                });
-            }
-            return list;
-        }
-
-        public async static Task UploadComment(int id, CommentDTO comment)
-        {
-            var request = new RestRequest($"postings/{id}/comment", Method.POST)
-                .AddJsonBody(comment);
-
-            var response = await client.ExecuteAsync(request);
-
-
-        } 
         #endregion
 
-        #region REST API : 이미지 CR(U)D 구현
+        #region IMAGE API
         // 이미지 업로드
         public async static Task<string> UploadImage(IEnumerable<FileResult> images)
         {

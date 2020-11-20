@@ -17,16 +17,5 @@ namespace ConvApp.Views
         {
             InitializeComponent();
         }
-
-        private void OnPostComment (object sender, EventArgs e)
-        {
-
-        }
-
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-
-        }
     }
 }
