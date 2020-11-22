@@ -5,21 +5,20 @@
              xmlns:helper ="clr-namespace:ConvApp.Helper;assembly=ConvApp"
              x:Class="ConvApp.Views.FeedbackView">
     <StackLayout Orientation="Horizontal">
-        <ImageButton Source="{helper:ImageResource ConvApp.IMAGES.heart.png}"
+        <ImageButton Source="{helper:ImageResource ConvApp.Resources.heart.png}"
                      HeightRequest="30"
                      Aspect="AspectFit"
+                     BackgroundColor="Transparent"
                      x:Name="likeBtn"
                      Clicked="OnLikeClick"/>
-        <Label x:Name="likeCnt"
+        <Label Text="{Binding LikeCount}"
                VerticalOptions="Center"/>
         <Label Text="Comments:"
                VerticalOptions="Center"
                HorizontalOptions="End"/>
-        <Label x:Name="commentCnt"
+        <Label Text="{Binding CommentCount}"
                VerticalOptions="Center"
                HorizontalOptions="End"/>
-    </StackLayout>
-    <StackLayout x:Name="commentLayout">
     </StackLayout>
     <ListView ItemsSource="{Binding Comments}"
               HasUnevenRows="true"
@@ -29,12 +28,17 @@
             <DataTemplate>
                 <ViewCell>
                     <StackLayout>
-                        <ff:CachedImage Source="{Binding Creator.ProfileImage}"/>
-                        <Label Text="{Binding Creator.Name}"/>
-                        <Label Text="{Binding CreatedDate}"/>
+                        <AbsoluteLayout>
+                            <ff:CachedImage AbsoluteLayout.LayoutBounds="0.1,0.1"
+                                        WidthRequest="30"
+                                        HeightRequest="30"
+                                        Source="{Binding Creator.ProfileImage}"/>
+                            <Label Text="{Binding Creator.Name}"/>
+                            <Label Text="{Binding CreatedDate}"/>
+                            <Button Text="대댓글"/>
+                            <Button Text="좋아요"/>
+                        </AbsoluteLayout>
                         <Label Text="{Binding Text}"/>
-                        <Button Text="대댓글"/>
-                        <Button Text="좋아요"/>
                     </StackLayout>
                 </ViewCell>
             </DataTemplate>

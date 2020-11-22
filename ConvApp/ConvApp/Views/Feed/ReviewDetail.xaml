@@ -43,8 +43,6 @@
                         Grid.Column="1"/>
             </Grid>
         </Frame>
-        
-        
     </StackLayout>
     
 

@@ -28,7 +28,7 @@
                    Grid.Row="2" Grid.Column="0"
                    FontSize="16"/>
                 
-                <ImageButton Source="{helper:ImageResource ConvApp.IMAGES.heart.png}"
+                <ImageButton Source="{helper:ImageResource ConvApp.Resources.heart.png}"
                              Aspect="AspectFit"
                              BackgroundColor="White"
                              x:Name="btn_love"

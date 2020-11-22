@@ -1,10 +1,4 @@
-﻿using ConvApp.Helper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -22,14 +16,14 @@ namespace ConvApp.Views
 
         private void OnClick_love(object sender, EventArgs e)
         {
-            if (btn_count ==0)
+            if (btn_count == 0)
             {
-                btn_love.Source = ImageSource.FromResource("ConvApp.IMAGES.heartfilled.png");
+                btn_love.Source = ImageSource.FromResource("ConvApp.Resources.heartfilled.png");
                 btn_count++;
             }
-            else 
+            else
             {
-                btn_love.Source = ImageSource.FromResource("ConvApp.IMAGES.heart.png"); 
+                btn_love.Source = ImageSource.FromResource("ConvApp.Resources.heart.png");
                 btn_count--;
             }
         }

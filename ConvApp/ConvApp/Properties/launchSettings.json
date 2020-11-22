@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ConvApp": {
+      "commandName": "Project",
+      "nativeDebugging": false
+    }
+  }
+}

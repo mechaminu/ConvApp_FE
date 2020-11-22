@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace ConvApp.Models
+﻿namespace ConvApp.Models
 {
     public class User
     {

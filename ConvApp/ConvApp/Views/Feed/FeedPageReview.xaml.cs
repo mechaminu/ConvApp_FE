@@ -1,15 +1,12 @@
-﻿using System;
+﻿using ConvApp.Models;
+using ConvApp.ViewModels;
+using FFImageLoading.Forms;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using FFImageLoading.Forms;
-
-using ConvApp.ViewModels;
-using static FFImageLoading.Forms.CachedImageEvents;
-using ConvApp.Models;
 
 namespace ConvApp.Views
 {
@@ -21,7 +18,7 @@ namespace ConvApp.Views
             InitializeComponent();
         }
 
-        public List<Post> postList = new List<Post>();
+        public List<PostingDetailViewModel> postList = new List<PostingDetailViewModel>();
         public bool populated = false;
 
         protected async override void OnAppearing()
@@ -43,9 +40,9 @@ namespace ConvApp.Views
         {
             populated = false;
 
-            await Clear();
+            Clear();
             await GetData();
-            await Show();
+            Show();
 
             populated = true;
         }
@@ -67,7 +64,7 @@ namespace ConvApp.Views
             }
         }
 
-        private async Task Show()
+        private void Show()
         {
             foreach (var post in postList)
             {
@@ -107,9 +104,9 @@ namespace ConvApp.Views
                     Page targetPage;
 
                     if (post is ReviewPost)
-                        targetPage = new ReviewDetail { BindingContext = post};
+                        targetPage = new ReviewDetail { BindingContext = post };
                     else
-                        targetPage = new RecipeDetail { BindingContext = post};
+                        targetPage = new RecipeDetail { BindingContext = post };
 
                     await Navigation.PushAsync(targetPage);
                 };
@@ -118,11 +115,10 @@ namespace ConvApp.Views
             }
         }
 
-        private async Task Clear()
+        private void Clear()
         {
             LEFT.Children.Clear();
             RIGHT.Children.Clear();
-            await Task.Delay(100);
         }
 
         private async void RefreshView_Refreshing(object sender, EventArgs e)

@@ -1,11 +1,11 @@
-﻿using System;
-using System.IO;
+﻿using ConvApp.Models;
+using HeyRed.Mime;
+using System;
 using System.Collections.Generic;
+using System.IO;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using Xamarin.Essentials;
-using ConvApp.Models;
-using HeyRed.Mime;
 
 namespace ConvApp.Views
 {
@@ -30,7 +30,7 @@ namespace ConvApp.Views
 
         private async void AddImage(object sender, EventArgs e)
         {
-            
+
             var pickResult = await FilePicker.PickAsync(new PickOptions { PickerTitle = "사진 선택", FileTypes = FilePickerFileType.Images });
             if (pickResult != null)
             {
@@ -43,6 +43,11 @@ namespace ConvApp.Views
             }
             else
                 return;
+        }
+
+        private async void AddProduct(object sender, EventArgs e)
+        {
+            await Navigation.PushModalAsync(new CategoryPage());
         }
 
         private async void OnSave(object sender, EventArgs e)

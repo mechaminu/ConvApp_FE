@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel;
-
+﻿using ConvApp.ViewModels;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-
-using ConvApp.ViewModels;
-using System.Runtime.CompilerServices;
 
 namespace ConvApp.Views
 {
@@ -19,27 +11,9 @@ namespace ConvApp.Views
         public FeedbackView()
         {
             InitializeComponent();
-
-            BindingContextChanged += FeedbackView_BindingContextChanged;
-        }
-
-        private void FeedbackView_BindingContextChanged(object sender, EventArgs e)
-        {
-            likeCnt.Text = ((Feedback)BindingContext).LikeCount + "";
-            LikeBtnRefresh();
-            ((Feedback)BindingContext).PropertyChanged += FeedbackView_PropertyChanged;
-        }
-
-        private void FeedbackView_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            likeCnt.Text = ((Feedback)BindingContext).LikeCount + "";
-            LikeBtnRefresh();
-            Console.WriteLine(e.PropertyName);
         }
 
         private bool likeClicked = false;
-
-
         private async void OnLikeClick(object sender, EventArgs e)
         {
             if (likeClicked)
@@ -47,22 +21,20 @@ namespace ConvApp.Views
 
             likeClicked = true;
 
-            await ((Feedback)BindingContext).ToggleLike();
-
-            LikeBtnRefresh();
+            await ((FeedbackViewModel)BindingContext).ToggleLike();
 
             likeClicked = false;
         }
 
-        private void LikeBtnRefresh()
+        private void LikeRefresh()
         {
-            if (((Feedback)BindingContext).IsLiked)
+            if (((FeedbackViewModel)BindingContext).IsLiked)
             {
-                likeBtn.Source = ImageSource.FromResource("ConvApp.IMAGES.heartfilled.png");
+                likeBtn.Source = ImageSource.FromResource("ConvApp.Resources.heartfilled.png");
             }
             else
             {
-                likeBtn.Source = ImageSource.FromResource("ConvApp.IMAGES.heart.png");
+                likeBtn.Source = ImageSource.FromResource("ConvApp.Resources.heart.png");
             }
         }
     }

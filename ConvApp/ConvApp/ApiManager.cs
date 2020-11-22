@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Net;
-using System.Text;
-using System.Linq;
-using System.Threading.Tasks;
-using Xamarin.Essentials;
-
-using ConvApp.Models;
+﻿using ConvApp.Models;
 using ConvApp.ViewModels;
-
 using RestSharp;
 using RestSharp.Serializers.NewtonsoftJson;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Text;
+using System.Threading.Tasks;
+using Xamarin.Essentials;
 
 
 namespace ConvApp
@@ -19,14 +17,14 @@ namespace ConvApp
     // Repository pattern 적용사례에 해당되는듯?
     public class ApiManager
     {
-        //private static string EndPointURL = "http://minuuoo.ddns.net:5000/api";
-        private static string EndPointURL = "http://convappdev.azurewebsites.net/api";
+        private static string EndPointURL = "http://minuuoo.ddns.net:5000/api";
+        //private static string EndPointURL = "http://convappdev.azurewebsites.net/api";
         public static string ImageEndPointURL = "https://convappdev.blob.core.windows.net/images";
-        private static RestClient client = new RestClient(EndPointURL){Timeout=-1}.UseNewtonsoftJson() as RestClient;
+        private static RestClient client = new RestClient(EndPointURL) { Timeout = -1 }.UseNewtonsoftJson() as RestClient;
         private static RestClient client_img = new RestClient(ImageEndPointURL) { Timeout = -1 }.UseNewtonsoftJson() as RestClient;
 
         #region FEEDBACK API
-        public async static Task<Feedback> GetFeedback(byte type, int id)
+        public async static Task<FeedbackViewModel> GetFeedback(byte type, int id)
         {
             var request = new RestRequest($"feedbacks", Method.GET)
                 .AddQueryParameter("type", $"{type}")
@@ -49,13 +47,7 @@ namespace ConvApp
                 likes.Add(await l.PopulateDTO());
             }
 
-            return new Feedback
-            {
-                Type = 0,
-                Id = id,
-                Comments = comments,
-                Likes = likes
-            };
+            return new FeedbackViewModel(type, id);
         }
 
         public async static Task<List<Like>> GetLikes(byte type, int id)
@@ -91,7 +83,7 @@ namespace ConvApp
             var request = new RestRequest("feedbacks/like", Method.DELETE)
                 .AddQueryParameter("type", $"{type}")
                 .AddQueryParameter("id", $"{id}")
-                .AddJsonBody(new LikeDTO { CreatorId = App.User.Id } );
+                .AddJsonBody(new LikeDTO { CreatorId = App.User.Id });
 
             var likes = new List<Like>();
             (await client.ExecuteAsync<List<LikeDTO>>(request)).Data
@@ -133,9 +125,9 @@ namespace ConvApp
                 result.ProfileImage = result.ProfileImage != null ? Path.Combine(ImageEndPointURL, result.ProfileImage) : null;
                 return result;
             }
-            catch (Exception ex)
+            catch
             {
-                throw ex;
+                throw;
             }
         }
 
@@ -169,12 +161,10 @@ namespace ConvApp
 
                 if (!response.IsSuccessful)
                     throw new InvalidOperationException("포스팅 실패");
-
-                //return await Posting.ToPost(response.Data);
             }
-            catch (Exception ex)
+            catch
             {
-                throw ex;
+                throw;
             }
         }
 
@@ -185,7 +175,7 @@ namespace ConvApp
         /// <param name="start">시작 순번</param>
         /// <param name="end">끝 순번</param>
         /// <returns></returns>
-        public async static Task<List<Post>> GetPostings(byte? type = null)
+        public async static Task<List<PostingDetailViewModel>> GetPostings(byte? type = null)
         {
             try
             {
@@ -198,16 +188,16 @@ namespace ConvApp
                 if (!response.IsSuccessful)
                     throw new InvalidOperationException($"Request Failed - CODE : {response.StatusCode}");
 
-                var result = new List<Post>();
+                var result = new List<PostingDetailViewModel>();
                 foreach (var rawPosting in response.Data)
                 {
                     result.Add(await PostingDTO.PopulateDTO(rawPosting));
                 }
                 return result;
             }
-            catch (Exception ex)
+            catch
             {
-                throw ex;
+                throw;
             }
         }
         #endregion
@@ -232,11 +222,11 @@ namespace ConvApp
                 }
 
                 // 업로드를 통해 생성된 이미지 파일명 목록(Joined with ',') 획득 및 리턴 
-                return await PostMultipart(Path.Combine(EndPointURL,"images"), tmpDict);
+                return await PostMultipart(Path.Combine(EndPointURL, "images"), tmpDict);
             }
-            catch (Exception e)
+            catch
             {
-                throw e;
+                throw;
             }
         }
 
@@ -246,8 +236,11 @@ namespace ConvApp
             try
             {
                 return new MemoryStream((await client_img.ExecuteAsync(new RestRequest($"images/{filename.Trim()}", Method.GET))).RawBytes);
-            } 
-            catch (Exception e) { throw e; }
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         public async static Task<bool> DeleteImage(string filename)
@@ -256,9 +249,9 @@ namespace ConvApp
             {
                 return (await client.ExecuteAsync(new RestRequest($"images/{filename.Trim()}", Method.DELETE))).IsSuccessful;
             }
-            catch (Exception e)
+            catch
             {
-                throw e;
+                throw;
             }
         }
         #endregion
@@ -310,9 +303,9 @@ namespace ConvApp
                 using (StreamReader reader = new StreamReader(resStream))
                     return await reader.ReadToEndAsync();
             }
-            catch (Exception e)
+            catch
             {
-                throw e;
+                throw;
             }
         }
     }

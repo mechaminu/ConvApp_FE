@@ -1,18 +1,15 @@
-﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
-
-using ConvApp.Models;
-using ConvApp.ViewModels;
+﻿using ConvApp.Models;
 using FFImageLoading;
-using Xamarin.Essentials;
-using System.Linq;
-using Xamarin.Forms.Internals;
 using HeyRed.Mime;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using Xamarin.Essentials;
+using Xamarin.Forms;
+using Xamarin.Forms.Internals;
+using Xamarin.Forms.Xaml;
 
 namespace ConvApp.Views
 {

@@ -6,17 +6,20 @@
     <LangVersion>8.0</LangVersion>
     <OutputType>Library</OutputType>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DebugType>portable</DebugType>
+    <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
+    <ErrorReport>queue</ErrorReport>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Resources\**" />
-    <EmbeddedResource Remove="Resources\**" />
-    <None Remove="Resources\**" />
+    <Compile Remove="IMAGES\**" />
+    <EmbeddedResource Remove="IMAGES\**" />
+    <None Remove="IMAGES\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,18 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="IMAGES\heart.png" />
-    <None Remove="IMAGES\heartfilled.png" />
-    <None Remove="IMAGES\P1.jpg" />
     <None Remove="Models\NewFile1.txt" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="IMAGES\heart.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="IMAGES\heartfilled.png" />
-    <EmbeddedResource Include="IMAGES\P1.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -55,7 +47,7 @@
     <PackageReference Include="Xamarin.FFImageLoading.Svg" Version="2.4.11.982" />
     <PackageReference Include="Xamarin.FFImageLoading.Svg.Forms" Version="2.4.11.982" />
     <PackageReference Include="Xamarin.FFImageLoading.Transformations" Version="2.4.11.982" />
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.1558-pre3" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.1709-pre4" />
     <PackageReference Include="Xamarin.Essentials" Version="1.6.0-pre4" />
   </ItemGroup>
 

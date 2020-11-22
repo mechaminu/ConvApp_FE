@@ -1,6 +1,5 @@
 ﻿<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:elems ="clr-namespace:ConvApp.ViewElements"
              x:Class="ConvApp.Views.RecipeEntry"
              Shell.NavBarIsVisible="True">
     <ContentPage.ToolbarItems>
@@ -11,21 +10,23 @@
     </ContentPage.ToolbarItems>
 
     <StackLayout>
-        <elems:CustomEditor x:Name="recipeTitle"
-                            Placeholder="Title"
-                            PlaceholderColor="Gray"
-                            FontSize="Body"
-                            FontAttributes="Bold" />
+        <Editor x:Name="recipeTitle"
+                Placeholder="레시피 제목"
+                PlaceholderColor="Gray"
+                BackgroundColor="Transparent"
+                FontSize="Body"
+                FontAttributes="Bold" />
 
         <BoxView BackgroundColor="Gray"
-                    HeightRequest="1"/>
+                 HeightRequest="1"/>
 
-        <elems:CustomEditor x:Name ="recipeDescription"
-                            HeightRequest="150"
-                            Placeholder="레시피 소개"
-                            PlaceholderColor="Gray"
-                            FontSize="Body"
-                            FontAttributes="Bold"/>
+        <Editor x:Name ="recipeDescription"
+                HeightRequest="150"
+                Placeholder="레시피 소개"
+                PlaceholderColor="Gray"
+                BackgroundColor="Transparent"
+                FontSize="Body"
+                FontAttributes="Bold"/>
 
         <BoxView BackgroundColor="Gray"
                     HeightRequest="1"/>
@@ -43,10 +44,11 @@
 
                                 <Image Grid.Column="0" 
                                        Source="{Binding image}"/>
-                                <elems:CustomEditor Placeholder="레시피 설명 입력"
-                                                    PlaceholderColor="Gray"
-                                                    Text="{Binding text}"
-                                                    Grid.Column="1" />
+                                <Editor Placeholder="레시피 설명 입력"
+                                        PlaceholderColor="Gray"
+                                        BackgroundColor="Transparent"
+                                        Text="{Binding text}"
+                                        Grid.Column="1" />
                             </Grid>
                         </StackLayout>
                     </ViewCell>

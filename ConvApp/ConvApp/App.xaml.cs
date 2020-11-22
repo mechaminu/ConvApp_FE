@@ -1,8 +1,5 @@
-﻿using ConvApp.Views;
-using System;
+﻿using ConvApp.Models;
 using Xamarin.Forms;
-using ConvApp.ViewModels;
-using ConvApp.Models;
 
 namespace ConvApp
 {

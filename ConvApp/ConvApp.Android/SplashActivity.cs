@@ -1,9 +1,8 @@
-﻿using System.Threading.Tasks;
-using Android.App;
+﻿using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Util;
 using AndroidX.AppCompat.App;
+using System.Threading.Tasks;
 
 namespace ConvApp.Droid
 {
@@ -26,7 +25,7 @@ namespace ConvApp.Droid
         }
 
         // Simulates background work that happens behind the splash screen
-        async void SimulateStartup()
+        void SimulateStartup()
         {
             StartActivity(new Intent(Application.Context, typeof(MainActivity)));
         }

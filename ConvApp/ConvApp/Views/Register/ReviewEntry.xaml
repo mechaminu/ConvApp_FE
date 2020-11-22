@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:elems="clr-namespace:ConvApp.ViewElements"
              x:Class="ConvApp.Views.ReviewEntry"
              Shell.NavBarIsVisible="True">
     <ContentPage.ToolbarItems>
@@ -13,11 +12,11 @@
 
     <StackLayout>
         <Button Text="상품 선택하기"
+                Clicked="AddProduct"
                 FontSize="30"
                 HeightRequest="100"
                 CornerRadius="5"
                 Margin="10"/>
-
         <BoxView BackgroundColor="Gray" HeightRequest="1"/>
         
         <Label Text="평가"
@@ -40,24 +39,23 @@
         </Grid>
         
         <BoxView BackgroundColor="Gray" HeightRequest="1"/>
-        
-        <Grid>
 
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="170"/>
             </Grid.RowDefinitions>
-            <elems:CustomEditor x:Name="reviewContent"
+            <Editor x:Name="reviewContent"
                                 Placeholder="문구 입력..."
                                 PlaceholderColor="Gray"
                                 Grid.Row="0"/>
-
         </Grid>
         
         <BoxView BackgroundColor="Gray" HeightRequest="1"/>
-        <Image x:Name="imageView"
+        <ScrollView>
+            <Image x:Name="imageView"
                Aspect="AspectFit"
                VerticalOptions="FillAndExpand"/>
-        <Button Text="상품추가하기"/>
+        </ScrollView>
         <Button Text="이미지 추가"
                 VerticalOptions="End"
                 CornerRadius="5"

@@ -1,23 +1,18 @@
-﻿using ConvApp.Models;
-using ConvApp.ViewModels;
-using ConvApp.Views;
+﻿using ConvApp.ViewModels;
 using FFImageLoading.Forms;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using static FFImageLoading.Forms.CachedImageEvents;
 
 namespace ConvApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class FeedPageAll : ContentPage
     {
-        public List<Post> postList = new List<Post>();
+        public List<PostingDetailViewModel> postList = new List<PostingDetailViewModel>();
         public bool populated = false;
 
         public FeedPageAll()
@@ -44,9 +39,9 @@ namespace ConvApp.Views
         {
             populated = false;
 
-            await Clear();
+            Clear();
             await GetData();
-            await Show();
+            Show();
 
             populated = true;
         }
@@ -70,7 +65,7 @@ namespace ConvApp.Views
             }
         }
 
-        private async Task Show()
+        private void Show()
         {
             foreach (var post in postList)
             {
@@ -85,10 +80,10 @@ namespace ConvApp.Views
 
                 elem.BackgroundColor = Color.Green;
                 elem.Padding = 0;
-                elem.Margin = new Thickness { Top = 0, Bottom = 5, Left = 0, Right = 0};
+                elem.Margin = new Thickness { Top = 0, Bottom = 5, Left = 0, Right = 0 };
                 layout.BackgroundColor = Color.Blue;
                 (LEFT.Children.Count == 0 ||
-                (RIGHT.Children.Count != 0 && 
+                (RIGHT.Children.Count != 0 &&
                     (LEFT.Children.Last().Y + LEFT.Children.Last().Height) < (RIGHT.Children.Last().Y + RIGHT.Children.Last().Height))
                 ? LEFT : RIGHT)
                     .Children.Add(elem);
@@ -121,11 +116,10 @@ namespace ConvApp.Views
             }
         }
 
-        private async Task Clear()
+        private void Clear()
         {
             LEFT.Children.Clear();
             RIGHT.Children.Clear();
-            await Task.Delay(100);
         }
 
         private async void RefreshView_Refreshing(object sender, EventArgs e)

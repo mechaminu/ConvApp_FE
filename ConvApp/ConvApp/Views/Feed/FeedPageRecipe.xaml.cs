@@ -20,7 +20,7 @@ namespace ConvApp.Views
             InitializeComponent();
         }
 
-        public List<Post> postList = new List<Post>();
+        public List<PostingDetailViewModel> postList = new List<PostingDetailViewModel>();
         public bool populated = false;
 
         protected async override void OnAppearing()

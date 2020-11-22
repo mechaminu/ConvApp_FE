@@ -1,9 +1,9 @@
-﻿using System;
+﻿using ConvApp.ViewModels;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Collections.Generic;
-using ConvApp.ViewModels;
 
 namespace ConvApp.Models
 {
@@ -23,9 +23,9 @@ namespace ConvApp.Models
         public int CreatorId { get; set; }
 
         public List<ProductDTO> Products { get; set; }
-        public List<PostingNode> PostingNodes {get; set;}
+        public List<PostingNode> PostingNodes { get; set; }
 
-        public async static Task<Post> PopulateDTO(PostingDTO posting)
+        public async static Task<PostingDetailViewModel> PopulateDTO(PostingDTO posting)
         {
             switch (posting.PostingType)
             {
@@ -37,7 +37,7 @@ namespace ConvApp.Models
                     {
                         otherNodes.Add(new PostNode
                         {
-                            NodeImage = node.Image != null ? Path.Combine(ApiManager.ImageEndPointURL,node.Image) : string.Empty,
+                            NodeImage = node.Image != null ? Path.Combine(ApiManager.ImageEndPointURL, node.Image) : string.Empty,
                             NodeString = node.Text
                         });
                     }
@@ -49,7 +49,7 @@ namespace ConvApp.Models
                         Title = posting.PostingNodes[0].Text,
                         PostContent = posting.PostingNodes[1].Text,
                         RecipeNode = otherNodes,
-                        Feedback = await ApiManager.GetFeedback(0,posting.Id)
+                        Feedback = await ApiManager.GetFeedback(0, posting.Id)
                     };
 
                 //case (byte)PostingTypes.REVIEW:
@@ -62,7 +62,7 @@ namespace ConvApp.Models
                         Rating = double.Parse(posting.PostingNodes[0].Text),
                         PostContent = posting.PostingNodes[1].Text,
                         PostImage = posting.PostingNodes[2].Image != null ? Path.Combine(ApiManager.ImageEndPointURL, posting.PostingNodes[2].Image) : string.Empty,
-                        Feedback = await ApiManager.GetFeedback(0,posting.Id)
+                        Feedback = await ApiManager.GetFeedback(0, posting.Id)
                     };
             }
         }

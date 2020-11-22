@@ -1,7 +1,7 @@
-﻿using System;
+﻿using ConvApp.ViewModels;
+using System;
 using System.Collections.Generic;
 using Xamarin.Forms;
-using ConvApp.ViewModels;
 
 namespace ConvApp.Views
 {
@@ -19,7 +19,7 @@ namespace ConvApp.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            RefreshList();   
+            RefreshList();
         }
 
         // ListView의 ItemsSource를 null로 만들었다 다시 할당하면 목록이 갱신됨!
@@ -53,7 +53,7 @@ namespace ConvApp.Views
             }
             //make sure to end the refresh state
             list.IsRefreshing = false;
-            
+
         }
     }
 }
