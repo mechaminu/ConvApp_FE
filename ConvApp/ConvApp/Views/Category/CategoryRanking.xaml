@@ -1,31 +1,50 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:helper ="clr-namespace:ConvApp.Helper;assembly=ConvApp"
              x:Class="ConvApp.Views.CategoryRanking">
     <ContentPage.Content>
         <StackLayout>
-            <ListView ItemsSource="{Binding}" ItemSelected="OnClick_CategoryDetail">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="4*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
-                                <Image Source="{Binding Image}" 
+            <Image Source="{helper:ImageResource ConvApp.IMAGES.trophy.png}" HeightRequest="100"/>
+            <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <!--<Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>-->
+                <StackLayout Grid.Column="0">
+                    <Image  Aspect="AspectFit" Source="{helper:ImageResource ConvApp.IMAGES.gold_2.png}" HeightRequest="40"/>
+                    <Image  Aspect="AspectFit" Source="{helper:ImageResource ConvApp.IMAGES.silver_2.png}" HeightRequest="40"/>
+                    <Image  Aspect="AspectFit" Source="{helper:ImageResource ConvApp.IMAGES.bronze_2.png}" HeightRequest="40"/>
+                </StackLayout>
+
+
+                <ListView x:Name="categoryranking1" ItemsSource="{Binding}" ItemSelected="OnClick_CategoryDetail" Grid.Column="1" >
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell x:Name="categoryranking2" Height="40">
+                                <Grid >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="4*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Image Source="{Binding Image}" 
                                        Grid.Column="0" Grid.RowSpan="2"
                                        Aspect="AspectFill"/>
-                                <Label Text="{Binding Name}" Grid.Column="1" Grid.Row="0"/>
-                            </Grid>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                                    <Label Text="{Binding Name}" Grid.Column="1" Grid.Row="0" />
+                                </Grid>
+
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

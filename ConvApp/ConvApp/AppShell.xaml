@@ -71,6 +71,9 @@
             <ShellContent Title="Category" 
                           ContentTemplate="{DataTemplate views:CategoryPage}" 
                           Style="{StaticResource BaseStyle}"/>
+            <ShellContent Title="Ranking" 
+                          ContentTemplate="{DataTemplate views:ReviewRanking}" 
+                          Style="{StaticResource BaseStyle}"/>
             
         </Tab>
         <Tab Title="내 정보">

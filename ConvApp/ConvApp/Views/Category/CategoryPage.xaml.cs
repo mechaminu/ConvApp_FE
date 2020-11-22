@@ -15,6 +15,7 @@ namespace ConvApp.Views
         {
             var products = await ApiManager.GetProducts(store: id);
             await Navigation.PushAsync(new CategoryRanking { BindingContext = products });
+           
         }
 
         public async void CategoryHandler(int id)
