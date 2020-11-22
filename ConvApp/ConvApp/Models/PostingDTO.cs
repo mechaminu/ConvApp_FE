@@ -25,7 +25,7 @@ namespace ConvApp.Models
         public List<ProductDTO> Products { get; set; }
         public List<PostingNode> PostingNodes { get; set; }
 
-        public async static Task<PostingDetailViewModel> PopulateDTO(PostingDTO posting)
+        public async static Task<PostingViewModel> PopulateDTO(PostingDTO posting)
         {
             switch (posting.PostingType)
             {
@@ -42,27 +42,28 @@ namespace ConvApp.Models
                         });
                     }
 
-                    return new RecipePost
+                    return new RecipePostingViewModel
                     {
+                        Id = posting.Id,
                         User = await ApiManager.GetUserData(posting.CreatorId),
                         Date = posting.ModifiedDate,
                         Title = posting.PostingNodes[0].Text,
                         PostContent = posting.PostingNodes[1].Text,
-                        RecipeNode = otherNodes,
-                        Feedback = await ApiManager.GetFeedback(0, posting.Id)
+                        Products = posting.Products,
+                        RecipeNode = otherNodes
                     };
 
                 //case (byte)PostingTypes.REVIEW:
                 default:
-
-                    return new ReviewPost
+                    return new ReviewPostingViewModel
                     {
+                        Id = posting.Id,
                         User = await ApiManager.GetUserData(posting.CreatorId),
                         Date = posting.ModifiedDate,
+                        Products = posting.Products,
                         Rating = double.Parse(posting.PostingNodes[0].Text),
                         PostContent = posting.PostingNodes[1].Text,
-                        PostImage = posting.PostingNodes[2].Image != null ? Path.Combine(ApiManager.ImageEndPointURL, posting.PostingNodes[2].Image) : string.Empty,
-                        Feedback = await ApiManager.GetFeedback(0, posting.Id)
+                        PostImage = posting.PostingNodes[2].Image != null ? Path.Combine(ApiManager.ImageEndPointURL, posting.PostingNodes[2].Image) : string.Empty
                     };
             }
         }

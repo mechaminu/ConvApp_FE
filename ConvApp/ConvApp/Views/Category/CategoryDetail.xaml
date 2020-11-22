@@ -61,7 +61,7 @@
                    FontSize="10"/>
             </Grid>
 
-            <ListView ItemsSource="{Binding REVIEW}"
+            <ListView ItemsSource="{Binding Postings}"
                   SelectionMode="None"
                   HasUnevenRows="True">
                 <ListView.ItemTemplate>

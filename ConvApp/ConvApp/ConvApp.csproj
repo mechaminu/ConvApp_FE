@@ -32,6 +32,15 @@
 
   <ItemGroup>
     <None Remove="Models\NewFile1.txt" />
+    <None Remove="Resources\heart.png" />
+    <None Remove="Resources\heartfilled.png" />
+    <None Remove="Resources\P1.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\heart.png" />
+    <EmbeddedResource Include="Resources\heartfilled.png" />
+    <EmbeddedResource Include="Resources\P1.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -116,6 +125,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\PostDetail.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ProductSelectionPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Register\EntrySelection.xaml">

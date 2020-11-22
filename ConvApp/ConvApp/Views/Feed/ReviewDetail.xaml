@@ -24,6 +24,7 @@
 
                 <Label Text="{Binding Rating, StringFormat='별점 : {0}'}"  FontSize="20" FontAttributes="Bold"/>
                 <Label Text="{Binding PostContent}" Padding ="10" FontSize="16" />
+                <Label Text="{Binding Products.Count, StringFormat='제품 : {0}'}" BackgroundColor="Yellow"/>
                 <local:FeedbackView BindingContext="{Binding Feedback}"/>
             </StackLayout>
         </ScrollView>

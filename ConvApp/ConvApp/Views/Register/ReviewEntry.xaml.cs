@@ -12,6 +12,8 @@ namespace ConvApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ReviewEntry : ContentPage
     {
+        private ProductDTO product;
+        
         public ReviewEntry()
         {
             InitializeComponent();
@@ -47,7 +49,17 @@ namespace ConvApp.Views
 
         private async void AddProduct(object sender, EventArgs e)
         {
-            await Navigation.PushModalAsync(new CategoryPage());
+            var page = new ProductSelectionPage();
+
+            page.MyEvent += (s, e) => GetSelection((s as ProductSelectionPage).selections);
+
+            await Navigation.PushAsync(page);
+        }
+
+        private void GetSelection(List<ProductDTO> products)
+        {
+            if (products.Count != 0)
+                product = products[0];
         }
 
         private async void OnSave(object sender, EventArgs e)
@@ -61,11 +73,15 @@ namespace ConvApp.Views
                 var imageFilename = await ApiManager.UploadImage(resultList);
                 modelNodes.Add(new PostingNode { Image = imageFilename });
 
+                var prodList = new List<ProductDTO>();
+                prodList.Add(product);
+
                 await ApiManager.PostPosting(new PostingDTO  // 이미지 업로드
                 {
                     CreatorId = App.User.Id,
                     PostingType = (byte)PostingTypes.REVIEW,
-                    PostingNodes = modelNodes
+                    PostingNodes = modelNodes,
+                    Products = prodList
                 });
 
                 await Navigation.PopToRootAsync();

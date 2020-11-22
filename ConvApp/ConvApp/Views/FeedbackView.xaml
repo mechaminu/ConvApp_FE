@@ -9,21 +9,11 @@
                      HeightRequest="30"
                      Aspect="AspectFit"
                      BackgroundColor="Transparent"
-                     x:Name="likeBtn"
-                     Clicked="OnLikeClick"/>
-        <Label Text="{Binding LikeCount}"
-               VerticalOptions="Center"/>
-        <Label Text="Comments:"
-               VerticalOptions="Center"
-               HorizontalOptions="End"/>
-        <Label Text="{Binding CommentCount}"
-               VerticalOptions="Center"
-               HorizontalOptions="End"/>
+                     x:Name="likeBtn"/>
     </StackLayout>
     <ListView ItemsSource="{Binding Comments}"
               HasUnevenRows="true"
-              SelectionMode="None"
-              BackgroundColor="Gray">
+              SelectionMode="None">
         <ListView.ItemTemplate>
             <DataTemplate>
                 <ViewCell>

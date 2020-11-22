@@ -20,7 +20,7 @@ namespace ConvApp.Views
             InitializeComponent();
         }
 
-        public List<PostingDetailViewModel> postList = new List<PostingDetailViewModel>();
+        public List<PostingViewModel> postList = new List<PostingViewModel>();
         public bool populated = false;
 
         protected async override void OnAppearing()
@@ -66,7 +66,7 @@ namespace ConvApp.Views
         {
             foreach (var post in postList)
             {
-                var imgUrl = (post is ReviewPost ? (post as ReviewPost).PostImage : (post as RecipePost).RecipeNode[0].NodeImage).Split(';')[0];
+                var imgUrl = (post is ReviewPostingViewModel ? (post as ReviewPostingViewModel).PostImage : (post as RecipePostingViewModel).RecipeNode[0].NodeImage).Split(';')[0];
 
                 var layout = new AbsoluteLayout();
                 var elem = new Frame()

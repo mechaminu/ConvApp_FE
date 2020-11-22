@@ -12,7 +12,7 @@ namespace ConvApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class FeedPageAll : ContentPage
     {
-        public List<PostingDetailViewModel> postList = new List<PostingDetailViewModel>();
+        public List<PostingViewModel> postList = new List<PostingViewModel>();
         public bool populated = false;
 
         public FeedPageAll()
@@ -69,7 +69,7 @@ namespace ConvApp.Views
         {
             foreach (var post in postList)
             {
-                var imgUrl = (post is ReviewPost ? (post as ReviewPost).PostImage : (post as RecipePost).RecipeNode[0].NodeImage).Split(';')[0];
+                var imgUrl = (post is ReviewPostingViewModel ? (post as ReviewPostingViewModel).PostImage : (post as RecipePostingViewModel).RecipeNode[0].NodeImage).Split(';')[0];
 
                 var layout = new StackLayout();
                 var elem = new Frame()
@@ -104,8 +104,11 @@ namespace ConvApp.Views
                 {
                     Page targetPage;
 
-                    if (post is ReviewPost)
+                    if (post is ReviewPostingViewModel)
+                    {
+                        var feedback = new FeedbackViewModel(0, post.Id);
                         targetPage = new ReviewDetail { BindingContext = post };
+                    }
                     else
                         targetPage = new RecipeDetail { BindingContext = post };
 

@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ConvApp.Views.ProductSelectionPage"
+             Shell.NavBarIsVisible="True">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="확인"
+                     Order="Primary"
+                     Priority="0"
+                     Clicked="ToolbarItem_Clicked"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <AbsoluteLayout BackgroundColor="Blue">
+            <ScrollView AbsoluteLayout.LayoutBounds="0,0,1,0.2"
+                        AbsoluteLayout.LayoutFlags="All"
+                        BackgroundColor="Green"
+                        Orientation="Horizontal">
+                <StackLayout Orientation="Horizontal"
+                             Spacing="0"
+                             x:Name="selectionList">
+                </StackLayout>
+            </ScrollView>
+            <ListView x:Name="list"
+                      ItemTapped="list_ItemTapped"
+                      AbsoluteLayout.LayoutBounds="0,1,1,0.8"
+                      AbsoluteLayout.LayoutFlags="All"
+                      BackgroundColor="Yellow">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ImageCell Text="{Binding Name}" ImageSource="{Binding Image}" Detail="{Binding Price, StringFormat='{0}원'}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

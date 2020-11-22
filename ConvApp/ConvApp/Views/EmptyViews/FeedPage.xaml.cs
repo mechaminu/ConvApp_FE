@@ -7,10 +7,10 @@ namespace ConvApp.Views
 {
     public partial class FeedPage : TabbedPage
     {
-        public static List<ReviewPost> reviewPosts = new List<ReviewPost>();
-        public static List<RecipePost> recipePosts = new List<RecipePost>();
+        public static List<ReviewPostingViewModel> reviewPosts = new List<ReviewPostingViewModel>();
+        public static List<RecipePostingViewModel> recipePosts = new List<RecipePostingViewModel>();
         //public FeedPage(ReviewPost review)
-        public FeedPage(ReviewPost review)
+        public FeedPage(ReviewPostingViewModel review)
         {
             InitializeComponent();
         }

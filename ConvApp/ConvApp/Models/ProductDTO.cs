@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ConvApp.Models
 {
@@ -11,5 +12,7 @@ namespace ConvApp.Models
         public string Name { get; set; }
         public int Price { get; set; }
         public string Image { get; set; }
+
+        public List<PostingDTO> Postings { get; set; }
     }
 }

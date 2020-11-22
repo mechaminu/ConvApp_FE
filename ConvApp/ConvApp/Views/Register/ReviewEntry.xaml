@@ -18,25 +18,18 @@
                 CornerRadius="5"
                 Margin="10"/>
         <BoxView BackgroundColor="Gray" HeightRequest="1"/>
-        
-        <Label Text="평가"
-               HorizontalOptions="Start"
-               Margin="10,10,10,0"/>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="4*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Slider x:Name="ratingSlider"
-                    Maximum="5" Minimum="0"
-                    Grid.Column="0"
-                    BackgroundColor="Gainsboro"
-                    ValueChanged="OnSliderChange"/>
+        <StackLayout>
             <Label x:Name="ratingLabel"
                    FontSize="40"
-                   Grid.Column="1"
                    HorizontalOptions="Center"/>
-        </Grid>
+            <Slider x:Name="ratingSlider"
+                    MinimumTrackColor="#512da8"
+                    MaximumTrackColor="DimGray"
+                    ThumbColor="#512da8"
+                    Maximum="5" Minimum="0"
+                    ValueChanged="OnSliderChange"/>
+            
+        </StackLayout>
         
         <BoxView BackgroundColor="Gray" HeightRequest="1"/>
 

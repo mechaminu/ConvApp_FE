@@ -140,7 +140,10 @@ namespace ConvApp
             if (category != null)
                 request.AddQueryParameter("category", category + "");
 
-            return (await client.ExecuteAsync<List<ProductDTO>>(request)).Data;
+            var response = await client.ExecuteAsync<List<ProductDTO>>(request);
+            var result = response.Data;
+
+            return result;
         }
         #endregion
 
@@ -175,7 +178,7 @@ namespace ConvApp
         /// <param name="start">시작 순번</param>
         /// <param name="end">끝 순번</param>
         /// <returns></returns>
-        public async static Task<List<PostingDetailViewModel>> GetPostings(byte? type = null)
+        public async static Task<List<PostingViewModel>> GetPostings(byte? type = null)
         {
             try
             {
@@ -188,7 +191,7 @@ namespace ConvApp
                 if (!response.IsSuccessful)
                     throw new InvalidOperationException($"Request Failed - CODE : {response.StatusCode}");
 
-                var result = new List<PostingDetailViewModel>();
+                var result = new List<PostingViewModel>();
                 foreach (var rawPosting in response.Data)
                 {
                     result.Add(await PostingDTO.PopulateDTO(rawPosting));

@@ -4,38 +4,40 @@
              xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              xmlns:local="clr-namespace:ConvApp.Views"
              x:Class="ConvApp.Views.RecipeDetail">
-    <StackLayout>
-        <Label Text="{Binding Title}" 
+    <ScrollView>
+        <StackLayout>
+            <Label Text="{Binding Title}" 
                FontSize="20"
                FontAttributes="Bold"/>
-        <StackLayout Padding="0"  Orientation="Horizontal">
-            <ff:CachedImage WidthRequest="30"
+            <StackLayout Padding="0"  Orientation="Horizontal">
+                <ff:CachedImage WidthRequest="30"
                             HeightRequest="30"
                             DownsampleToViewSize="true"
                             Source="{Binding User.ProfileImage}"/>
-            <Label Text="{Binding User.Name}" TextColor="Black" FontSize="16" FontAttributes="Bold"/>
-            <Label Text="{Binding Date}" TextColor="Black" FontSize="16"/>
-        </StackLayout>
-        <Label Text="{Binding PostContent}" FontSize="16" />
-        <ListView ItemsSource="{Binding RecipeNode}"
+                <Label Text="{Binding User.Name}" TextColor="Black" FontSize="16" FontAttributes="Bold"/>
+                <Label Text="{Binding Date}" TextColor="Black" FontSize="16"/>
+            </StackLayout>
+            <Label Text="{Binding PostContent}" FontSize="16" />
+            <ListView ItemsSource="{Binding RecipeNode}"
                   SelectionMode="None"
                   HasUnevenRows="True">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <StackLayout>
-                            <ff:CachedImage MinimumHeightRequest="100"
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout>
+                                <ff:CachedImage MinimumHeightRequest="100"
                                             Aspect="AspectFill"
                                             DownsampleToViewSize="true"
                                             Source="{Binding NodeImage}"/>
-                            <Label Text="{Binding NodeString}"
+                                <Label Text="{Binding NodeString}"
                                    FontSize="16"
                                    HorizontalTextAlignment="Center"/>
-                        </StackLayout>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-        <local:FeedbackView BindingContext="{Binding Feedback}"/>
-    </StackLayout>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <local:FeedbackView BindingContext="{Binding Feedback}"/>
+        </StackLayout>
+    </ScrollView>
 </ContentPage>

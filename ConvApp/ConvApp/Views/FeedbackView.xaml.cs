@@ -12,30 +12,5 @@ namespace ConvApp.Views
         {
             InitializeComponent();
         }
-
-        private bool likeClicked = false;
-        private async void OnLikeClick(object sender, EventArgs e)
-        {
-            if (likeClicked)
-                return;
-
-            likeClicked = true;
-
-            await ((FeedbackViewModel)BindingContext).ToggleLike();
-
-            likeClicked = false;
-        }
-
-        private void LikeRefresh()
-        {
-            if (((FeedbackViewModel)BindingContext).IsLiked)
-            {
-                likeBtn.Source = ImageSource.FromResource("ConvApp.Resources.heartfilled.png");
-            }
-            else
-            {
-                likeBtn.Source = ImageSource.FromResource("ConvApp.Resources.heart.png");
-            }
-        }
     }
 }
