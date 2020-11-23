@@ -22,7 +22,7 @@
                             <ff:CachedImage AbsoluteLayout.LayoutBounds="0.1,0.1"
                                         WidthRequest="30"
                                         HeightRequest="30"
-                                        Source="{Binding Creator.ProfileImage}"/>
+                                        Source="{Binding Creator.Image}"/>
                             <Label Text="{Binding Creator.Name}"/>
                             <Label Text="{Binding CreatedDate}"/>
                             <Button Text="대댓글"/>

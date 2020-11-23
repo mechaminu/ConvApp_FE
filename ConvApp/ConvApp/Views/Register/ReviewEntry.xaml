@@ -10,13 +10,55 @@
                      Clicked="OnSave"/>
     </ContentPage.ToolbarItems>
 
-    <StackLayout>
-        <Button Text="상품 선택하기"
-                Clicked="AddProduct"
-                FontSize="30"
-                HeightRequest="100"
-                CornerRadius="5"
-                Margin="10"/>
+    <StackLayout Spacing="0">
+        <CarouselView x:Name="prodSelection"
+                      Loop="False"
+                      HeightRequest="100">
+            <CarouselView.EmptyView>
+                <Frame Padding="10">
+                    <Button Text="상품 선택하기"
+                            Clicked="AddProduct"
+                            FontSize="30"
+                            HeightRequest="100"
+                            CornerRadius="5"/>
+                </Frame>
+            </CarouselView.EmptyView>
+            <CarouselView.ItemTemplate>
+                <DataTemplate>
+                    <AbsoluteLayout Padding="10">
+                        <Frame CornerRadius="10"
+                               BackgroundColor="#CCCCCC"
+                               Padding="10"
+                               AbsoluteLayout.LayoutBounds="0,0,1,1"
+                               AbsoluteLayout.LayoutFlags="All">
+                            <AbsoluteLayout>
+                                <Image Source="{Binding Image}"
+                                       AbsoluteLayout.LayoutBounds="0,0,0.5,1"
+                                       AbsoluteLayout.LayoutFlags="All"/>
+                                <StackLayout AbsoluteLayout.LayoutBounds="0.75,0.5"
+                                             AbsoluteLayout.LayoutFlags="PositionProportional">
+                                    <Label Text="{Binding Name}" FontSize="Large"/>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="{Binding StoreName}"/>
+                                        <Label Text="{Binding CategoryName}"/>
+                                    </StackLayout>
+                                    <Label Text="{Binding Price, StringFormat='{0}원'}"/>
+                                </StackLayout>
+                            </AbsoluteLayout>
+                        </Frame>
+                        <Button Text="X"
+                                Clicked="DeleteSelection"
+                                Padding="0"
+                                Margin="0"
+                                BackgroundColor="Transparent"
+                                TextColor="#333333"
+                                AbsoluteLayout.LayoutBounds="1,0,30,30"
+                                AbsoluteLayout.LayoutFlags="PositionProportional"/>
+                    </AbsoluteLayout>
+                </DataTemplate>
+            </CarouselView.ItemTemplate>
+        </CarouselView>
+
         <BoxView BackgroundColor="Gray" HeightRequest="1"/>
         <StackLayout>
             <Label x:Name="ratingLabel"

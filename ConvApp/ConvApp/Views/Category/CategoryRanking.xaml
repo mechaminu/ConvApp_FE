@@ -5,27 +5,25 @@
              x:Class="ConvApp.Views.CategoryRanking">
     <ContentPage.Content>
         <StackLayout>
-            <Image Source="{helper:ImageResource ConvApp.Resources.trophy.png}" HeightRequest="100"/>
-            <Grid >
+            <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="40"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <!--<Grid.RowDefinitions>
-                    <RowDefinition Height="40"/>
-                </Grid.RowDefinitions>-->
-                <StackLayout Grid.Column="0">
-                    <Image  Aspect="AspectFit" Source="{helper:ImageResource ConvApp.Resources.gold_2.png}" HeightRequest="40"/>
-                    <Image  Aspect="AspectFit" Source="{helper:ImageResource ConvApp.Resources.silver_2.png}" HeightRequest="40"/>
-                    <Image  Aspect="AspectFit" Source="{helper:ImageResource ConvApp.Resources.bronze_2.png}" HeightRequest="40"/>
-                </StackLayout>
-
-
-                <ListView x:Name="categoryranking1" ItemsSource="{Binding}" ItemSelected="OnClick_CategoryDetail" Grid.Column="1" >
+                <!--이거 렉걸려요~!!!-->
+                <!--<StackLayout Grid.Column="0">
+                    <Image Aspect="AspectFit" Source="{helper:ImageResource ConvApp.Resources.gold_2.png}" HeightRequest="40"/>
+                    <Image Aspect="AspectFit" Source="{helper:ImageResource ConvApp.Resources.silver_2.png}" HeightRequest="40"/>
+                    <Image Aspect="AspectFit" Source="{helper:ImageResource ConvApp.Resources.bronze_2.png}" HeightRequest="40"/>
+                </StackLayout>-->
+                <ListView ItemsSource="{Binding}"
+                          ItemTapped="OnClick_CategoryDetail"
+                          SelectionMode="None"
+                          Grid.Column="1">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <ViewCell x:Name="categoryranking2" Height="40">
-                                <Grid >
+                            <ViewCell Height="40">
+                                <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="4*"/>
@@ -37,9 +35,9 @@
                                     <Image Source="{Binding Image}" 
                                        Grid.Column="0" Grid.RowSpan="2"
                                        Aspect="AspectFill"/>
-                                    <Label Text="{Binding Name}" Grid.Column="1" Grid.Row="0" />
+                                    <Label Text="{Binding Name}" Grid.Column="1" Grid.Row="0"/>
+                                    <Label Text="{Binding Price}" Grid.Column="1" Grid.Row="1"/>
                                 </Grid>
-
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>

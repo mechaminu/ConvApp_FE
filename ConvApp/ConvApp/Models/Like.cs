@@ -5,7 +5,7 @@ namespace ConvApp.Models
 {
     public class Like
     {
-        public User Creator { get; set; }
+        public UserModel Creator { get; set; }
         public DateTime CreatedDate { get; set; }
     }
 
@@ -18,7 +18,7 @@ namespace ConvApp.Models
         {
             return new Like
             {
-                Creator = await ApiManager.GetUserData(this.CreatorId),
+                Creator = await ApiManager.GetUser(this.CreatorId),
                 CreatedDate = this.CreatedDate
             };
         }

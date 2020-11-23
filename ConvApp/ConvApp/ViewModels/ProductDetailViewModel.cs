@@ -1,13 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ConvApp.Models;
+using System;
+using System.Collections.ObjectModel;
 
 namespace ConvApp.ViewModels
 {
     public class ProductDetailViewModel
     {
         public int Id { get; set; }
+        public int StoreId { get; set; }
+        public int CategoryId { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime ModifiedDate { get; set; }
+
+        public string StoreName { get => ProductModel.StoreNames[this.StoreId]; }
+        public string CategoryName { get => ProductModel.CategoryNames[this.CategoryId]; }
 
         public string Name { get; set; }
         public int Price { get; set; }
@@ -17,6 +23,7 @@ namespace ConvApp.ViewModels
         public string Rank { get; set; }    // 상품의 랭킹
         public string Rate { get; set; }    // 상품의 평점 
 
-        public List<ReviewPostingViewModel> Reviewpostlist { get; set; } // 상품에 대한 관련 후기 리스트 
+        public ObservableCollection<ReviewPostingViewModel> ReviewList { get; set; } // 상품관련 상품평 리스트 
+        public ObservableCollection<RecipePostingViewModel> RecipeList { get; set; } // 상품관련 레시피 리스트 
     }
 }

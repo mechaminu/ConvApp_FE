@@ -2,95 +2,91 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ConvApp.Views.CategoryPage">
-    <ContentPage.Content>
-        <ScrollView>
-            <StackLayout>
-                <Label Text="By Stores" FontAttributes="Bold" FontSize="Body" Padding="20"/>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="100"/>
-                        <RowDefinition Height="100"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Button Text="GS25"
-                        Clicked="OnClick_GS25"
+    <StackLayout>
+        <Label Text="By Stores" FontAttributes="Bold" FontSize="Body" Padding="20,10,20,10"/>
+        <Grid VerticalOptions="FillAndExpand">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Text="GS25"
+                    Clicked="OnClick_GS25"
+                    Grid.Row="0"
+                    Grid.Column="0"/>
+            <Button Text="CU"
+                    Clicked="OnClick_CU"
+                    Grid.Row="0"
+                    Grid.Column="1"/>
+            <Button Text="Ministop"
+                    Clicked="OnClick_Ministop"
+                    Grid.Row="0"
+                    Grid.Column="2"/>
+            <Button Text="7-Eleven"
+                    Clicked="OnClick_711"
+                    Grid.Row="1"
+                    Grid.Column="0"/>
+            <Button Text="Emart24"
+                    Clicked="OnClick_Emart24"
+                    Grid.Row="1"
+                    Grid.Column="1"/>
+            <Button Text="기타"
+                    Clicked="OnClick_Misc"
+                    Grid.Row="1"
+                    Grid.Column="2"/>
+        </Grid>
+        <Label Text="By Categories" FontAttributes="Bold" FontSize="Body" Padding="20,10,20,10"/>
+        <Grid VerticalOptions="FillAndExpand">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Text="도시락"
+                        Clicked="OnClick_bento"
                         Grid.Row="0"
                         Grid.Column="0"/>
-                    <Button Text="CU"
-                        Clicked="OnClick_CU"
+            <Button Text="라면"
+                        Clicked="OnClick_noodle"
                         Grid.Row="0"
                         Grid.Column="1"/>
-                    <Button Text="Ministop"
-                        Clicked="OnClick_Ministop"
+            <Button Text="김밥"
+                        Clicked="OnClick_gimbab"
                         Grid.Row="0"
                         Grid.Column="2"/>
-                    <Button Text="7-Eleven"
-                        Clicked="OnClick_711"
+            <Button Text="즉석식품"
+                        Clicked="OnClick_instant"
                         Grid.Row="1"
                         Grid.Column="0"/>
-                    <Button Text="Emart24"
-                        Clicked="OnClick_Emart24"
+            <Button Text="스낵"
+                        Clicked="OnClick_snack"
                         Grid.Row="1"
                         Grid.Column="1"/>
-                    <Button Text="기타"
-                        Clicked="OnClick_Misc"
+            <Button Text="음료"
+                        Clicked="OnClick_drink"
                         Grid.Row="1"
                         Grid.Column="2"/>
-                </Grid>
-                <Label Text="By Categories" FontAttributes="Bold" FontSize="Body" Padding="20"/>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="100"/>
-                        <RowDefinition Height="100"/>
-                        <RowDefinition Height="100"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Button Text="도시락"
-                            Clicked="OnClick_bento"
-                            Grid.Row="0"
-                            Grid.Column="0"/>
-                    <Button Text="라면"
-                            Clicked="OnClick_noodle"
-                            Grid.Row="0"
-                            Grid.Column="1"/>
-                    <Button Text="김밥"
-                            Clicked="OnClick_gimbab"
-                            Grid.Row="0"
-                            Grid.Column="2"/>
-                    <Button Text="즉석식품"
-                            Clicked="OnClick_instant"
-                            Grid.Row="1"
-                            Grid.Column="0"/>
-                    <Button Text="스낵"
-                            Clicked="OnClick_snack"
-                            Grid.Row="1"
-                            Grid.Column="1"/>
-                    <Button Text="음료"
-                            Clicked="OnClick_drink"
-                            Grid.Row="1"
-                            Grid.Column="2"/>
-                    <Button Text="주류"
-                            Clicked="OnClick_alchol"
-                            Grid.Row="2"
-                            Grid.Column="0"/>
-                    <Button Text="생활용품"
-                            Clicked="OnClick_daily"
-                            Grid.Row="2"
-                            Grid.Column="1"/>
-                    <Button Text="기타"
-                            Clicked="OnClick_etc"
-                            Grid.Row="2"
-                            Grid.Column="2"/>
-                </Grid>
-            </StackLayout>
-        </ScrollView>
-    </ContentPage.Content>
+            <Button Text="주류"
+                        Clicked="OnClick_alchol"
+                        Grid.Row="2"
+                        Grid.Column="0"/>
+            <Button Text="생활용품"
+                        Clicked="OnClick_daily"
+                        Grid.Row="2"
+                        Grid.Column="1"/>
+            <Button Text="기타"
+                        Clicked="OnClick_etc"
+                        Grid.Row="2"
+                        Grid.Column="2"/>
+        </Grid>
+    </StackLayout>
 </ContentPage>

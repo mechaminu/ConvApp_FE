@@ -2,6 +2,7 @@
 using HeyRed.Mime;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -12,18 +13,20 @@ namespace ConvApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ReviewEntry : ContentPage
     {
-        private ProductDTO product;
+        private ObservableCollection<ProductModel> productList = new ObservableCollection<ProductModel>();
 
         public ReviewEntry()
         {
             InitializeComponent();
+            prodSelection.ItemsSource = productList;
         }
 
         protected override void OnAppearing()
         {
+            ratingSlider.Value = 5;
+            ratingLabel.Text = "5.0";
+
             base.OnAppearing();
-            ratingSlider.Value = 5;             // 별점 초기값
-            ratingLabel.Text = "5.0";    // 
         }
 
         List<FileResult> resultList = new List<FileResult>();
@@ -51,32 +54,46 @@ namespace ConvApp.Views
         {
             var page = new ProductSelectionPage();
 
-            page.MyEvent += (s, e) => GetSelection((s as ProductSelectionPage).selections);
+            page.MyEvent += (s, e) => GetSingleSelection((s as ProductSelectionPage).selections);
 
             await Navigation.PushAsync(page);
         }
 
-        private void GetSelection(List<ProductDTO> products)
+        private void GetSingleSelection(List<ProductModel> products)
         {
             if (products.Count != 0)
-                product = products[0];
+            {
+                if (productList.Count == 0)
+                    prodSelection.ItemsSource = productList;
+                productList.Add(products[0]);
+            }
+        }
+
+        private void DeleteSelection(object sender, EventArgs e)
+        {
+            var product = (sender as Button).BindingContext as ProductModel;
+            productList.Remove(product);
+
+            if (productList.Count == 0)
+                prodSelection.ItemsSource = null;
         }
 
         private async void OnSave(object sender, EventArgs e)
         {
             try
             {
-                var modelNodes = new List<PostingNode>();
-                modelNodes.Add(new PostingNode { Text = ratingLabel.Text });
-                modelNodes.Add(new PostingNode { Text = reviewContent.Text });
+                var modelNodes = new List<PostingNodeModel>();
+                modelNodes.Add(new PostingNodeModel { Text = ratingLabel.Text });
+                modelNodes.Add(new PostingNodeModel { Text = reviewContent.Text });
 
                 var imageFilename = await ApiManager.UploadImage(resultList);
-                modelNodes.Add(new PostingNode { Image = imageFilename });
+                modelNodes.Add(new PostingNodeModel { ImageFilename = imageFilename });
 
-                var prodList = new List<ProductDTO>();
-                prodList.Add(product);
+                var prodList = new List<ProductModel>();
+                foreach(var prod in productList)
+                    prodList.Add(prod);
 
-                await ApiManager.PostPosting(new PostingDTO  // 이미지 업로드
+                await ApiManager.PostPosting(new PostingModel  // 이미지 업로드
                 {
                     CreatorId = App.User.Id,
                     PostingType = (byte)PostingTypes.REVIEW,

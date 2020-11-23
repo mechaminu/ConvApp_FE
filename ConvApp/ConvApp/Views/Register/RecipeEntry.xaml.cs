@@ -76,19 +76,19 @@ namespace ConvApp.Views
         {
             try
             {
-                var modelNodes = new List<PostingNode>();
+                var modelNodes = new List<PostingNodeModel>();
 
-                modelNodes.Add(new PostingNode { Text = recipeTitle.Text });
-                modelNodes.Add(new PostingNode { Text = recipeDescription.Text });
+                modelNodes.Add(new PostingNodeModel { Text = recipeTitle.Text });
+                modelNodes.Add(new PostingNodeModel { Text = recipeDescription.Text });
 
                 var strArr = (await ApiManager.UploadImage(images)).Split(';');
                 foreach (var i in strArr)
                 {
-                    modelNodes.Add(new PostingNode { Image = i, Text = nodes[strArr.IndexOf(i)].text });
+                    modelNodes.Add(new PostingNodeModel { ImageFilename = i, Text = nodes[strArr.IndexOf(i)].text });
                 }
 
                 // 이미지 업로드
-                await ApiManager.PostPosting(new PostingDTO
+                await ApiManager.PostPosting(new PostingModel
                 {
                     CreatorId = App.User.Id,
                     PostingType = (byte)PostingTypes.RECIPE,

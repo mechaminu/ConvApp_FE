@@ -7,15 +7,15 @@ namespace ConvApp.ViewModels
     public class PostingDetailViewModel
     {
         public int Id { get; set; }
-        public User User { get; set; }
+        public UserModel User { get; set; }
         public DateTime Date { get; set; }
-        public List<ProductDTO> Products { get; set; }
+        public List<ProductModel> Products { get; set; }
         public FeedbackViewModel Feedback { get; set; }
     }
 
-    public class PostNode
+    public class PostingNode
     {
-        public string NodeImage { get; set; }                   // 이미지 Url
+        public string NodeImage { get; set; }                   // 이미지 URL
         public string NodeString { get; set; }                  // 이미지 에대한 설명
     }
 
@@ -30,7 +30,7 @@ namespace ConvApp.ViewModels
     {
         public string Title { get; set; }                       // 레시피 이름
         public string PostContent { get; set; }                 // 레시피 소개
-        public List<PostNode> RecipeNode { get; set; }          // 이미지 노드들
-        public List<ProductDTO> ProductList { get; set; }       // 상품 목록들
+        public List<PostingNode> RecipeNode { get; set; }          // 이미지 노드들
+        public List<ProductModel> ProductList { get; set; }       // 상품 목록들
     }
 }

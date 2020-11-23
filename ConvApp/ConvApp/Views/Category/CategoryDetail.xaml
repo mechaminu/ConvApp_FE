@@ -5,92 +5,110 @@
              xmlns:helper ="clr-namespace:ConvApp.Helper;assembly = ConvApp"
              x:Class="ConvApp.Views.CategoryDetail">
     <ScrollView>
-        <StackLayout>
+        <StackLayout Spacing="0">
             <Image Source="{Binding Image}"
                Aspect="AspectFill"/>
-
-            <Grid Padding="10" HeightRequest="100">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Label Text="{Binding Name}" 
-                   Grid.Row="0" Grid.Column="0" 
-                   FontSize="16" FontAttributes="Bold"/>
-                <Label Text="{Binding Price ,StringFormat='{0}원'}" 
-                   Grid.Row="2" Grid.Column="0"
-                   FontSize="16"/>
-                
-                <ImageButton Source="{helper:ImageResource ConvApp.Resources.heart.png}"
-                             Aspect="AspectFit"
-                             BackgroundColor="White"
-                             x:Name="btn_love"
-                             Grid.Row="0" Grid.Column="1"
-                             Clicked="OnClick_love"/>
-                <Label Text="{Binding Likes,StringFormat='{0} Likes'}"
-                   Grid.Row="1" Grid.Column="1"/>
-                <Button Text="후기"
-                    Grid.RowSpan="2" Grid.Column="2"/>
-            </Grid>
-            <BoxView BackgroundColor="Gray" HeightRequest="1"/>
+            <BoxView BackgroundColor="Gray"
+                     HeightRequest="1"/>
+            <Label Padding="10,5,10,5"
+                   Text="{Binding Name}" 
+                   FontSize="Large"
+                   FontAttributes="Bold"
+                   LineBreakMode="NoWrap"
+                   HorizontalTextAlignment="Start"
+                   HorizontalOptions="StartAndExpand"
+                   VerticalOptions="Center"/>
+            <BoxView BackgroundColor="Gray"
+                     HeightRequest="1"/>
             <Grid Padding="10">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Label Text="{Binding Calory, StringFormat='칼로리 {0}Kcal'}" 
-                   Grid.Row="0" Grid.Column="0" 
-                   FontSize="10" FontAttributes="Bold"/>
-                <Label Text="{Binding Rank, StringFormat='랭킹 {0}등'}" 
-                   Grid.Row="1" Grid.Column="0"
-                   FontSize="10"/>
-                <Label x:Name="rate" Text="{Binding Rate, StringFormat='평점 {0}'}" 
-                   Grid.Row="2" Grid.Column="0"
-                   FontSize="10"/>
-                <!--<Slider Value="{x:Reference rate}" 
-                        Grid.Row="2" Grid.Column="1"/>-->
+                <StackLayout Grid.Column="0">
+                    <Label Text="{Binding Price, StringFormat='{0}원'}"
+                       FontSize="Medium"
+                       HorizontalOptions="Start"
+                       VerticalOptions="Center"/>
+                    <Label Text="{Binding StoreName}"
+                       HorizontalTextAlignment="Start"
+                       HorizontalOptions="Start"
+                       VerticalOptions="Center"/>
+                    <Label Text="{Binding CategoryName}"
+                       HorizontalTextAlignment="Start"
+                       HorizontalOptions="Start"
+                       VerticalOptions="Center"/>
+                </StackLayout>
+                <StackLayout Grid.Column="1"
+                             VerticalOptions="Center">
+                    <Label Text="{Binding Rank, StringFormat='상품랭킹 종합 {0}위'}"/>
+                    <Label Text="{Binding Rate, StringFormat='상품평 평점 평균 {0} / 5.0'}"/>
+                    <Label Text="{Binding Calory, StringFormat='칼로리 {0} Kcal'}"/>
+                </StackLayout>
             </Grid>
-
-
-            <ListView ItemsSource="{Binding Reviewpostlist}"
+            <BoxView BackgroundColor="Gray"
+                     HeightRequest="1"/>
+            <Label Text="레시피"
+                   Margin="5"/>
+            <CarouselView ItemsSource="{Binding RecipeList}"
+                          HeightRequest="100">
+                <CarouselView.EmptyView>
+                    <StackLayout>
+                        <Label Text="연관 레시피가 없어요!"
+                               FontSize="Large"
+                               HorizontalOptions="Center"
+                               VerticalOptions="CenterAndExpand"/>
+                    </StackLayout>
+                </CarouselView.EmptyView>
+                <CarouselView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame>
+                            
+                        </Frame>
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+            </CarouselView>
+            <BoxView BackgroundColor="Gray"
+                     HeightRequest="1"/>
+            <Label Text="상품평 / 후기"
+                   Margin="5"/>
+            <ListView ItemsSource="{Binding ReviewList}"
                   SelectionMode="None"
                   HasUnevenRows="True">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="4*"/>
-                                </Grid.ColumnDefinitions>
-                                <ff1:CachedImage MinimumHeightRequest="40"
-                                            Aspect="AspectFill"
-                                            Grid.Column="0"
-                                            DownsampleToViewSize="true"
-                                            Source="{Binding User.ProfileImage}"/>
-
-                                <ff1:CachedImage MinimumHeightRequest="40"
-                                            Aspect="AspectFill"
-                                            Grid.Column="1"
-                                            DownsampleToViewSize="true"
-                                            Source="{Binding PostImage}"/>
-                                <Label Text="{Binding PostContent}"
-                                       Grid.Column="2"
-                                       FontSize="10"
-                                       HorizontalTextAlignment="Center"/>
-                            </Grid>
+                            <AbsoluteLayout>
+                                <StackLayout AbsoluteLayout.LayoutBounds="0,0.5,0.3,1"
+                                             AbsoluteLayout.LayoutFlags="All"
+                                             Padding="5"
+                                             Orientation="Horizontal">
+                                    <ff1:CachedImage Source="{Binding User.Image}"
+                                                     HeightRequest="30"
+                                                     Aspect="AspectFill"
+                                                     DownsampleToViewSize="true"/>
+                                    <Label Text="{Binding User.Name}"
+                                           LineBreakMode="NoWrap"
+                                           VerticalOptions="Center"
+                                           HorizontalOptions="Start"/>
+                                </StackLayout>
+                                <StackLayout AbsoluteLayout.LayoutBounds="1,0.5,0.7,1"
+                                             AbsoluteLayout.LayoutFlags="All"
+                                             Padding="5"
+                                             Orientation="Horizontal">
+                                    <Label Text="{Binding Rating, StringFormat='{0} / 5'}"
+                                           HorizontalTextAlignment="Start"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"/>
+                                    <Label Text="{Binding PostContent}"
+                                           Grid.Column="2"
+                                           FontSize="10"
+                                           HorizontalTextAlignment="Start"
+                                           HorizontalOptions="CenterAndExpand"
+                                           VerticalOptions="Center"/>
+                                </StackLayout>
+                                
+                            </AbsoluteLayout>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>

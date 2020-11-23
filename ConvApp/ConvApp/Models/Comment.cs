@@ -5,7 +5,7 @@ namespace ConvApp.Models
 {
     public class Comment
     {
-        public User Creator { get; set; }
+        public UserModel Creator { get; set; }
         public DateTime CreatedDate { get; set; }
         public string Text { get; set; }
     }
@@ -20,7 +20,7 @@ namespace ConvApp.Models
         {
             return new Comment
             {
-                Creator = await ApiManager.GetUserData(this.CreatorId),
+                Creator = await ApiManager.GetUser(this.CreatorId),
                 CreatedDate = this.CreatedDate,
                 Text = Text
             };

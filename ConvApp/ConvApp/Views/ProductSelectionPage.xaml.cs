@@ -11,8 +11,8 @@ namespace ConvApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ProductSelectionPage : ContentPage
     {
-        ObservableCollection<ProductDTO> products = new ObservableCollection<ProductDTO>();
-        public List<ProductDTO> selections = new List<ProductDTO>();
+        ObservableCollection<ProductModel> products = new ObservableCollection<ProductModel>();
+        public List<ProductModel> selections = new List<ProductModel>();
 
         public event EventHandler MyEvent;
 
@@ -59,7 +59,7 @@ namespace ConvApp.Views
 
     public class ProductSelectionItem : Frame
     {
-        public ProductSelectionItem(ProductDTO product)
+        public ProductSelectionItem(ProductModel product)
         {
             Margin = new Thickness(5, 5, 0, 5);
             Padding = 0;

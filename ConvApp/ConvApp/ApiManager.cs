@@ -1,9 +1,11 @@
 ﻿using ConvApp.Models;
 using ConvApp.ViewModels;
+using Newtonsoft.Json;
 using RestSharp;
 using RestSharp.Serializers.NewtonsoftJson;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -17,25 +19,42 @@ namespace ConvApp
     // Repository pattern 적용사례에 해당되는듯?
     public class ApiManager
     {
-        //private static string EndPointURL = "http://minuuoo.ddns.net:5000/api";
-        private static string EndPointURL = "http://convappdev.azurewebsites.net/api";
+        private static string EndPointURL = "http://minuuoo.ddns.net:5000/api";
+        //private static string EndPointURL = "http://convappdev.azurewebsites.net/api";
         public static string ImageEndPointURL = "https://convappdev.blob.core.windows.net/images";
-        private static RestClient client = new RestClient(EndPointURL) { Timeout = -1 }.UseNewtonsoftJson() as RestClient;
-        private static RestClient client_img = new RestClient(ImageEndPointURL) { Timeout = -1 }.UseNewtonsoftJson() as RestClient;
+        private static RestClient client = new RestClient(EndPointURL) { Timeout = -1 }.UseNewtonsoftJson(new JsonSerializerSettings
+            {
+                PreserveReferencesHandling = PreserveReferencesHandling.All 
+            }) as RestClient;
+        private static RestClient client_img = new RestClient(ImageEndPointURL) { Timeout = -1 }.UseNewtonsoftJson(new JsonSerializerSettings
+            {
+                PreserveReferencesHandling = PreserveReferencesHandling.All
+            }) as RestClient;
 
-        public async static Task<ProductDetailViewModel> GetProductInformation(int id)
+        public async static Task<ProductDetailViewModel> GetProductDetailViewModel(int id)
         {
             var product = await GetProduct(id);
-            var reviews = new List<ReviewPostingViewModel>();
-            product.Postings.ForEach(async e =>
+            var reviews = new ObservableCollection<ReviewPostingViewModel>();
+            var recipes = new ObservableCollection<RecipePostingViewModel>();
+
+            foreach (var e in product.Postings)
             {
-                if (e.PostingType == (byte)PostingTypes.REVIEW)
-                    reviews.Add((ReviewPostingViewModel)await e.PopulateDTO());
-            });
+                var post = await PostingModel.Populate(e);
+
+                if (post is RecipePostingViewModel)
+                    recipes.Add(post as RecipePostingViewModel);
+                else
+                    reviews.Add(post as ReviewPostingViewModel);
+            }
+
+            Console.WriteLine(reviews.Count);
+            Console.WriteLine(recipes.Count);
 
             return new ProductDetailViewModel
             {
                 Id = product.Id,
+                StoreId = product.StoreId,
+                CategoryId = product.CategoryId,
                 CreatedDate = product.CreatedDate,
                 ModifiedDate = product.ModifiedDate,
                 Image = product.Image,
@@ -44,11 +63,12 @@ namespace ConvApp
                 Rank = "123123",
                 Rate = "4.5",
                 Calory = "9999",
-                Reviewpostlist = reviews
+                ReviewList = reviews,
+                RecipeList = recipes
             };
         }
 
-        public async static Task<List<ProductDTO>> GetProducts(int? store = null, int? category = null)
+        public async static Task<List<ProductModel>> GetProducts(int? store = null, int? category = null)
         {
             var request = new RestRequest("products", Method.GET);
 
@@ -57,17 +77,17 @@ namespace ConvApp
             if (category != null)
                 request.AddQueryParameter("category", category + "");
 
-            return (await client.ExecuteAsync<List<ProductDTO>>(request)).Data;
+            return (await client.ExecuteAsync<List<ProductModel>>(request)).Data;
         }
 
-        public async static Task<ProductDTO> GetProduct(int id)
+        public async static Task<ProductModel> GetProduct(int id)
         {
             var request = new RestRequest($"products/{id}", Method.GET);
 
-            var response = await client.ExecuteAsync<ProductDTO>(request);  // TODO NullException 발생하는 듯... 디버깅 할 것
+            var response = await client.ExecuteAsync<ProductModel>(request);
 
-            if (!response.IsSuccessful)
-                return null;
+            if (response == null || !response.IsSuccessful)
+                throw new InvalidOperationException($"제품{id} 정보 획득 실패!");
 
             return response.Data;
         }
@@ -165,13 +185,13 @@ namespace ConvApp
 
         #region USER API
         // 유저 데이터 획득
-        public async static Task<User> GetUserData(int userId)
+        public async static Task<UserModel> GetUser(int userId)
         {
             try
             {
-                var response = await client.ExecuteAsync<User>(new RestRequest($"users/{userId}", Method.GET));
+                var response = await client.ExecuteAsync<UserModel>(new RestRequest($"users/{userId}", Method.GET));
                 var result = response.Data;
-                result.ProfileImage = result.ProfileImage != null ? Path.Combine(ImageEndPointURL, result.ProfileImage) : null;
+
                 return result;
             }
             catch
@@ -187,14 +207,14 @@ namespace ConvApp
         /// </summary>
         /// <param name="post">포스트 뷰모델 객체</param>
         /// <returns>포스트 뷰모델 객체</returns>
-        public async static Task PostPosting(PostingDTO post)
+        public async static Task PostPosting(PostingModel post)
         {
             var payloadObject = post;
             try
             {
                 var request = new RestRequest("postings", Method.POST)
                     .AddJsonBody(payloadObject);
-                var response = await client.ExecuteAsync<PostingDTO>(request);
+                var response = await client.ExecuteAsync<PostingModel>(request);
 
                 if (!response.IsSuccessful)
                     throw new InvalidOperationException("포스팅 실패");
@@ -221,14 +241,14 @@ namespace ConvApp
                 if (type != null)
                     request.AddQueryParameter("type", $"{type}");
 
-                var response = await client.ExecuteAsync<List<PostingDTO>>(request);
+                var response = await client.ExecuteAsync<List<PostingModel>>(request);
                 if (!response.IsSuccessful)
                     throw new InvalidOperationException($"Request Failed - CODE : {response.StatusCode}");
 
                 var result = new List<PostingDetailViewModel>();
                 foreach (var rawPosting in response.Data)
                 {
-                    result.Add(await rawPosting.PopulateDTO());
+                    result.Add(await PostingModel.Populate(rawPosting));
                 }
                 return result;
             }

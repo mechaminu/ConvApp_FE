@@ -13,7 +13,7 @@
                     <ff:CachedImage WidthRequest="30"
                                 HeightRequest="30"
                                 DownsampleToViewSize="true"
-                                Source="{Binding User.ProfileImage}"/>
+                                Source="{Binding User.Image}"/>
                     <Label Text="{Binding User.Name}"
                            TextColor="Black"
                            FontSize="16"
@@ -33,10 +33,21 @@
                             <Frame CornerRadius="10"
                                    BackgroundColor="#CCCCCC"
                                    Padding="10">
-                                <Label Text="관련 상품이 없어요!"
-                                       FontSize="Large"
-                                       HorizontalOptions="Center"
-                                       VerticalOptions="Center"/>
+                                <StackLayout VerticalOptions="Center">
+                                    <Label Text="관련 상품 정보가 없어요..."
+                                           HorizontalOptions="Center"
+                                           FontSize="Large"/>
+                                    <Label HorizontalOptions="Center">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="내가 상품정보 추가하기"
+                                                      TextDecorations="Underline"
+                                                      TextColor="Blue"
+                                                      FontSize="Small"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                </StackLayout>
                             </Frame>
                         </Frame>
                     </CarouselView.EmptyView>

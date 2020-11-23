@@ -13,7 +13,7 @@
                 <ff:CachedImage WidthRequest="30"
                             HeightRequest="30"
                             DownsampleToViewSize="true"
-                            Source="{Binding User.ProfileImage}"/>
+                            Source="{Binding User.Image}"/>
                 <Label Text="{Binding User.Name}" TextColor="Black" FontSize="16" FontAttributes="Bold"/>
                 <Label Text="{Binding Date}" TextColor="Black" FontSize="16"/>
             </StackLayout>

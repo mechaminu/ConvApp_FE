@@ -6,7 +6,7 @@ namespace ConvApp
 
     public partial class App : Application
     {
-        public static User User { get; private set; }
+        public static UserModel User { get; private set; }
 
         public App()
         {
@@ -19,7 +19,7 @@ namespace ConvApp
 
         private async void GetUser()
         {
-            User = await ApiManager.GetUserData(1);
+            User = await ApiManager.GetUser(1);
         }
     }
 }
