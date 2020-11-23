@@ -1,9 +1,8 @@
 ﻿using ConvApp.Models;
+using System;
 using System.Collections.Generic;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using ConvApp.ViewModels;
 
 namespace ConvApp.Views
 {
@@ -15,7 +14,7 @@ namespace ConvApp.Views
         public CategoryRanking()
         {
             InitializeComponent();
-            
+
         }
 
         protected override void OnAppearing()
@@ -25,18 +24,18 @@ namespace ConvApp.Views
             products = (List<ProductDTO>)BindingContext;
             //products = (List<ProductInformation>)BindingContext;
         }
-
+        
         private async void OnClick_CategoryDetail(object sender, SelectedItemChangedEventArgs e)
         {
-            var product = products[e.SelectedItemIndex];
-            var productInfo = await ApiManager.GetProductInformation(product.Id);
             try
             {
+                var product = products[e.SelectedItemIndex];
+                var productInfo = await ApiManager.GetProductInformation(product.Id);
                 await Navigation.PushAsync(new CategoryDetail { BindingContext = productInfo });
             }
             catch (Exception ex)
             {
-                await DisplayAlert("error", ex.StackTrace, "ok");
+                await DisplayAlert(ex.Message, ex.StackTrace, "ok");
             }
         }
     }

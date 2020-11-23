@@ -23,15 +23,17 @@ namespace ConvApp
         private static RestClient client = new RestClient(EndPointURL) { Timeout = -1 }.UseNewtonsoftJson() as RestClient;
         private static RestClient client_img = new RestClient(ImageEndPointURL) { Timeout = -1 }.UseNewtonsoftJson() as RestClient;
 
-        public async static Task<ProductInformation> GetProductInformation(int id)
+        public async static Task<ProductDetailViewModel> GetProductInformation(int id)
         {
             var product = await GetProduct(id);
-            var reviews = await GetPostings((byte)PostingTypes.REVIEW);
+            var reviews = new List<ReviewPostingViewModel>();
+            product.Postings.ForEach(async e =>
+            {
+                if (e.PostingType == (byte)PostingTypes.REVIEW)
+                    reviews.Add((ReviewPostingViewModel)await e.PopulateDTO());
+            });
 
-            var l = new List<ReviewPost>();
-            reviews.ForEach(e => l.Add((ReviewPost)e));
-
-            return new ProductInformation
+            return new ProductDetailViewModel
             {
                 Id = product.Id,
                 CreatedDate = product.CreatedDate,
@@ -42,7 +44,7 @@ namespace ConvApp
                 Rank = "123123",
                 Rate = "4.5",
                 Calory = "9999",
-                Reviewpostlist = l
+                Reviewpostlist = reviews
             };
         }
 
@@ -210,7 +212,7 @@ namespace ConvApp
         /// <param name="start">시작 순번</param>
         /// <param name="end">끝 순번</param>
         /// <returns></returns>
-        public async static Task<List<PostingViewModel>> GetPostings(byte? type = null)
+        public async static Task<List<PostingDetailViewModel>> GetPostings(byte? type = null)
         {
             try
             {
@@ -223,10 +225,10 @@ namespace ConvApp
                 if (!response.IsSuccessful)
                     throw new InvalidOperationException($"Request Failed - CODE : {response.StatusCode}");
 
-                var result = new List<PostingViewModel>();
+                var result = new List<PostingDetailViewModel>();
                 foreach (var rawPosting in response.Data)
                 {
-                    result.Add(await PostingDTO.PopulateDTO(rawPosting));
+                    result.Add(await rawPosting.PopulateDTO());
                 }
                 return result;
             }

@@ -13,7 +13,7 @@ namespace ConvApp.Views
     public partial class ReviewEntry : ContentPage
     {
         private ProductDTO product;
-        
+
         public ReviewEntry()
         {
             InitializeComponent();

@@ -31,26 +31,24 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="IMAGES\bronze_2.png" />
-    <None Remove="IMAGES\gold_2.png" />
-    <None Remove="IMAGES\silver_2.png" />
-    <None Remove="IMAGES\trophy.png" />
     <None Remove="Models\NewFile1.txt" />
+    <None Remove="Resources\bronze_2.png" />
+    <None Remove="Resources\gold_2.png" />
     <None Remove="Resources\heart.png" />
     <None Remove="Resources\heartfilled.png" />
     <None Remove="Resources\P1.jpg" />
+    <None Remove="Resources\silver_2.png" />
+    <None Remove="Resources\trophy.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="IMAGES\bronze_2.png" />
-    <EmbeddedResource Include="IMAGES\gold_2.png" />
-    <EmbeddedResource Include="IMAGES\heart.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="IMAGES\heartfilled.png" />
-    <EmbeddedResource Include="IMAGES\P1.jpg" />
-    <EmbeddedResource Include="IMAGES\silver_2.png" />
-    <EmbeddedResource Include="IMAGES\trophy.png" />
+    <EmbeddedResource Include="Resources\bronze_2.png" />
+    <EmbeddedResource Include="Resources\gold_2.png" />
+    <EmbeddedResource Include="Resources\heart.png" />
+    <EmbeddedResource Include="Resources\heartfilled.png" />
+    <EmbeddedResource Include="Resources\P1.jpg" />
+    <EmbeddedResource Include="Resources\silver_2.png" />
+    <EmbeddedResource Include="Resources\trophy.png" />
   </ItemGroup>
 
   <ItemGroup>

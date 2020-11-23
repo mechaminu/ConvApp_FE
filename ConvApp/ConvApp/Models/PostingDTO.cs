@@ -25,15 +25,15 @@ namespace ConvApp.Models
         public List<ProductDTO> Products { get; set; }
         public List<PostingNode> PostingNodes { get; set; }
 
-        public async static Task<PostingViewModel> PopulateDTO(PostingDTO posting)
+        public async Task<PostingDetailViewModel> PopulateDTO()
         {
-            switch (posting.PostingType)
+            switch (this.PostingType)
             {
                 case (byte)PostingTypes.RECIPE:
 
                     var otherNodes = new List<PostNode>();
 
-                    foreach (var node in posting.PostingNodes.Skip(2))
+                    foreach (var node in this.PostingNodes.Skip(2))
                     {
                         otherNodes.Add(new PostNode
                         {
@@ -44,12 +44,12 @@ namespace ConvApp.Models
 
                     return new RecipePostingViewModel
                     {
-                        Id = posting.Id,
-                        User = await ApiManager.GetUserData(posting.CreatorId),
-                        Date = posting.ModifiedDate,
-                        Title = posting.PostingNodes[0].Text,
-                        PostContent = posting.PostingNodes[1].Text,
-                        Products = posting.Products,
+                        Id = this.Id,
+                        User = await ApiManager.GetUserData(this.CreatorId),
+                        Date = this.ModifiedDate,
+                        Title = this.PostingNodes[0].Text,
+                        PostContent = this.PostingNodes[1].Text,
+                        Products = this.Products,
                         RecipeNode = otherNodes
                     };
 
@@ -57,13 +57,13 @@ namespace ConvApp.Models
                 default:
                     return new ReviewPostingViewModel
                     {
-                        Id = posting.Id,
-                        User = await ApiManager.GetUserData(posting.CreatorId),
-                        Date = posting.ModifiedDate,
-                        Products = posting.Products,
-                        Rating = double.Parse(posting.PostingNodes[0].Text),
-                        PostContent = posting.PostingNodes[1].Text,
-                        PostImage = posting.PostingNodes[2].Image != null ? Path.Combine(ApiManager.ImageEndPointURL, posting.PostingNodes[2].Image) : string.Empty
+                        Id = this.Id,
+                        User = await ApiManager.GetUserData(this.CreatorId),
+                        Date = this.ModifiedDate,
+                        Products = this.Products,
+                        Rating = double.Parse(this.PostingNodes[0].Text),
+                        PostContent = this.PostingNodes[1].Text,
+                        PostImage = this.PostingNodes[2].Image != null ? Path.Combine(ApiManager.ImageEndPointURL, this.PostingNodes[2].Image) : string.Empty
                     };
             }
         }

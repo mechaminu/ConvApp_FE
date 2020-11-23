@@ -5,7 +5,6 @@
              xmlns:helper ="clr-namespace:ConvApp.Helper;assembly = ConvApp"
              x:Class="ConvApp.Views.CategoryDetail">
     <ScrollView>
-        
         <StackLayout>
             <Image Source="{Binding Image}"
                Aspect="AspectFill"/>
@@ -97,7 +96,7 @@
                 </ListView.ItemTemplate>
             </ListView>
 
-            <ListView ItemsSource="{Binding Postings}"
+            <!--<ListView ItemsSource="{Binding Postings}"
                   SelectionMode="None"
                   HasUnevenRows="True">
                 <ListView.ItemTemplate>

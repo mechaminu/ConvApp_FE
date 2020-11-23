@@ -12,7 +12,7 @@ namespace ConvApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class FeedPageAll : ContentPage
     {
-        public List<PostingViewModel> postList = new List<PostingViewModel>();
+        public List<PostingDetailViewModel> postList = new List<PostingDetailViewModel>();
         public bool populated = false;
 
         public FeedPageAll()
