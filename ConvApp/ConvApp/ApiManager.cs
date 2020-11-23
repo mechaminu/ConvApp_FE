@@ -64,7 +64,7 @@ namespace ConvApp
         {
             var request = new RestRequest($"products/{id}", Method.GET);
 
-            var response = await client.ExecuteAsync<ProductDTO>(request);
+            var response = await client.ExecuteAsync<ProductDTO>(request);  // TODO NullException 발생하는 듯... 디버깅 할 것
 
             if (!response.IsSuccessful)
                 return null;
