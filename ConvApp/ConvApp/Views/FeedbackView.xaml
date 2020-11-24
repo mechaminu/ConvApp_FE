@@ -4,12 +4,18 @@
              xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              xmlns:helper ="clr-namespace:ConvApp.Helper;assembly=ConvApp"
              x:Class="ConvApp.Views.FeedbackView">
-    <StackLayout Orientation="Horizontal">
-        <ImageButton Source="{helper:ImageResource ConvApp.Resources.heart.png}"
+    <StackLayout Orientation="Horizontal"
+                 Margin="5">
+        <ImageButton Source="{Binding LikeImage}"
+                     Command="{Binding LikeBtnCommand}"
                      HeightRequest="30"
                      Aspect="AspectFit"
-                     BackgroundColor="Transparent"
-                     x:Name="likeBtn"/>
+                     BackgroundColor="Transparent"/>
+        <Label Text="{Binding Likes.Count}"
+               VerticalOptions="Center"/>
+        <Label Text="{Binding Comments.Count, StringFormat='총 댓글 {0}개'}"
+               HorizontalOptions="EndAndExpand"
+               VerticalOptions="Center"/>
     </StackLayout>
     <ListView ItemsSource="{Binding Comments}"
               HasUnevenRows="true"
@@ -17,19 +23,36 @@
         <ListView.ItemTemplate>
             <DataTemplate>
                 <ViewCell>
-                    <StackLayout>
-                        <AbsoluteLayout>
-                            <ff:CachedImage AbsoluteLayout.LayoutBounds="0.1,0.1"
-                                        WidthRequest="30"
-                                        HeightRequest="30"
-                                        Source="{Binding Creator.Image}"/>
-                            <Label Text="{Binding Creator.Name}"/>
-                            <Label Text="{Binding CreatedDate}"/>
-                            <Button Text="대댓글"/>
-                            <Button Text="좋아요"/>
-                        </AbsoluteLayout>
-                        <Label Text="{Binding Text}"/>
-                    </StackLayout>
+                    <Frame Margin="5"
+                           Padding="0"
+                           CornerRadius="10">
+                        <StackLayout Spacing="0"
+                                 BackgroundColor="Gainsboro">
+                            <StackLayout Orientation="Horizontal"
+                                         Padding="10,5,10,0"
+                                         Spacing="0">
+                                <ff:CachedImage Margin="0,0,10,0"
+                                            WidthRequest="30"
+                                            HeightRequest="30"
+                                            Source="{Binding Creator.Image}"/>
+                                <Label Text="{Binding Creator.Name}"
+                                   HorizontalOptions="FillAndExpand"
+                                   VerticalOptions="Center"/>
+                                <Label Text="{Binding CreatedDate}"
+                                   HorizontalOptions="End"
+                                   VerticalOptions="Center"/>
+                            </StackLayout>
+                            <Label Text="{Binding Text}"
+                               Padding="10"/>
+                            <!--<StackLayout Orientation="Horizontal"
+                                     Spacing="0">
+                                <Button Text="댓글"
+                                    HorizontalOptions="FillAndExpand"/>
+                                <Button Text="좋아요"
+                                    HorizontalOptions="FillAndExpand"/>
+                            </StackLayout>-->
+                        </StackLayout>
+                    </Frame>
                 </ViewCell>
             </DataTemplate>
         </ListView.ItemTemplate>

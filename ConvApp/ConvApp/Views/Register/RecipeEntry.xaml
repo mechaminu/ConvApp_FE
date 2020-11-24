@@ -9,59 +9,61 @@
                      Clicked="OnSave"/>
     </ContentPage.ToolbarItems>
 
-    <StackLayout>
-        <Editor x:Name="recipeTitle"
+    <StackLayout Spacing="0">
+        <Frame Margin="5"
+               Padding="0"
+               CornerRadius="5"
+               BackgroundColor="Gainsboro">
+            <StackLayout Spacing="0">
+                <Editor x:Name="recipeTitle"
                 Placeholder="레시피 제목"
                 PlaceholderColor="Gray"
                 BackgroundColor="Transparent"
                 FontSize="Body"
                 FontAttributes="Bold" />
-
-        <BoxView BackgroundColor="Gray"
-                 HeightRequest="1"/>
-
-        <Editor x:Name ="recipeDescription"
+                <Editor x:Name ="recipeDescription"
                 HeightRequest="150"
                 Placeholder="레시피 소개"
                 PlaceholderColor="Gray"
                 BackgroundColor="Transparent"
                 FontSize="Body"
                 FontAttributes="Bold"/>
+            </StackLayout>
+        </Frame>
 
-        <BoxView BackgroundColor="Gray"
-                    HeightRequest="1"/>
+        <Frame Margin="5"
+               Padding="0"
+               CornerRadius="5"
+               BackgroundColor="Gainsboro">
+            <ListView x:Name="recipeNodeList">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="4*"/>
+                                    </Grid.ColumnDefinitions>
 
-        <ListView x:Name="recipeNodeList">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <StackLayout>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="4*"/>
-                                </Grid.ColumnDefinitions>
+                                    <Image Grid.Column="0" 
+                                           Source="{Binding Image}"/>
+                                    <Editor Placeholder="설명 입력"
+                                            PlaceholderColor="Gray"
+                                            BackgroundColor="Transparent"
+                                            Text="{Binding Text}"
+                                            Grid.Column="1" />
+                                </Grid>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Frame>
 
-                                <Image Grid.Column="0" 
-                                       Source="{Binding image}"/>
-                                <Editor Placeholder="레시피 설명 입력"
-                                        PlaceholderColor="Gray"
-                                        BackgroundColor="Transparent"
-                                        Text="{Binding text}"
-                                        Grid.Column="1" />
-                            </Grid>
-                        </StackLayout>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-
-        <BoxView BackgroundColor="Gray"
-                    HeightRequest="1"/>
-
-        <Button Text="상품추가하기"/>
+        <Button Text="상품추가하기"
+                Clicked="AddProduct"/>
         <Button Text="이미지 추가하기"
-                Grid.Column="1"
                 Clicked="AddNodesFromImage"/>
 
     </StackLayout>

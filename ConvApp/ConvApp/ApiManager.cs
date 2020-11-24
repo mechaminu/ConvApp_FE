@@ -19,14 +19,14 @@ namespace ConvApp
     // Repository pattern 적용사례에 해당되는듯?
     public class ApiManager
     {
-        private static string EndPointURL = "http://minuuoo.ddns.net:5000/api";
+        private static readonly string EndPointURL = "http://minuuoo.ddns.net:5000/api";
         //private static string EndPointURL = "http://convappdev.azurewebsites.net/api";
-        public static string ImageEndPointURL = "https://convappdev.blob.core.windows.net/images";
-        private static RestClient client = new RestClient(EndPointURL) { Timeout = -1 }.UseNewtonsoftJson(new JsonSerializerSettings
+        public static readonly string ImageEndPointURL = "https://convappdev.blob.core.windows.net/images";
+        private static readonly RestClient client = new RestClient(EndPointURL) { Timeout = -1 }.UseNewtonsoftJson(new JsonSerializerSettings
             {
                 PreserveReferencesHandling = PreserveReferencesHandling.All 
             }) as RestClient;
-        private static RestClient client_img = new RestClient(ImageEndPointURL) { Timeout = -1 }.UseNewtonsoftJson(new JsonSerializerSettings
+        private static readonly RestClient client_img = new RestClient(ImageEndPointURL) { Timeout = -1 }.UseNewtonsoftJson(new JsonSerializerSettings
             {
                 PreserveReferencesHandling = PreserveReferencesHandling.All
             }) as RestClient;
@@ -93,41 +93,17 @@ namespace ConvApp
         }
 
         #region FEEDBACK API
-        public async static Task<FeedbackViewModel> GetFeedback(byte type, int id)
-        {
-            var request = new RestRequest($"feedbacks", Method.GET)
-                .AddQueryParameter("type", $"{type}")
-                .AddQueryParameter("id", $"{id}")
-                .AddQueryParameter("time", $"{DateTime.UtcNow}");
-
-            var response = await client.ExecuteAsync<FeedbackDTO>(request);
-
-            var comments = new List<Comment>();
-
-            foreach (var c in response.Data.comments)
-            {
-                comments.Add(await c.PopulateDTO());
-            }
-
-            var likes = new List<Like>();
-
-            foreach (var l in response.Data.likes)
-            {
-                likes.Add(await l.PopulateDTO());
-            }
-
-            return new FeedbackViewModel(type, id);
-        }
-
         public async static Task<List<Like>> GetLikes(byte type, int id)
         {
             var request = new RestRequest("feedbacks/like", Method.GET)
                     .AddQueryParameter("type", $"{type}")
                     .AddQueryParameter("id", $"{id}");
 
+            var response = await client.ExecuteAsync<List<LikeDTO>>(request);
+
             var likes = new List<Like>();
-            (await client.ExecuteAsync<List<LikeDTO>>(request)).Data
-                .ForEach(async e => likes.Add(await e.PopulateDTO()));
+            foreach (var likeDTO in response.Data)
+                likes.Add(await LikeDTO.Populate(likeDTO));
 
             return likes;
         }
@@ -135,16 +111,20 @@ namespace ConvApp
         public async static Task<List<Like>> PostLike(byte type, int id)
         {
             var request = new RestRequest("feedbacks/like", Method.POST)
-                    .AddQueryParameter("type", $"{type}")
-                    .AddQueryParameter("id", $"{id}")
-                    .AddJsonBody(new LikeDTO { CreatorId = App.User.Id });
+                .AddQueryParameter("type", $"{type}")
+                .AddQueryParameter("id", $"{id}")
+                .AddJsonBody(new LikeDTO { CreatorId = App.User.Id });
 
             var response = await client.ExecuteAsync<List<LikeDTO>>(request);
 
-            var likes = new List<Like>();
-            response.Data.ForEach(async e => likes.Add(await e.PopulateDTO()));
+            if (response == null || !response.IsSuccessful)
+                throw new InvalidOperationException("like posting failed");
 
-            return likes;
+            var likes = new List<Like>();
+            foreach (var likeDTO in response.Data)
+                likes.Add(await LikeDTO.Populate(likeDTO));
+
+            return likes;            
         }
 
         public async static Task<List<Like>> DeleteLike(byte type, int id)
@@ -154,32 +134,46 @@ namespace ConvApp
                 .AddQueryParameter("id", $"{id}")
                 .AddJsonBody(new LikeDTO { CreatorId = App.User.Id });
 
+            var response = await client.ExecuteAsync<List<LikeDTO>>(request);
+
+            if (response == null || !response.IsSuccessful)
+                throw new InvalidOperationException("like deletion failed");
+
             var likes = new List<Like>();
-            (await client.ExecuteAsync<List<LikeDTO>>(request)).Data
-                .ForEach(async e => likes.Add(await e.PopulateDTO()));
+            foreach (var likeDTO in response.Data)
+                likes.Add(await LikeDTO.Populate(likeDTO));
 
             return likes;
         }
 
-        public async static Task<List<Comment>> GetComments(byte type, int id, DateTime time, int page)
+        public async static Task<List<Comment>> GetComments(byte type, int id)
         {
-            var request = new RestRequest("feedbacks/like", Method.GET)
-                    .AddQueryParameter("type", $"{type}")
-                    .AddQueryParameter("id", $"{id}")
-                    .AddQueryParameter("time", $"{time}")
-                    .AddQueryParameter("page", $"{page}");
+            var request = new RestRequest("feedbacks/comment", Method.GET)
+                .AddQueryParameter("type", type + "")
+                .AddQueryParameter("id", id + "");
+
+            var response = await client.ExecuteAsync<List<CommentDTO>>(request);
 
             var comments = new List<Comment>();
-            (await client.ExecuteAsync<List<CommentDTO>>(request)).Data
-                .ForEach(async e => comments.Add(await e.PopulateDTO()));
+            foreach (var cmtDTO in response.Data)
+                comments.Add(await CommentDTO.Populate(cmtDTO));
 
             return comments;
         }
 
-        class FeedbackDTO
+        public async static Task<Comment> PostComment(byte type, int id, string text)
         {
-            public List<CommentDTO> comments { get; set; }
-            public List<LikeDTO> likes { get; set; }
+            var request = new RestRequest("feedbacks/comment", Method.POST)
+                .AddQueryParameter("type", $"{type}")
+                .AddQueryParameter("id", $"{id}")
+                .AddJsonBody(new CommentDTO { CreatorId = App.User.Id, Text = text });
+
+            var response = await client.ExecuteAsync<CommentDTO>(request);
+
+            if (response == null || !response.IsSuccessful)
+                throw new InvalidOperationException("comment posting failed");
+
+            return await CommentDTO.Populate(response.Data);
         }
         #endregion
 
@@ -232,14 +226,17 @@ namespace ConvApp
         /// <param name="start">시작 순번</param>
         /// <param name="end">끝 순번</param>
         /// <returns></returns>
-        public async static Task<List<PostingDetailViewModel>> GetPostings(byte? type = null)
+        public async static Task<List<PostingDetailViewModel>> GetPostings(DateTime? time = null, int? page = null, byte? type = null)
         {
+            var payload = new PostingQueryOption { baseTime = time.HasValue ? time.Value : DateTime.UtcNow, page = page.HasValue ? page.Value : 0 };
             try
             {
-                var request = new RestRequest("postings", Method.GET);
+                var request = new RestRequest("postings", Method.GET)
+                    .AddParameter("time", time.HasValue ? time.Value.ToString("o") : DateTime.UtcNow.ToString("o"))
+                    .AddParameter("page", page.HasValue ? page.Value : 0);
 
-                if (type != null)
-                    request.AddQueryParameter("type", $"{type}");
+                if (type.HasValue)
+                    request.AddQueryParameter("type", $"{type.Value}");
 
                 var response = await client.ExecuteAsync<List<PostingModel>>(request);
                 if (!response.IsSuccessful)
@@ -257,6 +254,19 @@ namespace ConvApp
                 throw;
             }
         }
+
+        public class PostingQueryOption
+        {
+            public DateTime baseTime;
+            public int page;
+        }
+
+        public class PostingQueryResult
+        {
+            public int page;
+            public int maxPage;
+            public List<PostingModel> postings;
+        }
         #endregion
 
         #region IMAGE API
@@ -265,7 +275,7 @@ namespace ConvApp
         {
             try
             {
-                if (images.Count() == 0)
+                if (!images.Any())
                     return null;
 
                 var tmpDict = new Dictionary<string, object>();
@@ -332,33 +342,31 @@ namespace ConvApp
 
                 if (parameters != null && parameters.Count > 0)
                 {
-                    using (Stream reqStream = request.GetRequestStream())
+                    using Stream reqStream = request.GetRequestStream();
+                    foreach (KeyValuePair<string, object> pair in parameters)
                     {
-                        foreach (KeyValuePair<string, object> pair in parameters)
-                        {
-                            reqStream.Write(boundaryBytes, 0, boundaryBytes.Length);
+                        reqStream.Write(boundaryBytes, 0, boundaryBytes.Length);
 
-                            FormFile file = pair.Value as FormFile;
-                            string header = "Content-Disposition: form-data; name=\"" + pair.Key + "\"; filename=\"" + file.Name + "\"\r\nContent-Type: " + file.ContentType + "\r\n\r\n";
-                            byte[] bytes = Encoding.UTF8.GetBytes(header);
-                            reqStream.Write(bytes, 0, bytes.Length);
-                            byte[] buffer = new byte[32768];
-                            int bytesRead;
+                        FormFile file = pair.Value as FormFile;
+                        string header = "Content-Disposition: form-data; name=\"" + pair.Key + "\"; filename=\"" + file.Name + "\"\r\nContent-Type: " + file.ContentType + "\r\n\r\n";
+                        byte[] bytes = Encoding.UTF8.GetBytes(header);
+                        reqStream.Write(bytes, 0, bytes.Length);
+                        byte[] buffer = new byte[32768];
+                        int bytesRead;
 
-                            while ((bytesRead = file.Stream.Read(buffer, 0, buffer.Length)) != 0)
-                                reqStream.Write(buffer, 0, buffer.Length);
+                        while ((bytesRead = file.Stream.Read(buffer, 0, buffer.Length)) != 0)
+                            reqStream.Write(buffer, 0, buffer.Length);
 
-                            reqStream.Write(rnBytes, 0, rnBytes.Length);
-                        }
-                        reqStream.Write(trailerBytes, 0, trailerBytes.Length);
-                        reqStream.Close();
+                        reqStream.Write(rnBytes, 0, rnBytes.Length);
                     }
+                    reqStream.Write(trailerBytes, 0, trailerBytes.Length);
+                    reqStream.Close();
                 }
 
-                using (WebResponse res = request.GetResponse())
-                using (Stream resStream = res.GetResponseStream())
-                using (StreamReader reader = new StreamReader(resStream))
-                    return await reader.ReadToEndAsync();
+                using WebResponse res = request.GetResponse();
+                using Stream resStream = res.GetResponseStream();
+                using StreamReader reader = new StreamReader(resStream);
+                return await reader.ReadToEndAsync();
             }
             catch
             {

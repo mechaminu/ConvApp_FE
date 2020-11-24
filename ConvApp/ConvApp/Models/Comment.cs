@@ -16,13 +16,13 @@ namespace ConvApp.Models
         public DateTime CreatedDate { get; set; }
         public string Text { get; set; }
 
-        public async Task<Comment> PopulateDTO()
+        public static async Task<Comment> Populate(CommentDTO dto)
         {
             return new Comment
             {
-                Creator = await ApiManager.GetUser(this.CreatorId),
-                CreatedDate = this.CreatedDate,
-                Text = Text
+                Creator = await ApiManager.GetUser(dto.CreatorId),
+                CreatedDate = dto.CreatedDate,
+                Text = dto.Text
             };
         }
     }

@@ -11,9 +11,9 @@
                              Margin="10,10,10,0"
                              Orientation="Horizontal">
                     <ff:CachedImage WidthRequest="30"
-                                HeightRequest="30"
-                                DownsampleToViewSize="true"
-                                Source="{Binding User.Image}"/>
+                                    HeightRequest="30"
+                                    DownsampleToViewSize="true"
+                                    Source="{Binding User.Image}"/>
                     <Label Text="{Binding User.Name}"
                            TextColor="Black"
                            FontSize="16"
@@ -27,6 +27,7 @@
                            HorizontalOptions="End"/>
                 </StackLayout>
                 <CarouselView ItemsSource="{Binding Products}"
+                              Loop="False"
                               HeightRequest="100">
                     <CarouselView.EmptyView>
                         <Frame Padding="5">
@@ -101,9 +102,12 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Editor Placeholder="댓글 입력..."
+                        x:Name="cmtEditor"
                         AutoSize="TextChanges"
                         Grid.Column="0"/>
                 <Button Text="게시"
+                        Command="{Binding Feedback.PostCmtCommand}"
+                        CommandParameter="{Binding Source={x:Reference cmtEditor}, Path=Text}"
                         Grid.Column="1"/>
             </Grid>
         </Frame>

@@ -13,8 +13,6 @@ namespace ConvApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ReviewEntry : ContentPage
     {
-        private ObservableCollection<ProductModel> productList = new ObservableCollection<ProductModel>();
-
         public ReviewEntry()
         {
             InitializeComponent();
@@ -25,11 +23,10 @@ namespace ConvApp.Views
         {
             ratingSlider.Value = 5;
             ratingLabel.Text = "5.0";
-
             base.OnAppearing();
         }
 
-        List<FileResult> resultList = new List<FileResult>();
+        private readonly List<FileResult> resultList = new List<FileResult>();
         Stream imgStream;
         double rate = 5;
 
@@ -50,21 +47,21 @@ namespace ConvApp.Views
                 return;
         }
 
+        private readonly ObservableCollection<ProductModel> productList = new ObservableCollection<ProductModel>();
         private async void AddProduct(object sender, EventArgs e)
         {
-            var page = new ProductSelectionPage();
+            var page = new ProductSelectionPage(_single:true);
 
-            page.MyEvent += (s, e) => GetSingleSelection((s as ProductSelectionPage).selections);
+            page.MyEvent += (s, e) => GetSelection((s as ProductSelectionPage).selections);
 
             await Navigation.PushAsync(page);
         }
 
-        private void GetSingleSelection(List<ProductModel> products)
+        private void GetSelection(List<ProductModel> products)
         {
+            productList.Clear();
             if (products.Count != 0)
             {
-                if (productList.Count == 0)
-                    prodSelection.ItemsSource = productList;
                 productList.Add(products[0]);
             }
         }
@@ -74,17 +71,19 @@ namespace ConvApp.Views
             var product = (sender as Button).BindingContext as ProductModel;
             productList.Remove(product);
 
-            if (productList.Count == 0)
-                prodSelection.ItemsSource = null;
+            //if (productList.Count == 0)
+            //    prodSelection.ItemsSource = null;
         }
 
         private async void OnSave(object sender, EventArgs e)
         {
             try
             {
-                var modelNodes = new List<PostingNodeModel>();
-                modelNodes.Add(new PostingNodeModel { Text = ratingLabel.Text });
-                modelNodes.Add(new PostingNodeModel { Text = reviewContent.Text });
+                var modelNodes = new List<PostingNodeModel>
+                {
+                    new PostingNodeModel { Text = ratingLabel.Text },
+                    new PostingNodeModel { Text = reviewContent.Text }
+                };
 
                 var imageFilename = await ApiManager.UploadImage(resultList);
                 modelNodes.Add(new PostingNodeModel { ImageFilename = imageFilename });

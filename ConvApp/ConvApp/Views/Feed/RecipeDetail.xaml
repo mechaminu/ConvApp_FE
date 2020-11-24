@@ -4,40 +4,137 @@
              xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              xmlns:local="clr-namespace:ConvApp.Views"
              x:Class="ConvApp.Views.RecipeDetail">
-    <ScrollView>
-        <StackLayout>
-            <Label Text="{Binding Title}" 
-               FontSize="20"
-               FontAttributes="Bold"/>
-            <StackLayout Padding="0"  Orientation="Horizontal">
-                <ff:CachedImage WidthRequest="30"
-                            HeightRequest="30"
-                            DownsampleToViewSize="true"
-                            Source="{Binding User.Image}"/>
-                <Label Text="{Binding User.Name}" TextColor="Black" FontSize="16" FontAttributes="Bold"/>
-                <Label Text="{Binding Date}" TextColor="Black" FontSize="16"/>
+    <StackLayout>
+        <ScrollView>
+            <StackLayout Spacing="0">
+                <Label Text="{Binding Title}"
+                       Padding="5"
+                       FontSize="Large"
+                       FontAttributes="Bold"/>
+                <StackLayout Padding="0"
+                                 Margin="10,10,10,0"
+                                 Orientation="Horizontal">
+                    <ff:CachedImage WidthRequest="30"
+                                    HeightRequest="30"
+                                    DownsampleToViewSize="true"
+                                    Source="{Binding User.Image}"/>
+                    <Label Text="{Binding User.Name}"
+                               TextColor="Black"
+                               FontSize="16"
+                               FontAttributes="Bold"
+                               HorizontalOptions="FillAndExpand"
+                               VerticalOptions="Center"/>
+                    <Label Text="{Binding Date, StringFormat='{0}'}"
+                               TextColor="Black"
+                               FontSize="16"
+                               VerticalOptions="Center"
+                               HorizontalOptions="End"/>
+                </StackLayout>
+
+                <CarouselView ItemsSource="{Binding Products}"
+                              Loop="False"
+                              PeekAreaInsets="50"
+                              HeightRequest="100">
+                    <CarouselView.EmptyView>
+                        <Frame Padding="5">
+                            <Frame CornerRadius="10"
+                                       BackgroundColor="#CCCCCC"
+                                       Padding="10">
+                                <StackLayout VerticalOptions="Center">
+                                    <Label Text="관련 상품 정보가 없어요..."
+                                           HorizontalOptions="Center"
+                                           FontSize="Large"/>
+                                    <Label HorizontalOptions="Center">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="내가 상품정보 추가하기"
+                                                          TextDecorations="Underline"
+                                                          TextColor="Blue"
+                                                          FontSize="Small"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                </StackLayout>
+                            </Frame>
+                        </Frame>
+                    </CarouselView.EmptyView>
+                    <CarouselView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame Padding="5">
+                                <Frame CornerRadius="10"
+                                       BackgroundColor="#CCCCCC"
+                                       Padding="10">
+                                    <AbsoluteLayout>
+                                        <Image Source="{Binding Image}"
+                                               AbsoluteLayout.LayoutBounds="0,0,0.3,1"
+                                               AbsoluteLayout.LayoutFlags="All"/>
+                                        <StackLayout AbsoluteLayout.LayoutBounds="0.75,0.5"
+                                                     AbsoluteLayout.LayoutFlags="PositionProportional"
+                                                     HorizontalOptions="Start">
+                                            <Label Text="{Binding Name}"
+                                                   FontSize="Large"
+                                                   HorizontalTextAlignment="Start"/>
+                                            <StackLayout Orientation="Horizontal">
+                                                <Label Text="{Binding StoreName}"
+                                                       HorizontalTextAlignment="Start"/>
+                                                <Label Text="{Binding CategoryName}"
+                                                       HorizontalTextAlignment="Start"/>
+                                            </StackLayout>
+                                            <Label Text="{Binding Price, StringFormat='{0}원'}"/>
+                                        </StackLayout>
+                                    </AbsoluteLayout>
+                                </Frame>
+                            </Frame>
+                        </DataTemplate>
+                    </CarouselView.ItemTemplate>
+                </CarouselView>
+
+                <Label Text="{Binding PostContent}"
+                       Padding="5"
+                       FontSize="Medium"/>
+
+                <ListView ItemsSource="{Binding RecipeNode}"
+                          SelectionMode="None"
+                          HasUnevenRows="True">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout>
+                                    <ff:CachedImage MinimumHeightRequest="100"
+                                                    Aspect="AspectFill"
+                                                    DownsampleToViewSize="true"
+                                                    Source="{Binding NodeImage}"/>
+                                    <Label Text="{Binding NodeString}"
+                                       FontSize="16"
+                                       HorizontalTextAlignment="Center"/>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <local:FeedbackView BindingContext="{Binding Feedback}"/>
+
             </StackLayout>
-            <Label Text="{Binding PostContent}" FontSize="16" />
-            <ListView ItemsSource="{Binding RecipeNode}"
-                  SelectionMode="None"
-                  HasUnevenRows="True">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <StackLayout>
-                                <ff:CachedImage MinimumHeightRequest="100"
-                                            Aspect="AspectFill"
-                                            DownsampleToViewSize="true"
-                                            Source="{Binding NodeImage}"/>
-                                <Label Text="{Binding NodeString}"
-                                   FontSize="16"
-                                   HorizontalTextAlignment="Center"/>
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-            <local:FeedbackView BindingContext="{Binding Feedback}"/>
-        </StackLayout>
-    </ScrollView>
+        </ScrollView>
+        <Frame VerticalOptions="End"
+                   Padding="0">
+            <Grid Padding="0"
+                      ColumnSpacing="0"
+                      MinimumHeightRequest="100">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Editor Placeholder="댓글 입력..."
+                            x:Name="cmtEditor"
+                            AutoSize="TextChanges"
+                            Grid.Column="0"/>
+                <Button Text="게시"
+                        Command="{Binding Feedback.PostCmtCommand}"
+                        CommandParameter="{Binding Source={x:Reference cmtEditor}, Path=Text}"
+                        Grid.Column="1"/>
+            </Grid>
+        </Frame>
+    </StackLayout>
 </ContentPage>

@@ -16,8 +16,8 @@ namespace ConvApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RecipeEntry : ContentPage
     {
-        private List<EntryNode> nodes = new List<EntryNode>();
-        private List<FileResult> images = new List<FileResult>();
+        private readonly List<EntryNode> nodes = new List<EntryNode>();
+        private readonly List<FileResult> images = new List<FileResult>();
         private bool isSelecting = false;
 
         public RecipeEntry()
@@ -38,7 +38,7 @@ namespace ConvApp.Views
             {
                 var pickResults = await FilePicker.PickMultipleAsync(new PickOptions { PickerTitle = "사진 선택", FileTypes = FilePickerFileType.Images });
 
-                if (pickResults.Count() == 0)
+                if (!pickResults.Any())
                     throw new InvalidOperationException("이미지를 선택하지 않았습니다");
 
                 foreach (var photo in pickResults)
@@ -50,8 +50,8 @@ namespace ConvApp.Views
 
                     nodes.Add(new EntryNode
                     {
-                        image = ImageSource.FromStream(() => new MemoryStream(bytes)),
-                        text = string.Empty
+                        Image = ImageSource.FromStream(() => new MemoryStream(bytes)),
+                        Text = string.Empty
                     });
                 }
                 RefreshList();
@@ -72,19 +72,43 @@ namespace ConvApp.Views
             }
         }
 
+        private readonly List<ProductModel> productList = new List<ProductModel>();
+        private async void AddProduct(object sender, EventArgs e)
+        {
+            var page = new ProductSelectionPage(productList);
+            page.MyEvent += (s, e) =>
+            {
+                GetSelection((s as ProductSelectionPage).selections);
+                (sender as Button).Text = $"상품추가하기 (현재 {productList.Count}개 선택중)";
+            };
+
+            await Navigation.PushAsync(page);
+        }
+
+        private void GetSelection(List<ProductModel> products)
+        {
+            productList.Clear();
+            if (products.Count != 0)
+            {
+                foreach(var prod in products)
+                    productList.Add(prod);
+            }
+        }
+
         private async void OnSave(object sender, EventArgs e)
         {
             try
             {
-                var modelNodes = new List<PostingNodeModel>();
-
-                modelNodes.Add(new PostingNodeModel { Text = recipeTitle.Text });
-                modelNodes.Add(new PostingNodeModel { Text = recipeDescription.Text });
+                var modelNodes = new List<PostingNodeModel>
+                {
+                    new PostingNodeModel { Text = recipeTitle.Text },
+                    new PostingNodeModel { Text = recipeDescription.Text }
+                };
 
                 var strArr = (await ApiManager.UploadImage(images)).Split(';');
                 foreach (var i in strArr)
                 {
-                    modelNodes.Add(new PostingNodeModel { ImageFilename = i, Text = nodes[strArr.IndexOf(i)].text });
+                    modelNodes.Add(new PostingNodeModel { ImageFilename = i, Text = nodes[strArr.IndexOf(i)].Text });
                 }
 
                 // 이미지 업로드
@@ -92,7 +116,8 @@ namespace ConvApp.Views
                 {
                     CreatorId = App.User.Id,
                     PostingType = (byte)PostingTypes.RECIPE,
-                    PostingNodes = modelNodes
+                    PostingNodes = modelNodes,
+                    Products = productList
                 });
 
                 await Navigation.PopToRootAsync();
@@ -107,8 +132,8 @@ namespace ConvApp.Views
 
     public class EntryNode
     {
-        public ImageSource image { get; set; }
-        public string text { get; set; }
+        public ImageSource Image { get; set; }
+        public string Text { get; set; }
     }
 
 }

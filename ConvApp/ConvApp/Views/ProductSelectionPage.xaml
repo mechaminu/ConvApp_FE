@@ -7,24 +7,24 @@
         <ToolbarItem Text="확인"
                      Order="Primary"
                      Priority="0"
-                     Clicked="ToolbarItem_Clicked"/>
+                     Clicked="OnSave"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <AbsoluteLayout BackgroundColor="Blue">
+        <AbsoluteLayout>
             <ScrollView AbsoluteLayout.LayoutBounds="0,0,1,0.2"
                         AbsoluteLayout.LayoutFlags="All"
-                        BackgroundColor="Green"
-                        Orientation="Horizontal">
+                        Orientation="Horizontal"
+                        BackgroundColor="Gainsboro">
                 <StackLayout Orientation="Horizontal"
                              Spacing="0"
                              x:Name="selectionList">
                 </StackLayout>
             </ScrollView>
             <ListView x:Name="list"
-                      ItemTapped="list_ItemTapped"
+                      ItemTapped="ItemTapped"
                       AbsoluteLayout.LayoutBounds="0,1,1,0.8"
                       AbsoluteLayout.LayoutFlags="All"
-                      BackgroundColor="Yellow">
+                      SelectionMode="None">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ImageCell Text="{Binding Name}" ImageSource="{Binding Image}" Detail="{Binding Price, StringFormat='{0}원'}"/>

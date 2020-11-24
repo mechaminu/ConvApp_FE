@@ -14,12 +14,12 @@ namespace ConvApp.Models
         public int CreatorId { get; set; }
         public DateTime CreatedDate { get; set; }
 
-        public async Task<Like> PopulateDTO()
+        public static async Task<Like> Populate(LikeDTO dto)
         {
             return new Like
             {
-                Creator = await ApiManager.GetUser(this.CreatorId),
-                CreatedDate = this.CreatedDate
+                Creator = await ApiManager.GetUser(dto.CreatorId),
+                CreatedDate = dto.CreatedDate
             };
         }
     }

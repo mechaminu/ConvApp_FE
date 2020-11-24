@@ -48,13 +48,15 @@
             </Grid>
             <BoxView BackgroundColor="Gray"
                      HeightRequest="1"/>
-            <Label Text="레시피"
+            <Label Text="관련 레시피"
                    Margin="5"/>
             <CarouselView ItemsSource="{Binding RecipeList}"
-                          HeightRequest="100">
+                          HeightRequest="100"
+                          PeekAreaInsets="100"
+                          Loop="False">
                 <CarouselView.EmptyView>
                     <StackLayout>
-                        <Label Text="연관 레시피가 없어요!"
+                        <Label Text="관련 레시피가 없습니다..."
                                FontSize="Large"
                                HorizontalOptions="Center"
                                VerticalOptions="CenterAndExpand"/>
@@ -62,8 +64,14 @@
                 </CarouselView.EmptyView>
                 <CarouselView.ItemTemplate>
                     <DataTemplate>
-                        <Frame>
-                            
+                        <Frame Padding="5">
+                            <Frame BackgroundColor="Gainsboro"
+                                   Padding="0">
+                                <StackLayout>
+                                    <Label Text="{Binding Title}"/>
+                                    <Image Source="{Binding RecipeNode[0].NodeImage}"/>
+                                </StackLayout>
+                            </Frame>
                         </Frame>
                     </DataTemplate>
                 </CarouselView.ItemTemplate>

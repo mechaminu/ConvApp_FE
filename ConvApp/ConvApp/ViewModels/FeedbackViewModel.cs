@@ -10,8 +10,8 @@ namespace ConvApp.ViewModels
 {
     public class FeedbackViewModel : INotifyPropertyChanged
     {
-        private byte type;
-        private int id;
+        private readonly byte type;
+        private readonly int id;
         private bool isPopulated = false;
 
         public FeedbackViewModel(byte _type, int _id)
@@ -20,10 +20,12 @@ namespace ConvApp.ViewModels
             id = _id;
             LikeBtnCommand = new Command(async () => await ToggleLike());
             RefreshCommand = new Command(async () => await Refresh());
+            PostCmtCommand = new Command<string>(async (t) => await PostComment(t));
         }
 
         public ICommand LikeBtnCommand { protected set; get; }
         public ICommand RefreshCommand { protected set; get; }
+        public ICommand PostCmtCommand { protected set; get; }
 
         private ObservableCollection<Comment> comments = new ObservableCollection<Comment>();
         public ObservableCollection<Comment> Comments
@@ -47,9 +49,17 @@ namespace ConvApp.ViewModels
                 if (value != isLiked)
                 {
                     isLiked = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsLiked"));
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsLiked)));
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(LikeImage)));
                 }
             }
+        }
+
+        public ImageSource LikeImage
+        {
+            get => IsLiked
+                ? ImageSource.FromResource("ConvApp.Resources.heartfilled.png")
+                : ImageSource.FromResource("ConvApp.Resources.heart.png");
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -58,12 +68,12 @@ namespace ConvApp.ViewModels
         {
             try
             {
-                var cmtList = await ApiManager.GetComments(type, id, DateTime.UtcNow, 0);
+                var cmtList = await ApiManager.GetComments(type, id);
                 var likeList = await ApiManager.GetLikes(type, id);
 
                 isPopulated = false;
                 comments.Clear();
-                comments = new ObservableCollection<Comment>();
+                comments = new ObservableCollection<Comment>(cmtList);
                 likes.Clear();
                 likes = new ObservableCollection<Like>(likeList);
                 IsLiked = likeList.Exists(l => l.Creator.Id == App.User.Id);
@@ -110,6 +120,11 @@ namespace ConvApp.ViewModels
                 }
             else
                 throw new Exception("wait for viewmodel to be populated");
+        }
+
+        public async Task PostComment(string text)
+        {
+            comments.Add(await ApiManager.PostComment(type, id, text));
         }
     }
 }
