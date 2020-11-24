@@ -37,17 +37,20 @@ namespace ConvApp.Views
 
         private async void OnPaging(object sender, EventArgs e)
         {
-            populated = false;
-            
-            var list = await ApiManager.GetPostings(time: basetime, page: page++);
-            
-            foreach (var post in list)
+            try
             {
-                await AddElem(post);
-                postList.Add(post);
-            }
+                var list = await ApiManager.GetPostings(time: basetime, page: page++);
 
-            populated = true;
+                foreach (var post in list)
+                {
+                    await AddElem(post);
+                    postList.Add(post);
+                }
+            }
+            catch
+            {
+                await Refresh();
+            }
         }
 
         private async Task Refresh()

@@ -16,7 +16,8 @@
                         <FlexLayout x:Name="LEFT" Grid.Column="0" Direction="Column" Margin="0"/>
                         <FlexLayout x:Name="RIGHT" Grid.Column="1" Direction="Column" Margin="0"/>
                     </Grid>
-                    <Button Text="페이징"/>
+                    <Button Text="페이징"
+                            Clicked="OnPaging"/>
                 </StackLayout>
             </ScrollView>
         </RefreshView>

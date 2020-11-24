@@ -19,8 +19,8 @@ namespace ConvApp
     // Repository pattern 적용사례에 해당되는듯?
     public class ApiManager
     {
-        private static readonly string EndPointURL = "http://minuuoo.ddns.net:5000/api";
-        //private static string EndPointURL = "http://convappdev.azurewebsites.net/api";
+        //private static readonly string EndPointURL = "http://minuuoo.ddns.net:5000/api";
+        private static readonly string EndPointURL = "http://convappdev.azurewebsites.net/api";
         public static readonly string ImageEndPointURL = "https://convappdev.blob.core.windows.net/images";
         private static readonly RestClient client = new RestClient(EndPointURL) { Timeout = -1 }.UseNewtonsoftJson(new JsonSerializerSettings
             {
@@ -228,12 +228,11 @@ namespace ConvApp
         /// <returns></returns>
         public async static Task<List<PostingDetailViewModel>> GetPostings(DateTime? time = null, int? page = null, byte? type = null)
         {
-            var payload = new PostingQueryOption { baseTime = time.HasValue ? time.Value : DateTime.UtcNow, page = page.HasValue ? page.Value : 0 };
             try
             {
                 var request = new RestRequest("postings", Method.GET)
                     .AddParameter("time", time.HasValue ? time.Value.ToString("o") : DateTime.UtcNow.ToString("o"))
-                    .AddParameter("page", page.HasValue ? page.Value : 0);
+                    .AddParameter("page", page ?? 0);
 
                 if (type.HasValue)
                     request.AddQueryParameter("type", $"{type.Value}");

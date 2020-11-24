@@ -11,7 +11,7 @@ namespace ConvApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ProductSelectionPage : ContentPage
     {
-        ObservableCollection<ProductModel> products = new ObservableCollection<ProductModel>();
+        readonly ObservableCollection<ProductModel> products = new ObservableCollection<ProductModel>();
         public List<ProductModel> selections = new List<ProductModel>();
         private readonly bool single;
 

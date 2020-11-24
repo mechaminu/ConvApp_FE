@@ -23,6 +23,9 @@ namespace ConvApp.Views
         public List<PostingDetailViewModel> postList = new List<PostingDetailViewModel>();
         public bool populated = false;
 
+        private DateTime basetime = DateTime.UtcNow;
+        private int page = 0;
+
         protected async override void OnAppearing()
         {
             base.OnAppearing();
@@ -33,14 +36,12 @@ namespace ConvApp.Views
             }
         }
 
-        protected override void OnDisappearing()
-        {
-            base.OnDisappearing();
-        }
-
         private async Task Refresh()
         {
             populated = false;
+
+            basetime = DateTime.UtcNow;
+            page = 0;
 
             Clear();
             await GetData();
@@ -49,12 +50,31 @@ namespace ConvApp.Views
             populated = true;
         }
 
+        private async void OnPaging(object sender, EventArgs e)
+        {
+            try
+            {
+                var list = await ApiManager.GetPostings(time: basetime, page: page++, type: (byte)PostingTypes.REVIEW);
+
+                foreach (var post in list)
+                {
+                    await AddElem(post);
+                    postList.Add(post);
+                }
+            }
+            catch
+            {
+                await Refresh();
+            }
+        }
+
         private async Task GetData()
         {
             try
             {
-                var list = await ApiManager.GetPostings(type:(byte?)PostingTypes.REVIEW);
+                var list = await ApiManager.GetPostings(time: basetime, page: page++, type: (byte?)PostingTypes.REVIEW);
                 postList.Clear();
+
                 foreach (var post in list)
                 {
                     postList.Add(post);
