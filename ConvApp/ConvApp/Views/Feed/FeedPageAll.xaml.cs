@@ -14,6 +14,8 @@ namespace ConvApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class FeedPageAll : ContentPage
     {
+        // FeedPageReview에 피드페이지 관련 Comment 작성되어있음
+
         public List<PostingDetailViewModel> postList = new List<PostingDetailViewModel>();
         public bool populated = false;
 
@@ -104,10 +106,8 @@ namespace ConvApp.Views
                 Content = layout
             };
 
-            elem.BackgroundColor = Color.Green;
             elem.Padding = 0;
             elem.Margin = new Thickness { Top = 0, Bottom = 5, Left = 0, Right = 0 };
-            layout.BackgroundColor = Color.Blue;
             (LEFT.Children.Count == 0 ||
             (RIGHT.Children.Count != 0 &&
                 (LEFT.Children.Last().Y + LEFT.Children.Last().Height) < (RIGHT.Children.Last().Y + RIGHT.Children.Last().Height))
