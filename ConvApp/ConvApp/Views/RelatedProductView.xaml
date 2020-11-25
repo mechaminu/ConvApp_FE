@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<StackLayout xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ConvApp.Views.RelatedProductView"
+             HeightRequest="150"
+             Padding="5"
+             Spacing="0">
+    <Label Text="관련 상품"
+           Margin="5"
+           HorizontalOptions="CenterAndExpand"/>
+    <CarouselView ItemsSource="{Binding Products}"
+                  IndicatorView="indicatorView"
+                  Loop="False">
+        <CarouselView.ItemsLayout>
+            <LinearItemsLayout Orientation="Horizontal"
+                               ItemSpacing="10"
+                               SnapPointsType="MandatorySingle"
+                               SnapPointsAlignment="Start"/>
+        </CarouselView.ItemsLayout>
+        <CarouselView.EmptyView>
+            <Frame CornerRadius="10"
+                   BackgroundColor="#CCCCCC"
+                   Padding="10">
+                <StackLayout VerticalOptions="Center">
+                    <Label Text="관련 상품 정보가 없어요..."
+                           HorizontalOptions="Center"
+                           FontSize="Large"/>
+                    <Label HorizontalOptions="Center">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="내가 상품정보 추가하기"
+                                      TextDecorations="Underline"
+                                      TextColor="Blue"
+                                      FontSize="Small"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </StackLayout>
+            </Frame>
+        </CarouselView.EmptyView>
+        <CarouselView.ItemTemplate>
+            <DataTemplate>
+                <Frame Padding="5">
+                    <Frame CornerRadius="10"
+                       BackgroundColor="#CCCCCC"
+                       Padding="5">
+                        <StackLayout Orientation="Horizontal"
+                                 Margin="0"
+                                 Padding="0"
+                                 Spacing="0">
+                            <AbsoluteLayout>
+                                <Image Source="{Binding Image}"
+                                       AbsoluteLayout.LayoutFlags="All"
+                                       AbsoluteLayout.LayoutBounds="0,0,0.4,1"
+                                       Aspect="AspectFill"/>
+                                <StackLayout AbsoluteLayout.LayoutBounds="1,0.5,0.6,1"
+                                             AbsoluteLayout.LayoutFlags="All"
+                                             Padding="10,0,0,0"
+                                             VerticalOptions="Center">
+                                    <Label Text="{Binding Name}"
+                                            LineBreakMode="NoWrap"
+                                            FontSize="Large"
+                                            HorizontalOptions="Fill"/>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="{Binding StoreName}"
+                                               HorizontalTextAlignment="Start"/>
+                                        <Label Text="{Binding CategoryName}"
+                                               HorizontalTextAlignment="Start"/>
+                                    </StackLayout>
+                                    <Label Text="{Binding Price, StringFormat='{0}원'}"/>
+                                </StackLayout>
+                            </AbsoluteLayout>
+                            <Button Text="상품정보" Clicked="Button_Clicked"/>
+                        </StackLayout>
+                    </Frame>
+                </Frame>
+            </DataTemplate>
+        </CarouselView.ItemTemplate>
+    </CarouselView>
+    <IndicatorView x:Name="indicatorView"
+                   IndicatorColor="LightGray"
+                   SelectedIndicatorColor="DarkGray"
+                   HorizontalOptions="Center"
+                   Margin="0,10,0,0"/>
+</StackLayout>

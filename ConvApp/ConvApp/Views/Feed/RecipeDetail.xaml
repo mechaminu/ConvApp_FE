@@ -31,63 +31,7 @@
                                HorizontalOptions="End"/>
                 </StackLayout>
 
-                <CarouselView ItemsSource="{Binding Products}"
-                              Loop="False"
-                              PeekAreaInsets="50"
-                              HeightRequest="100">
-                    <CarouselView.EmptyView>
-                        <Frame Padding="5">
-                            <Frame CornerRadius="10"
-                                       BackgroundColor="#CCCCCC"
-                                       Padding="10">
-                                <StackLayout VerticalOptions="Center">
-                                    <Label Text="관련 상품 정보가 없어요..."
-                                           HorizontalOptions="Center"
-                                           FontSize="Large"/>
-                                    <Label HorizontalOptions="Center">
-                                        <Label.FormattedText>
-                                            <FormattedString>
-                                                <Span Text="내가 상품정보 추가하기"
-                                                          TextDecorations="Underline"
-                                                          TextColor="Blue"
-                                                          FontSize="Small"/>
-                                            </FormattedString>
-                                        </Label.FormattedText>
-                                    </Label>
-                                </StackLayout>
-                            </Frame>
-                        </Frame>
-                    </CarouselView.EmptyView>
-                    <CarouselView.ItemTemplate>
-                        <DataTemplate>
-                            <Frame Padding="5">
-                                <Frame CornerRadius="10"
-                                       BackgroundColor="#CCCCCC"
-                                       Padding="10">
-                                    <AbsoluteLayout>
-                                        <Image Source="{Binding Image}"
-                                               AbsoluteLayout.LayoutBounds="0,0,0.3,1"
-                                               AbsoluteLayout.LayoutFlags="All"/>
-                                        <StackLayout AbsoluteLayout.LayoutBounds="0.75,0.5"
-                                                     AbsoluteLayout.LayoutFlags="PositionProportional"
-                                                     HorizontalOptions="Start">
-                                            <Label Text="{Binding Name}"
-                                                   FontSize="Large"
-                                                   HorizontalTextAlignment="Start"/>
-                                            <StackLayout Orientation="Horizontal">
-                                                <Label Text="{Binding StoreName}"
-                                                       HorizontalTextAlignment="Start"/>
-                                                <Label Text="{Binding CategoryName}"
-                                                       HorizontalTextAlignment="Start"/>
-                                            </StackLayout>
-                                            <Label Text="{Binding Price, StringFormat='{0}원'}"/>
-                                        </StackLayout>
-                                    </AbsoluteLayout>
-                                </Frame>
-                            </Frame>
-                        </DataTemplate>
-                    </CarouselView.ItemTemplate>
-                </CarouselView>
+                <local:RelatedProductView/>
 
                 <Label Text="{Binding PostContent}"
                        Padding="5"

@@ -48,7 +48,7 @@ namespace ConvApp.Models
                     {
                         Id = model.Id,
                         User = user,
-                        Date = model.ModifiedDate,
+                        Date = model.ModifiedDate.ToLocalTime(),
                         Title = model.PostingNodes[0].Text,
                         PostContent = model.PostingNodes[1].Text,
                         Products = model.Products,
@@ -60,7 +60,7 @@ namespace ConvApp.Models
                     {
                         Id = model.Id,
                         User = user,
-                        Date = model.ModifiedDate,
+                        Date = model.ModifiedDate.ToLocalTime(),
                         Products = model.Products,
                         Rating = double.Parse(model.PostingNodes[0].Text),
                         PostContent = model.PostingNodes[1].Text,
