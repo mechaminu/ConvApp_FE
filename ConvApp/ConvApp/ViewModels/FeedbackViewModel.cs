@@ -76,8 +76,11 @@ namespace ConvApp.ViewModels
         {
             try
             {
-                var cmtList = await ApiManager.GetComments(type, id);
-                var likeList = await ApiManager.GetLikes(type, id);
+                //var cmtList = await ApiManager.GetComments(type, id);
+                //var likeList = await ApiManager.GetLikes(type, id);
+
+                // 튜플 받아오기. 한번의 Request.
+                var (cmtList, likeList) = await ApiManager.GetFeedbacks(type, id);
 
                 foreach (var cmt in cmtList)
                 {

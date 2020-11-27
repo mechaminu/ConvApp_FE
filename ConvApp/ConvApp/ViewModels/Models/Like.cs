@@ -9,12 +9,12 @@ namespace ConvApp.Models
         public DateTime CreatedDate { get; set; }
     }
 
-    public class LikeDTO
+    public class LikeModel
     {
         public int CreatorId { get; set; }
         public DateTime CreatedDate { get; set; }
 
-        public static async Task<Like> Populate(LikeDTO dto)
+        public static async Task<Like> Populate(LikeModel dto)
         {
             return new Like
             {

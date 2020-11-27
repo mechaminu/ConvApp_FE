@@ -17,7 +17,7 @@ namespace ConvApp.Models
             return new CommentViewModel
             {
                 Id = model.Id,
-                Date = model.ModifiedDate,
+                Date = model.ModifiedDate.ToLocalTime(),
                 IsModified = model.CreatedDate != model.ModifiedDate,
                 Creator = await ApiManager.GetUser(model.CreatorId),
                 Text = model.Text,

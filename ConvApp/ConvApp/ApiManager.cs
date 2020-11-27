@@ -31,6 +31,11 @@ namespace ConvApp
                 PreserveReferencesHandling = PreserveReferencesHandling.All
             }) as RestClient;
 
+        public async static Task AddViewCount(byte type, int id)
+        {
+
+        }
+
         public async static Task<ProductViewModel> GetProductDetailViewModel(int id)
         {
             var product = await GetProduct(id);
@@ -93,17 +98,49 @@ namespace ConvApp
         }
 
         #region FEEDBACK API
+        public async static Task<(List<CommentViewModel>, List<Like>)> GetFeedbacks(byte type, int id)
+        {
+            var request = new RestRequest("feedbacks", Method.GET)
+                    .AddQueryParameter("type", $"{type}")
+                    .AddQueryParameter("id", $"{id}");
+
+            var response = await client.ExecuteAsync<FeedbackDTO>(request);
+
+            var comments = new List<CommentViewModel>();
+            foreach(var cmtModel in response.Data.Comments)
+            {
+                var cmt = await CommentModel.Populate(cmtModel);
+                await cmt.Feedback.Refresh();
+                comments.Add(cmt);
+            }
+
+            var likes = new List<Like>();
+            foreach(var likeModel in response.Data.Likes)
+            {
+                var like = await LikeModel.Populate(likeModel);
+                likes.Add(like);
+            }
+
+            return (comments, likes);
+        }
+
+        public class FeedbackDTO
+        {
+            public List<CommentModel> Comments { get; set; }
+            public List<LikeModel> Likes { get; set; }
+        }
+
         public async static Task<List<Like>> GetLikes(byte type, int id)
         {
             var request = new RestRequest("feedbacks/like", Method.GET)
                     .AddQueryParameter("type", $"{type}")
                     .AddQueryParameter("id", $"{id}");
 
-            var response = await client.ExecuteAsync<List<LikeDTO>>(request);
+            var response = await client.ExecuteAsync<List<LikeModel>>(request);
 
             var likes = new List<Like>();
             foreach (var likeDTO in response.Data)
-                likes.Add(await LikeDTO.Populate(likeDTO));
+                likes.Add(await LikeModel.Populate(likeDTO));
 
             return likes;
         }
@@ -113,16 +150,16 @@ namespace ConvApp
             var request = new RestRequest("feedbacks/like", Method.POST)
                 .AddQueryParameter("type", $"{type}")
                 .AddQueryParameter("id", $"{id}")
-                .AddJsonBody(new LikeDTO { CreatorId = App.User.Id });
+                .AddJsonBody(new LikeModel { CreatorId = App.User.Id });
 
-            var response = await client.ExecuteAsync<List<LikeDTO>>(request);
+            var response = await client.ExecuteAsync<List<LikeModel>>(request);
 
             if (response == null || !response.IsSuccessful)
                 throw new InvalidOperationException("like posting failed");
 
             var likes = new List<Like>();
             foreach (var likeDTO in response.Data)
-                likes.Add(await LikeDTO.Populate(likeDTO));
+                likes.Add(await LikeModel.Populate(likeDTO));
 
             return likes;            
         }
@@ -132,16 +169,16 @@ namespace ConvApp
             var request = new RestRequest("feedbacks/like", Method.DELETE)
                 .AddQueryParameter("type", $"{type}")
                 .AddQueryParameter("id", $"{id}")
-                .AddJsonBody(new LikeDTO { CreatorId = App.User.Id });
+                .AddJsonBody(new LikeModel { CreatorId = App.User.Id });
 
-            var response = await client.ExecuteAsync<List<LikeDTO>>(request);
+            var response = await client.ExecuteAsync<List<LikeModel>>(request);
 
             if (response == null || !response.IsSuccessful)
                 throw new InvalidOperationException("like deletion failed");
 
             var likes = new List<Like>();
             foreach (var likeDTO in response.Data)
-                likes.Add(await LikeDTO.Populate(likeDTO));
+                likes.Add(await LikeModel.Populate(likeDTO));
 
             return likes;
         }
