@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 
 namespace ConvApp.ViewModels
 {
-    public class ProductDetailViewModel
+    public class ProductViewModel
     {
         public int Id { get; set; }
         public int StoreId { get; set; }
@@ -23,7 +23,7 @@ namespace ConvApp.ViewModels
         public string Rank { get; set; }    // 상품의 랭킹
         public string Rate { get; set; }    // 상품의 평점 
 
-        public ObservableCollection<ReviewPostingViewModel> ReviewList { get; set; } // 상품관련 상품평 리스트 
-        public ObservableCollection<RecipePostingViewModel> RecipeList { get; set; } // 상품관련 레시피 리스트 
+        public ObservableCollection<ReviewViewModel> ReviewList { get; set; } // 상품관련 상품평 리스트 
+        public ObservableCollection<RecipeViewModel> RecipeList { get; set; } // 상품관련 레시피 리스트 
     }
 }

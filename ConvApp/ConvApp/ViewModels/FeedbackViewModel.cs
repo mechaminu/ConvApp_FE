@@ -14,12 +14,20 @@ namespace ConvApp.ViewModels
         private readonly int id;
         private bool isPopulated = false;
 
+        // 새 FeedbackViewModel이 생성된다는 의미는 해당 포스팅이 조회된다는 이야기이므로
+        // 조회수 +1 메커니즘이 생성자에 같이 들어가야 할 듯
         public FeedbackViewModel(byte _type, int _id)
         {
             type = _type;
             id = _id;
+
+            // TODO 조회수 +1 << IHasViewCount 대상에 한해서만!
+
+
             LikeBtnCommand = new Command(async () => await ToggleLike());
             RefreshCommand = new Command(async () => await Refresh());
+
+            // Editor 뷰 요소를 파라미터로 전달받아 입력 Text 추출하여 댓글 업로드 시도하고, 성공적으로 업로드된 경우 입력 Text 공백으로 전환
             PostCmtCommand = new Command<string>(async (t) => await PostComment(t));
         }
 
@@ -27,8 +35,8 @@ namespace ConvApp.ViewModels
         public ICommand RefreshCommand { protected set; get; }
         public ICommand PostCmtCommand { protected set; get; }
 
-        private ObservableCollection<Comment> comments = new ObservableCollection<Comment>();
-        public ObservableCollection<Comment> Comments
+        private ObservableCollection<CommentViewModel> comments = new ObservableCollection<CommentViewModel>();
+        public ObservableCollection<CommentViewModel> Comments
         {
             get => comments;
         }
@@ -71,9 +79,16 @@ namespace ConvApp.ViewModels
                 var cmtList = await ApiManager.GetComments(type, id);
                 var likeList = await ApiManager.GetLikes(type, id);
 
+                foreach (var cmt in cmtList)
+                {
+                    await cmt.Feedback.Refresh();
+                }
+
                 isPopulated = false;
                 comments.Clear();
-                comments = new ObservableCollection<Comment>(cmtList);
+
+
+                comments = new ObservableCollection<CommentViewModel>(cmtList);
                 likes.Clear();
                 likes = new ObservableCollection<Like>(likeList);
                 IsLiked = likeList.Exists(l => l.Creator.Id == App.User.Id);
@@ -124,7 +139,8 @@ namespace ConvApp.ViewModels
 
         public async Task PostComment(string text)
         {
-            comments.Add(await ApiManager.PostComment(type, id, text));
+            var cmt = await ApiManager.PostComment(type, id, text);
+            comments.Add(cmt);
         }
     }
 }

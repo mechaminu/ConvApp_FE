@@ -25,7 +25,7 @@ namespace ConvApp.Models
         public List<ProductModel> Products { get; set; }
         public List<PostingNodeModel> PostingNodes { get; set; }
 
-        public static async Task<PostingDetailViewModel> Populate(PostingModel model)
+        public static async Task<PostingViewModel> Populate(PostingModel model)
         {
             var user = await ApiManager.GetUser(model.CreatorId);
 
@@ -44,7 +44,7 @@ namespace ConvApp.Models
                         });
                     }
 
-                    return new RecipePostingViewModel
+                    return new RecipeViewModel
                     {
                         Id = model.Id,
                         User = user,
@@ -56,7 +56,7 @@ namespace ConvApp.Models
                     };
 
                 default:
-                    var tmp = new ReviewPostingViewModel
+                    var tmp = new ReviewViewModel
                     {
                         Id = model.Id,
                         User = user,

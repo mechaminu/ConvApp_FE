@@ -21,10 +21,9 @@
                 </StackLayout>
             </ScrollView>
             <ListView x:Name="list"
-                      ItemTapped="ItemTapped"
+                      ItemSelected="ItemTapped"
                       AbsoluteLayout.LayoutBounds="0,1,1,0.8"
-                      AbsoluteLayout.LayoutFlags="All"
-                      SelectionMode="None">
+                      AbsoluteLayout.LayoutFlags="All">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ImageCell Text="{Binding Name}" ImageSource="{Binding Image}" Detail="{Binding Price, StringFormat='{0}원'}"/>

@@ -6,18 +6,16 @@
     <ScrollView>
         <StackLayout Spacing="0">
             <ff:CachedImage Source="{Binding Image}"
-                            Aspect="AspectFill"
-                            BackgroundColor="#8559da"/>
+                            Aspect="AspectFill"/>
             <Label Text="{Binding Name}" 
-                   TextColor="#FFFFFF"
-                   BackgroundColor="#140078"
+                   BackgroundColor="#CCCCCC"
                    FontSize="Large"
                    FontAttributes="Bold"
                    LineBreakMode="NoWrap"
                    HorizontalOptions="FillAndExpand"
                    VerticalOptions="Center"
                    Padding="5"/>
-            <Grid Padding="10" BackgroundColor="#8559da">
+            <Grid Padding="10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
@@ -25,28 +23,22 @@
                 <StackLayout Grid.Column="0">
                     <Label Text="{Binding Price, StringFormat='{0}원'}"
                            FontSize="Medium"
-                           TextColor="#FFFFFF"
                            HorizontalOptions="Start"
                            VerticalOptions="Center"/>
                     <Label Text="{Binding StoreName}"
-                           TextColor="#FFFFFF"
                            HorizontalTextAlignment="Start"
                            HorizontalOptions="Start"
                            VerticalOptions="Center"/>
                     <Label Text="{Binding CategoryName}"
-                           TextColor="#FFFFFF"
                            HorizontalTextAlignment="Start"
                            HorizontalOptions="Start"
                            VerticalOptions="Center"/>
                 </StackLayout>
                 <StackLayout Grid.Column="1"
                              VerticalOptions="Center">
-                    <Label Text="{Binding Rank, StringFormat='상품랭킹 종합 {0}위'}"
-                           TextColor="#FFFFFF"/>
-                    <Label Text="{Binding Rate, StringFormat='상품평 평점 평균 {0} / 5.0'}"
-                           TextColor="#FFFFFF"/>
-                    <Label Text="{Binding Calory, StringFormat='칼로리 {0} Kcal'}"
-                           TextColor="#FFFFFF"/>
+                    <Label Text="{Binding Rank, StringFormat='상품랭킹 종합 {0}위'}"/>
+                    <Label Text="{Binding Rate, StringFormat='상품평 평점 평균 {0} / 5.0'}"/>
+                    <Label Text="{Binding Calory, StringFormat='칼로리 {0} Kcal'}"/>
                 </StackLayout>
             </Grid>
             <Label Text="관련 레시피"

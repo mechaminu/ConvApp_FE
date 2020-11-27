@@ -2,7 +2,6 @@
 <StackLayout xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
-             xmlns:helper ="clr-namespace:ConvApp.Helper;assembly=ConvApp"
              x:Class="ConvApp.Views.FeedbackView">
     <StackLayout Orientation="Horizontal"
                  Margin="5">
@@ -28,29 +27,47 @@
                            CornerRadius="10">
                         <StackLayout Spacing="0"
                                  BackgroundColor="Gainsboro">
-                            <StackLayout Orientation="Horizontal"
-                                         Padding="10,5,10,0"
-                                         Spacing="0">
-                                <ff:CachedImage Margin="0,0,10,0"
+                            <AbsoluteLayout>
+                                <StackLayout Orientation="Horizontal"
+                                             Padding="10,5,10,0"
+                                             Spacing="0"
+                                             AbsoluteLayout.LayoutBounds="0,0,0.7,1"
+                                             AbsoluteLayout.LayoutFlags="All">
+                                    <ff:CachedImage Margin="0,0,10,0"
                                             WidthRequest="30"
                                             HeightRequest="30"
                                             Source="{Binding Creator.Image}"/>
-                                <Label Text="{Binding Creator.Name}"
+                                    <Label Text="{Binding Creator.Name}"
                                    HorizontalOptions="FillAndExpand"
                                    VerticalOptions="Center"/>
-                                <Label Text="{Binding CreatedDate}"
-                                   HorizontalOptions="End"
-                                   VerticalOptions="Center"/>
-                            </StackLayout>
+                                    <Label Text="{Binding Date}"
+                                           HorizontalOptions="End"
+                                           VerticalOptions="Center"/>
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal"
+                                             Padding="0"
+                                             Spacing="0"
+                                             AbsoluteLayout.LayoutBounds="1,0,0.3,1"
+                                             AbsoluteLayout.LayoutFlags="All">
+                                    <ImageButton Source="{Binding Feedback.LikeImage}"
+                                                 Command="{Binding Feedback.LikeBtnCommand}"
+                                                 HeightRequest="20"
+                                                 Aspect="AspectFit"
+                                                 BackgroundColor="Transparent"/>
+                                    <Label Text="{Binding Feedback.Likes.Count}"
+                                           Padding="10,0,0,0"
+                                           VerticalOptions="Center"
+                                           HorizontalOptions="StartAndExpand"/>
+                                    <Label Text="내 댓글임"
+                                           Padding="0,0,10,0"
+                                           VerticalOptions="Center"
+                                           HorizontalOptions="EndAndExpand"
+                                           IsVisible="{Binding Owned}"/>
+                                </StackLayout>
+                            </AbsoluteLayout>
+                            
                             <Label Text="{Binding Text}"
                                Padding="10"/>
-                            <!--<StackLayout Orientation="Horizontal"
-                                     Spacing="0">
-                                <Button Text="댓글"
-                                    HorizontalOptions="FillAndExpand"/>
-                                <Button Text="좋아요"
-                                    HorizontalOptions="FillAndExpand"/>
-                            </StackLayout>-->
                         </StackLayout>
                     </Frame>
                 </ViewCell>

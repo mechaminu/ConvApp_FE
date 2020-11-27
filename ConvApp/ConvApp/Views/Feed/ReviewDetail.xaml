@@ -42,6 +42,8 @@
                 <local:FeedbackView BindingContext="{Binding Feedback}"/>
             </StackLayout>
         </ScrollView>
+        <Button Text="댓글 입력창 강제 활성화 (대댓글 입력 테스트)"
+                Clicked="Button_Clicked"/>
         <Frame VerticalOptions="End"
                Padding="0">
             <Grid Padding="0"
@@ -51,13 +53,12 @@
                     <ColumnDefinition Width="4*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Editor Placeholder="댓글 입력..."
+                <Editor Placeholder="댓글 입력"
                         x:Name="cmtEditor"
                         AutoSize="TextChanges"
                         Grid.Column="0"/>
                 <Button Text="게시"
-                        Command="{Binding Feedback.PostCmtCommand}"
-                        CommandParameter="{Binding Source={x:Reference cmtEditor}, Path=Text}"
+                        Clicked="PostBtnClicked"
                         Grid.Column="1"/>
             </Grid>
         </Frame>

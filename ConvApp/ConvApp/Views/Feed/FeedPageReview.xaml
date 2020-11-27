@@ -4,7 +4,8 @@
              x:Class="ConvApp.Views.FeedPageReview"      
              Shell.NavBarIsVisible="False">
     <StackLayout>
-        <RefreshView Refreshing="RefreshView_Refreshing">
+        <RefreshView x:Name="refreshView"
+                     Refreshing="RefreshView_Refreshing">
             <ScrollView>
                 <StackLayout Spacing="0">
                     <Grid Margin="5,5,5,0" ColumnSpacing="5">

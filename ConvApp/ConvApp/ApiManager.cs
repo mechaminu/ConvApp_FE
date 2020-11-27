@@ -19,8 +19,8 @@ namespace ConvApp
     // Repository pattern 적용사례에 해당되는듯?
     public class ApiManager
     {
-        //private static readonly string EndPointURL = "http://minuuoo.ddns.net:5000/api";
-        private static readonly string EndPointURL = "http://convappdev.azurewebsites.net/api";
+        private static readonly string EndPointURL = "http://minuuoo.ddns.net:5000/api";
+        //private static readonly string EndPointURL = "http://convappdev.azurewebsites.net/api";
         public static readonly string ImageEndPointURL = "https://convappdev.blob.core.windows.net/images";
         private static readonly RestClient client = new RestClient(EndPointURL) { Timeout = -1 }.UseNewtonsoftJson(new JsonSerializerSettings
             {
@@ -31,26 +31,26 @@ namespace ConvApp
                 PreserveReferencesHandling = PreserveReferencesHandling.All
             }) as RestClient;
 
-        public async static Task<ProductDetailViewModel> GetProductDetailViewModel(int id)
+        public async static Task<ProductViewModel> GetProductDetailViewModel(int id)
         {
             var product = await GetProduct(id);
-            var reviews = new ObservableCollection<ReviewPostingViewModel>();
-            var recipes = new ObservableCollection<RecipePostingViewModel>();
+            var reviews = new ObservableCollection<ReviewViewModel>();
+            var recipes = new ObservableCollection<RecipeViewModel>();
 
             foreach (var e in product.Postings)
             {
                 var post = await PostingModel.Populate(e);
 
-                if (post is RecipePostingViewModel)
-                    recipes.Add(post as RecipePostingViewModel);
+                if (post is RecipeViewModel)
+                    recipes.Add(post as RecipeViewModel);
                 else
-                    reviews.Add(post as ReviewPostingViewModel);
+                    reviews.Add(post as ReviewViewModel);
             }
 
             Console.WriteLine(reviews.Count);
             Console.WriteLine(recipes.Count);
 
-            return new ProductDetailViewModel
+            return new ProductViewModel
             {
                 Id = product.Id,
                 StoreId = product.StoreId,
@@ -146,34 +146,34 @@ namespace ConvApp
             return likes;
         }
 
-        public async static Task<List<Comment>> GetComments(byte type, int id)
+        public async static Task<List<CommentViewModel>> GetComments(byte type, int id)
         {
             var request = new RestRequest("feedbacks/comment", Method.GET)
                 .AddQueryParameter("type", type + "")
                 .AddQueryParameter("id", id + "");
 
-            var response = await client.ExecuteAsync<List<CommentDTO>>(request);
+            var response = await client.ExecuteAsync<List<CommentModel>>(request);
 
-            var comments = new List<Comment>();
+            var comments = new List<CommentViewModel>();
             foreach (var cmtDTO in response.Data)
-                comments.Add(await CommentDTO.Populate(cmtDTO));
+                comments.Add(await CommentModel.Populate(cmtDTO));
 
             return comments;
         }
 
-        public async static Task<Comment> PostComment(byte type, int id, string text)
+        public async static Task<CommentViewModel> PostComment(byte type, int id, string text)
         {
             var request = new RestRequest("feedbacks/comment", Method.POST)
                 .AddQueryParameter("type", $"{type}")
                 .AddQueryParameter("id", $"{id}")
-                .AddJsonBody(new CommentDTO { CreatorId = App.User.Id, Text = text });
+                .AddJsonBody(new CommentModel { CreatorId = App.User.Id, Text = text });
 
-            var response = await client.ExecuteAsync<CommentDTO>(request);
+            var response = await client.ExecuteAsync<CommentModel>(request);
 
             if (response == null || !response.IsSuccessful)
                 throw new InvalidOperationException("comment posting failed");
 
-            return await CommentDTO.Populate(response.Data);
+            return await CommentModel.Populate(response.Data);
         }
         #endregion
 
@@ -226,7 +226,7 @@ namespace ConvApp
         /// <param name="start">시작 순번</param>
         /// <param name="end">끝 순번</param>
         /// <returns></returns>
-        public async static Task<List<PostingDetailViewModel>> GetPostings(DateTime? time = null, int? page = null, byte? type = null)
+        public async static Task<List<PostingViewModel>> GetPostings(DateTime? time = null, int? page = null, byte? type = null)
         {
             try
             {
@@ -241,7 +241,7 @@ namespace ConvApp
                 if (!response.IsSuccessful)
                     throw new InvalidOperationException($"Request Failed - CODE : {response.StatusCode}");
 
-                var result = new List<PostingDetailViewModel>();
+                var result = new List<PostingViewModel>();
                 foreach (var rawPosting in response.Data)
                 {
                     result.Add(await PostingModel.Populate(rawPosting));

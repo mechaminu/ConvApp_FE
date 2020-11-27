@@ -17,39 +17,24 @@ namespace ConvApp.Views
     {
         // FeedPageReview에 피드페이지 관련 Comment 작성되어있음
 
-        public FeedPageRecipe()
-        {
-            InitializeComponent();
-        }
-
-        public List<PostingDetailViewModel> postList = new List<PostingDetailViewModel>();
+        public List<PostingViewModel> postList = new List<PostingViewModel>();
         public bool populated = false;
 
         private DateTime basetime = DateTime.UtcNow;
         private int page = 0;
+
+        public FeedPageRecipe()
+        {
+            InitializeComponent();
+        }
 
         protected async override void OnAppearing()
         {
             base.OnAppearing();
             if (!populated)
             {
-                populated = true;
                 await Refresh();
             }
-        }
-
-        private async Task Refresh()
-        {
-            populated = false;
-
-            basetime = DateTime.UtcNow;
-            page = 0;
-
-            Clear();
-            await GetData();
-            await Show();
-
-            populated = true;
         }
 
         private async void OnPaging(object sender, EventArgs e)
@@ -70,11 +55,48 @@ namespace ConvApp.Views
             }
         }
 
+        private async void RefreshView_Refreshing(object sender, EventArgs e)
+        {
+            if (populated)
+            {
+                await Refresh();
+                (sender as RefreshView).IsRefreshing = false;
+            }
+        }
+
+        private async Task Refresh()
+        {
+            populated = false;
+
+            basetime = DateTime.UtcNow;
+            page = 0;
+
+            LEFT.Children.Clear();
+            RIGHT.Children.Clear();
+
+            refreshView.IsRefreshing = true;    // 이게 RefreshView Refreshing event를 invoke하는 문제가 있음. 해당 eventhandler delegate에서 관련 처리해야함.
+            try
+            {
+                await GetData();
+                await Show();
+            }
+            catch
+            {
+                await DisplayAlert("오류", "요소 전시 실패", "확인");
+            }
+            finally
+            {
+                refreshView.IsRefreshing = false;
+            }
+
+            populated = true;
+        }
+
         private async Task GetData()
         {
             try
             {
-                var list = await ApiManager.GetPostings(time: basetime, page: page++, type:(byte?)PostingTypes.RECIPE);
+                var list = await ApiManager.GetPostings(time: basetime, page: page++, type: (byte?)PostingTypes.RECIPE);
                 postList.Clear();
 
                 foreach (var post in list)
@@ -96,9 +118,9 @@ namespace ConvApp.Views
             }
         }
 
-        public async Task AddElem(PostingDetailViewModel posting)
+        public async Task AddElem(PostingViewModel posting)
         {
-            var imgUrl = (posting is ReviewPostingViewModel ? (posting as ReviewPostingViewModel).PostImage : (posting as RecipePostingViewModel).RecipeNode[0].NodeImage).Split(';')[0];
+            var imgUrl = (posting is ReviewViewModel ? (posting as ReviewViewModel).PostImage : (posting as RecipeViewModel).RecipeNode[0].NodeImage).Split(';')[0];
 
             var layout = new StackLayout();
             var elem = new Frame()
@@ -160,26 +182,13 @@ namespace ConvApp.Views
                 posting.Feedback = feedback;
                 Page targetPage;
 
-                if (posting is ReviewPostingViewModel)
+                if (posting is ReviewViewModel)
                     targetPage = new ReviewDetail { BindingContext = posting };
                 else
                     targetPage = new RecipeDetail { BindingContext = posting };
                 await Navigation.PushAsync(targetPage);
             };
             elem.GestureRecognizers.Add(tap);
-        }
-
-        private void Clear()
-        {
-            LEFT.Children.Clear();
-            RIGHT.Children.Clear();
-        }
-
-        private async void RefreshView_Refreshing(object sender, EventArgs e)
-        {
-            var elem = (RefreshView)sender;
-            await Refresh();
-            elem.IsRefreshing = false;
         }
     }
 }

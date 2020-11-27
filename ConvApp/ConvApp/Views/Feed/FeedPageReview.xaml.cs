@@ -23,7 +23,7 @@ namespace ConvApp.Views
         // TODO 피드페이지 뷰모델 List 제거 방안 고안
         // 굳이 뷰 로직 안에 전시요소의 뷰모델을 list 변수로 따로 저장해서 관리해야 하는가?
         // 전시요소 BindingContext에 들어가 있는 내용이기에 불필요한 중복으로 보임.
-        public List<PostingDetailViewModel> postList = new List<PostingDetailViewModel>();
+        public List<PostingViewModel> postList = new List<PostingViewModel>();
         public bool populated = false;
 
         // TODO 피드페이지 페이지네이션 작동방식 보완
@@ -37,10 +37,23 @@ namespace ConvApp.Views
         protected async override void OnAppearing()
         {
             base.OnAppearing();
+
+            // 일정 시간 지난경우 populated false로 다시 만들어 초기화시켜주기 필요할까? pros 최신 포스팅 제공 cons 보던게 있는경우 새로고침되면서 다시 스크롤해야함
             if (!populated)
             {
-                populated = true;
                 await Refresh();
+            }
+        }
+
+        // TODO 피드페이지 새로고침 Issue
+        // RefreshView의 Refresh eventlistener임.
+        // 동시에 여러번의 Refresh 요청이 들어오면 진행중인 refresh의 완료 여부와 상관 없이 계속해서 spinner가 전시되고 추가적인 refresh를 진행할수 없는 오류가 존재함.
+        private async void RefreshView_Refreshing(object sender, EventArgs e)
+        {
+            if (populated)
+            {
+                await Refresh();
+                (sender as RefreshView).IsRefreshing = false;
             }
         }
 
@@ -54,8 +67,20 @@ namespace ConvApp.Views
             LEFT.Children.Clear();
             RIGHT.Children.Clear();
 
-            await GetData();
-            await Show();
+            refreshView.IsRefreshing = true;    // 이게 RefreshView Refreshing event를 invoke하는 문제가 있음. 해당 eventhandler delegate에서 관련 처리해야함.
+            try
+            {
+                await GetData();
+                await Show();
+            }
+            catch
+            {
+                await DisplayAlert("오류", "요소 전시 실패", "확인");
+            }
+            finally
+            {
+                refreshView.IsRefreshing = false;
+            }
 
             populated = true;
         }
@@ -108,9 +133,9 @@ namespace ConvApp.Views
             }
         }
 
-        public async Task AddElem(PostingDetailViewModel posting)
+        public async Task AddElem(PostingViewModel posting)
         {
-            var imgUrl = (posting is ReviewPostingViewModel ? (posting as ReviewPostingViewModel).PostImage : (posting as RecipePostingViewModel).RecipeNode[0].NodeImage).Split(';')[0];
+            var imgUrl = (posting is ReviewViewModel ? (posting as ReviewViewModel).PostImage : (posting as RecipeViewModel).RecipeNode[0].NodeImage).Split(';')[0];
 
             var layout = new StackLayout();
             var elem = new Frame()
@@ -166,7 +191,7 @@ namespace ConvApp.Views
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 
             // TODO 피드페이지 요소 추가 - 비동기화 고려
-            // TaskCompletionSource의 Task. 위의 Await되지 않은 Task 속에 아래 Task의 완결조건이 내장되어있으며, 비동기적인 이미지 로딩을 동기적으로 기다림
+            // TaskCompletionSource의 Task. 위의 Await되지 않은 Task 속에 아래 Task의 완결조건이 내장되어있으며, 비동기적인 이미지 로딩을 await을 이용해 동기적으로 기다림
             // "비동기적인 이미지 로딩을 동기적으로 기다림"은 Performance 차원에서 좋지 않아보이므로 보완점 고안할 것.
             await tcs1.Task;
 
@@ -176,6 +201,8 @@ namespace ConvApp.Views
             var tap = new TapGestureRecognizer();
             tap.Tapped += async (s, e) =>
             {
+                // 피드에선 Feedback 속성이 비어있는 PostingViewModel들만 보여줌
+                // 클릭 시 PostingViewModel 내부 Feedback 속성에 FeedbackViewModel을 받아와 채워준 후 세부페이지 전시함.
                 var feedback = new FeedbackViewModel(0, posting.Id);
                 try
                 {
@@ -190,24 +217,13 @@ namespace ConvApp.Views
                 posting.Feedback = feedback;
                 Page targetPage;
 
-                if (posting is ReviewPostingViewModel)
+                if (posting is ReviewViewModel)
                     targetPage = new ReviewDetail { BindingContext = posting };
                 else
                     targetPage = new RecipeDetail { BindingContext = posting };
                 await Navigation.PushAsync(targetPage);
             };
             elem.GestureRecognizers.Add(tap);
-        }
-
-
-        // TODO 피드페이지 새로고침 Issue
-        // RefreshView의 Refresh eventlistener임.
-        // 동시에 여러번의 Refresh 요청이 들어오면 진행중인 refresh의 완료 여부와 상관 없이 계속해서 spinner가 전시되고 추가적인 refresh를 진행할수 없는 오류가 존재함.
-        private async void RefreshView_Refreshing(object sender, EventArgs e)
-        {
-            var elem = (RefreshView)sender;
-            await Refresh();
-            elem.IsRefreshing = false;
         }
     }
 }

@@ -54,9 +54,10 @@ namespace ConvApp.Views
             }
         }
 
-        private void ItemTapped(object sender, ItemTappedEventArgs e)
+        // 스크롤을 위해서 탭했는데도 작동하는 경우 발생
+        private void ItemTapped(object sender, SelectedItemChangedEventArgs e)
         {
-            var product = products[e.ItemIndex];
+            var product = products[e.SelectedItemIndex];
 
             if (!selections.Exists(e => e.Id == product.Id))
             {
