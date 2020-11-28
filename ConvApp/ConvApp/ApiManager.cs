@@ -19,8 +19,8 @@ namespace ConvApp
     // Repository pattern 적용사례에 해당되는듯?
     public class ApiManager
     {
-        private static readonly string EndPointURL = "http://minuuoo.ddns.net:5000/api";
-        //private static readonly string EndPointURL = "http://convappdev.azurewebsites.net/api";
+        //private static readonly string EndPointURL = "http://minuuoo.ddns.net:5000/api";
+        private static readonly string EndPointURL = "http://convappdev.azurewebsites.net/api";
         public static readonly string ImageEndPointURL = "https://convappdev.blob.core.windows.net/images";
         private static readonly RestClient client = new RestClient(EndPointURL) { Timeout = -1 }.UseNewtonsoftJson(new JsonSerializerSettings
             {
