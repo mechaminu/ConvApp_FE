@@ -31,9 +31,17 @@ namespace ConvApp
                 PreserveReferencesHandling = PreserveReferencesHandling.All
             }) as RestClient;
 
-        public async static Task AddViewCount(byte type, int id)
+        public async static Task RefreshRank()
         {
+            await client.ExecuteAsync(new RestRequest("feedbacks/ranking", Method.GET));
+        }
 
+        public async static Task AddView(byte type, int id)
+        {
+            var request = new RestRequest("feedbacks/view", Method.POST)
+                .AddJsonBody(new { type = type, id = id, userid = App.User.Id });
+
+            await client.ExecuteAsync(request);
         }
 
         public async static Task<ProductViewModel> GetProductDetailViewModel(int id)
@@ -71,6 +79,18 @@ namespace ConvApp
                 ReviewList = reviews,
                 RecipeList = recipes
             };
+        }
+
+        public async static Task<List<ProductModel>> GetHotProducts(int? store = null, int? category = null)
+        {
+            var request = new RestRequest("products/hot", Method.GET);
+
+            if (store != null)
+                request.AddQueryParameter("store", store + "");
+            if (category != null)
+                request.AddQueryParameter("category", category + "");
+
+            return (await client.ExecuteAsync<List<ProductModel>>(request)).Data;
         }
 
         public async static Task<List<ProductModel>> GetProducts(int? store = null, int? category = null)
@@ -268,6 +288,34 @@ namespace ConvApp
             try
             {
                 var request = new RestRequest("postings", Method.GET)
+                    .AddParameter("time", time.HasValue ? time.Value.ToString("o") : DateTime.UtcNow.ToString("o"))
+                    .AddParameter("page", page ?? 0);
+
+                if (type.HasValue)
+                    request.AddQueryParameter("type", $"{type.Value}");
+
+                var response = await client.ExecuteAsync<List<PostingModel>>(request);
+                if (!response.IsSuccessful)
+                    throw new InvalidOperationException($"Request Failed - CODE : {response.StatusCode}");
+
+                var result = new List<PostingViewModel>();
+                foreach (var rawPosting in response.Data)
+                {
+                    result.Add(await PostingModel.Populate(rawPosting));
+                }
+                return result;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async static Task<List<PostingViewModel>> GetHotPostings(DateTime? time = null, int? page = null, byte? type = null)
+        {
+            try
+            {
+                var request = new RestRequest("postings/hot", Method.GET)
                     .AddParameter("time", time.HasValue ? time.Value.ToString("o") : DateTime.UtcNow.ToString("o"))
                     .AddParameter("page", page ?? 0);
 

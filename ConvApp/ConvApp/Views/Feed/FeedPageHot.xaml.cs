@@ -13,9 +13,9 @@ using Xamarin.Forms.Xaml;
 namespace ConvApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class FeedPageReview : ContentPage
+    public partial class FeedPageHot : ContentPage
     {
-        public FeedPageReview()
+        public FeedPageHot()
         {
             InitializeComponent();
         }
@@ -111,7 +111,7 @@ namespace ConvApp.Views
         {
             try
             {
-                var list = await ApiManager.GetPostings(time: basetime, page: page++, type: (byte?)PostingTypes.REVIEW);
+                var list = await ApiManager.GetHotPostings(time: basetime, page: page++);
                 postList.Clear();
 
                 foreach (var post in list)
@@ -225,6 +225,16 @@ namespace ConvApp.Views
                 await Navigation.PushAsync(targetPage);
             };
             elem.GestureRecognizers.Add(tap);
+        }
+
+        private async void Button_Clicked(object sender, EventArgs e)
+        {
+            (sender as Button).IsEnabled = false;
+
+            await ApiManager.RefreshRank();
+            await Refresh();
+
+            (sender as Button).IsEnabled = true;
         }
     }
 }

@@ -72,11 +72,17 @@
     <Compile Update="AppShell.xaml.cs">
       <DependentUpon>AppShell.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\Category\CategoryGeneralRanking.xaml.cs">
+      <DependentUpon>CategoryGeneralRanking.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\EmptyViews\MyPage.xaml.cs">
       <DependentUpon>MyPage.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\Feed\FeedPageAll.xaml.cs">
       <DependentUpon>FeedPageAll.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Feed\FeedPageHot.xaml.cs">
+      <DependentUpon>FeedPageHot.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\Feed\FeedPageReview.xaml.cs">
       <DependentUpon>FeedPageReview.xaml</DependentUpon>

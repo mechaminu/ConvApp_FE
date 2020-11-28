@@ -7,9 +7,9 @@ using Xamarin.Forms.Xaml;
 namespace ConvApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class CategoryRanking : ContentPage
+    public partial class CategoryGeneralRanking : ContentPage
     {
-        public CategoryRanking()
+        public CategoryGeneralRanking()
         {
             InitializeComponent();
         }
@@ -28,6 +28,14 @@ namespace ConvApp.Views
             {
                 await DisplayAlert(ex.Message, ex.StackTrace, "ok");
             }
+        }
+
+        private async void Button_Clicked(object sender, EventArgs e)
+        {
+            (sender as Button).IsEnabled = false;
+            list.ItemsSource = null;
+            list.ItemsSource = await ApiManager.GetHotProducts();
+            (sender as Button).IsEnabled = true;
         }
     }
 }

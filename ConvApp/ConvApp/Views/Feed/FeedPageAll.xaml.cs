@@ -186,6 +186,9 @@ namespace ConvApp.Views
                     targetPage = new ReviewDetail { BindingContext = posting };
                 else
                     targetPage = new RecipeDetail { BindingContext = posting };
+
+                ApiManager.AddView(0, posting.Id);
+
                 await Navigation.PushAsync(targetPage);
             };
             elem.GestureRecognizers.Add(tap);

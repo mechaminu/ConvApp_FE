@@ -50,6 +50,10 @@
                           ContentTemplate="{DataTemplate views:FeedPageRecipe}"
                           Style="{StaticResource FeedShell}"
                           Route="pageRecipeFeed"/>
+            <ShellContent Title="Hot"
+                          ContentTemplate="{DataTemplate views:FeedPageHot}"
+                          Style="{StaticResource FeedShell}"
+                          Route="pageHotFeed"/>
         </Tab>
         <Tab Title="검색" >
             <ShellContent Style="{StaticResource BaseStyle}">
@@ -72,7 +76,7 @@
                           ContentTemplate="{DataTemplate views:CategoryPage}" 
                           Style="{StaticResource BaseStyle}"/>
             <ShellContent Title="Ranking" 
-                          ContentTemplate="{DataTemplate views:ReviewRanking}" 
+                          ContentTemplate="{DataTemplate views:CategoryGeneralRanking}"
                           Style="{StaticResource BaseStyle}"/>
             
         </Tab>
