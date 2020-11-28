@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ConvApp.Models;
+using System;
 using System.ComponentModel;
-using System.Text;
-using System.Windows.Input;
-using ConvApp.Models;
-using Xamarin.Forms;
 
 namespace ConvApp.ViewModels
 {

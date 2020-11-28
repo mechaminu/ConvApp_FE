@@ -1,29 +1,28 @@
-﻿
-using ConvApp.ViewModels;
+﻿using ConvApp.ViewModels;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-
-
 namespace ConvApp.Views
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SearchPage : ContentPage
     {
-        public List<ReviewPostingViewModel> aa = new List<ReviewPostingViewModel>();
-            
+        public List<ReviewViewModel> aa = new List<ReviewViewModel>();
+
         public SearchPage()
         {
             InitializeComponent();
             //searchResults.ItemsSource = DataSearch.GetSearchResults(searchBar.Text);
         }
 
-        private void OnClick_search(object sender, TextChangedEventArgs e)
+        private async void OnClick_search(object sender, TextChangedEventArgs e)
         {
-           searchResults.ItemsSource = DataSearch.GetSearchResults(e.NewTextValue);
+            searchResults.ItemsSource = await ApiManager.GetPostings();
         }
-
-       
     }
 }

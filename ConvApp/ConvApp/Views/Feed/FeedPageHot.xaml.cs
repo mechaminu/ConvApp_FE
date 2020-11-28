@@ -129,7 +129,7 @@ namespace ConvApp.Views
         {
             foreach (var post in postList)
             {
-                await AddElem(post);   
+                await AddElem(post);
             }
         }
 
@@ -221,7 +221,7 @@ namespace ConvApp.Views
                     targetPage = new ReviewDetail { BindingContext = posting };
                 else
                     targetPage = new RecipeDetail { BindingContext = posting };
-                
+
                 await Navigation.PushAsync(targetPage);
             };
             elem.GestureRecognizers.Add(tap);

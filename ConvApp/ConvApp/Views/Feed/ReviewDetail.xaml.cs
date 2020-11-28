@@ -1,9 +1,9 @@
-﻿using System;
+﻿using ConvApp.ViewModels;
+using System;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using ConvApp.ViewModels;
 
 namespace ConvApp.Views
 {

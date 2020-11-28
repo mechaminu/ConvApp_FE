@@ -50,7 +50,7 @@ namespace ConvApp.Views
         private readonly ObservableCollection<ProductModel> productList = new ObservableCollection<ProductModel>();
         private async void AddProduct(object sender, EventArgs e)
         {
-            var page = new ProductSelectionPage(_single:true);
+            var page = new ProductSelectionPage(_single: true);
 
             page.MyEvent += (s, e) => GetSelection((s as ProductSelectionPage).selections);
 
@@ -89,7 +89,7 @@ namespace ConvApp.Views
                 modelNodes.Add(new PostingNodeModel { ImageFilename = imageFilename });
 
                 var prodList = new List<ProductModel>();
-                foreach(var prod in productList)
+                foreach (var prod in productList)
                     prodList.Add(prod);
 
                 await ApiManager.PostPosting(new PostingModel  // 이미지 업로드

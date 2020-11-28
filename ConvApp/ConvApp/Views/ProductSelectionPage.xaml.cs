@@ -79,7 +79,7 @@ namespace ConvApp.Views
         private void RefreshSelection()
         {
             selectionList.Children.Clear();
-            foreach(var e in selections)
+            foreach (var e in selections)
             {
                 var item = new ProductSelectionItem(e);
                 item.GestureRecognizer.Tapped += (s, e) => ItemRemove(s, e);

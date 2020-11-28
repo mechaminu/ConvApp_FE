@@ -1,6 +1,6 @@
-﻿using System;
+﻿using ConvApp.ViewModels;
+using System;
 using System.Threading.Tasks;
-using ConvApp.ViewModels;
 
 namespace ConvApp.Models
 {

@@ -2,32 +2,24 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ConvApp.Views.SearchPage"
-             x:customeditor="ConvApp."
-             Shell.NavBarIsVisible="True">
-    
-        <ContentPage.ToolbarItems>
+             Shell.NavBarIsVisible="False">
+    <!--x:customeditor="ConvApp."-->
+    <ContentPage.ToolbarItems>
         <ToolbarItem/>
-
     </ContentPage.ToolbarItems>
-        <StackLayout>
-            <StackLayout Orientation="Horizontal">
-                <!--<Button  Text="뒤로" WidthRequest="30" Padding="0" Clicked="OnClicked_back"/>-->
+    <StackLayout>
+        <StackLayout Orientation="Horizontal">
+            <!--<Button  Text="뒤로" WidthRequest="30" Padding="0" Clicked="OnClicked_back"/>-->
             <SearchBar x:Name="searchBar" Placeholder="Search items..."
-                       BackgroundColor="Azure"
-                       CancelButtonColor="Red"
-                       PlaceholderColor="Gray"
-                       TextColor="Black"
-                       TextTransform="Lowercase"
-                       HorizontalTextAlignment="Center"
-                       FontSize="Medium"
-                       FontAttributes="Italic" 
-                       TextChanged="OnClick_search"/>
+                    TextTransform="Lowercase"
+                    FontSize="Medium"
+                    HorizontalOptions="FillAndExpand"
+                    TextChanged="OnClick_search"/>
         </StackLayout>
-        <Editor TextChanged="aaaaa" />
+        <!--<Editor TextChanged="aaaaa" />-->
 
         <ListView x:Name="searchResults" 
-                      HorizontalOptions="Fill"
-                      VerticalOptions="CenterAndExpand"/>
-        </StackLayout>
-    
+                    HorizontalOptions="Fill"
+                    VerticalOptions="CenterAndExpand"/>
+    </StackLayout>
 </ContentPage>

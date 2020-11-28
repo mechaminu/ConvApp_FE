@@ -23,13 +23,13 @@ namespace ConvApp
         private static readonly string EndPointURL = "http://convappdev.azurewebsites.net/api";
         public static readonly string ImageEndPointURL = "https://convappdev.blob.core.windows.net/images";
         private static readonly RestClient client = new RestClient(EndPointURL) { Timeout = -1 }.UseNewtonsoftJson(new JsonSerializerSettings
-            {
-                PreserveReferencesHandling = PreserveReferencesHandling.All 
-            }) as RestClient;
+        {
+            PreserveReferencesHandling = PreserveReferencesHandling.All
+        }) as RestClient;
         private static readonly RestClient client_img = new RestClient(ImageEndPointURL) { Timeout = -1 }.UseNewtonsoftJson(new JsonSerializerSettings
-            {
-                PreserveReferencesHandling = PreserveReferencesHandling.All
-            }) as RestClient;
+        {
+            PreserveReferencesHandling = PreserveReferencesHandling.All
+        }) as RestClient;
 
         public async static Task RefreshRank()
         {
@@ -127,7 +127,7 @@ namespace ConvApp
             var response = await client.ExecuteAsync<FeedbackDTO>(request);
 
             var comments = new List<CommentViewModel>();
-            foreach(var cmtModel in response.Data.Comments)
+            foreach (var cmtModel in response.Data.Comments)
             {
                 var cmt = await CommentModel.Populate(cmtModel);
                 await cmt.Feedback.Refresh();
@@ -135,7 +135,7 @@ namespace ConvApp
             }
 
             var likes = new List<Like>();
-            foreach(var likeModel in response.Data.Likes)
+            foreach (var likeModel in response.Data.Likes)
             {
                 var like = await LikeModel.Populate(likeModel);
                 likes.Add(like);
@@ -181,7 +181,7 @@ namespace ConvApp
             foreach (var likeDTO in response.Data)
                 likes.Add(await LikeModel.Populate(likeDTO));
 
-            return likes;            
+            return likes;
         }
 
         public async static Task<List<Like>> DeleteLike(byte type, int id)

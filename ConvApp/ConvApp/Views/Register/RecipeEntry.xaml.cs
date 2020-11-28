@@ -90,7 +90,7 @@ namespace ConvApp.Views
             productList.Clear();
             if (products.Count != 0)
             {
-                foreach(var prod in products)
+                foreach (var prod in products)
                     productList.Add(prod);
             }
         }
