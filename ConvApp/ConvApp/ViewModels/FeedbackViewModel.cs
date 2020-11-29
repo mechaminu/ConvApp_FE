@@ -84,7 +84,7 @@ namespace ConvApp.ViewModels
                 foreach (var cmt in cmtList)
                 {
                     await cmt.Feedback.Refresh();
-                    cmt.RefreshParent = () => Refresh();
+                    cmt.RefreshParent = async () => await Refresh();
                 }
 
                 isPopulated = false;
@@ -92,14 +92,14 @@ namespace ConvApp.ViewModels
                 MainThread.BeginInvokeOnMainThread(() =>
                 {
                     comments.Clear();
-                    foreach(var cmt in cmtList)
+                    foreach (var cmt in cmtList)
                         comments.Add(cmt);
 
                     likes.Clear();
-                    foreach(var like in likeList)
+                    foreach (var like in likeList)
                         likes.Add(like);
                 });
-                
+
                 IsLiked = likeList.Exists(l => l.Creator.Id == App.User.Id);
 
                 isPopulated = true;
@@ -132,10 +132,10 @@ namespace ConvApp.ViewModels
                 {
                     try
                     {
-                        var likeList = await ApiManager.PostLike(type, id);
                         likes.Clear();
-                        likeList.ForEach(l => likes.Add(l));
                         IsLiked = true;
+                        var likeList = await ApiManager.PostLike(type, id);
+                        likeList.ForEach(l => likes.Add(l));
                     }
                     catch
                     {
@@ -149,7 +149,8 @@ namespace ConvApp.ViewModels
         public async Task PostComment(string text)
         {
             var cmt = await ApiManager.PostComment(type, id, text);
-            cmt.RefreshParent = () => Refresh();
+            cmt.RefreshParent = async () => await Refresh();
+            await cmt.Feedback.Refresh();
             comments.Add(cmt);
         }
     }

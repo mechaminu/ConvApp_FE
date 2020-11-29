@@ -21,11 +21,11 @@
                                     DownsampleToViewSize="true"
                                     Source="{Binding User.Image}"/>
                     <Label Text="{Binding User.Name}"
-                               TextColor="Black"
-                               FontSize="16"
-                               FontAttributes="Bold"
-                               HorizontalOptions="FillAndExpand"
-                               VerticalOptions="Center"/>
+                            TextColor="Black"
+                            FontSize="16"
+                            FontAttributes="Bold"
+                            HorizontalOptions="FillAndExpand"
+                            VerticalOptions="Center"/>
                     <Label Text="{Binding Date, StringFormat='{0}'}"
                                TextColor="Black"
                                FontSize="16"
@@ -39,25 +39,7 @@
                        Padding="10"
                        FontSize="Medium"/>
 
-                <ListView ItemsSource="{Binding RecipeNode}"
-                          SelectionMode="None"
-                          HasUnevenRows="True"
-                          x:Name="nodeList">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <StackLayout MinimumHeightRequest="100">
-                                    <ff:CachedImage Aspect="AspectFill"
-                                                    Source="{Binding NodeImage}"/>
-                                    <Label Text="{Binding NodeString}"
-                                           Padding="10"
-                                           FontSize="Medium"
-                                           HorizontalTextAlignment="Center"/>
-                                </StackLayout>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                <StackLayout x:Name="nodeArea"/>
 
                 <local:FeedbackView BindingContext="{Binding Feedback}"/>
 

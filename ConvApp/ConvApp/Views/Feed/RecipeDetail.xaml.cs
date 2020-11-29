@@ -14,23 +14,23 @@ namespace ConvApp.Views
         public RecipeDetail()
         {
             InitializeComponent();
+
+            BindingContextChanged += (s, e) => ShowNodes();
         }
 
-        protected override void OnAppearing()
+        private void ShowNodes()
         {
-            base.OnAppearing();
+            if (BindingContext == null)
+                return;
 
-            // TODO 댓글 ListView 고치는 스크립트
-            // TODO 포스팅노드 ListView 고치는 스크립트
-            ListResizing();
-        }
+            var btx = BindingContext as RecipeViewModel;
 
-        private void ListResizing()
-        {
-            nodeList.ItemAppearing += (s, e) =>
+            nodeArea.Children.Clear();
+            MainThread.BeginInvokeOnMainThread(() =>
             {
-                Console.WriteLine(e);
-            };
+                foreach (var node in btx.RecipeNode)
+                    nodeArea.Children.Add(new RecipeNodeCell { BindingContext = node });
+            });
         }
 
         private void Button_Clicked(object sender, EventArgs e)

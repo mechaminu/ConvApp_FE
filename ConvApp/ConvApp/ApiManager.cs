@@ -1,4 +1,9 @@
-﻿using System;
+﻿using ConvApp.Models;
+using ConvApp.ViewModels;
+using Newtonsoft.Json;
+using RestSharp;
+using RestSharp.Serializers.NewtonsoftJson;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -6,15 +11,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-
 using Xamarin.Essentials;
-
-using Newtonsoft.Json;
-using RestSharp;
-using RestSharp.Serializers.NewtonsoftJson;
-
-using ConvApp.Models;
-using ConvApp.ViewModels;
 
 namespace ConvApp
 {

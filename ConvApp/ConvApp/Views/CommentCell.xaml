@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:fftf="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+             xmlns:ffsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+             x:Class="ConvApp.Views.CommentCell">
+    <Frame Margin="5"
+           Padding="0"
+           CornerRadius="10">
+        <StackLayout Spacing="0"
+                     BackgroundColor="Gainsboro">
+            <StackLayout Orientation="Horizontal">
+                <StackLayout Orientation="Horizontal"
+                             HorizontalOptions="FillAndExpand"
+                             Padding="5,5,10,0"
+                             Spacing="0">
+                    <ff:CachedImage Margin="0,0,5,0"
+                                    WidthRequest="30"
+                                    HeightRequest="30"
+                                    VerticalOptions="Center"
+                                    Source="{Binding Creator.Image}">
+                        <ff:CachedImage.Transformations>
+                            <fftf:CircleTransformation BorderHexColor="#CCCCCC"/>
+                        </ff:CachedImage.Transformations>
+                    </ff:CachedImage>
+                    <Label Text="{Binding Creator.Name}"
+                           FontAttributes="Bold"
+                           HorizontalOptions="FillAndExpand"
+                           VerticalOptions="Center"/>
+                    <Label Text="{Binding Date, StringFormat='{0:M/d HH:mm}'}"
+                           FontAttributes="Bold"
+                           HorizontalOptions="End"
+                           VerticalOptions="Center"/>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal"
+                             Padding="5,5,10,0"
+                             Spacing="0">
+                    <StackLayout Padding="5">
+                        <ffsvg:SvgCachedImage Source="{Binding Feedback.LikeImage}"
+                                              WidthRequest="20"
+                                              HorizontalOptions="CenterAndExpand"
+                                              VerticalOptions="CenterAndExpand">
+                            <ffsvg:SvgCachedImage.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Feedback.LikeBtnCommand}"/>
+                            </ffsvg:SvgCachedImage.GestureRecognizers>
+                        </ffsvg:SvgCachedImage>
+                    </StackLayout>
+                    <Label Text="{Binding Feedback.Likes.Count}"
+                            FontSize="Small"
+                            FontAttributes="Bold"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Start"/>
+                    <StackLayout Padding="5"
+                                 HorizontalOptions="Fill">
+                        <ffsvg:SvgCachedImage Source="resource://ConvApp.Resources.comment-dots-regular.svg"
+                                              WidthRequest="20"
+                                              HorizontalOptions="CenterAndExpand"
+                                              VerticalOptions="CenterAndExpand">
+                        </ffsvg:SvgCachedImage>
+                    </StackLayout>
+                    <StackLayout Padding="5"
+                                 HorizontalOptions="Fill"
+                                 IsVisible="{Binding Owned}">
+                        <ffsvg:SvgCachedImage Source="resource://ConvApp.Resources.trash-alt-regular.svg"
+                                              WidthRequest="20"
+                                              HorizontalOptions="CenterAndExpand"
+                                              VerticalOptions="CenterAndExpand">
+                            <ffsvg:SvgCachedImage.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding DeleteComment}"/>
+                            </ffsvg:SvgCachedImage.GestureRecognizers>
+                        </ffsvg:SvgCachedImage>
+                    </StackLayout>
+                    <StackLayout Padding="5"
+                                 HorizontalOptions="Fill"
+                                 IsVisible="{Binding NotOwned}">
+                        <ffsvg:SvgCachedImage Source="resource://ConvApp.Resources.exclamation-circle-solid.svg"
+                                            WidthRequest="20"
+                                            HorizontalOptions="CenterAndExpand"
+                                            VerticalOptions="CenterAndExpand">
+                        </ffsvg:SvgCachedImage>
+                    </StackLayout>
+                </StackLayout>
+            </StackLayout>
+            <Label Text="{Binding Text}"
+                   Padding="10"/>
+        </StackLayout>
+    </Frame>
+</ContentView>

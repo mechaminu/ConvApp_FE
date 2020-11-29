@@ -1,13 +1,8 @@
-﻿using ConvApp.Models;
-using ConvApp.ViewModels;
+﻿using ConvApp.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace ConvApp.Views
 {
@@ -27,7 +22,7 @@ namespace ConvApp.Views
 
             var result = await ApiManager.GetSearch((sender as SearchBar).Text);
             var list = result.Postings;
-            
+
             searchResults.ItemsSource = list;
             activityInd.IsVisible = false;
         }
