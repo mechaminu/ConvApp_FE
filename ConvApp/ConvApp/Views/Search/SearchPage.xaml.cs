@@ -22,7 +22,11 @@ namespace ConvApp.Views
             activityInd.IsVisible = true;
 
             var result = await ApiManager.GetSearch((sender as SearchBar).Text);
-            var list = SearchResultModel.Populate(result);
+            var list = new List<SearchResultViewModel>();
+            if (result.Postings != null && result.Products != null)
+                list = SearchResultModel.Populate(result);
+            else
+                list.Add(new SearchResultViewModel { Description = "검색 결과가 없습니다" });
 
             searchResults.ItemsSource = list;
             activityInd.IsVisible = false;

@@ -65,6 +65,8 @@
     <AndroidKeyStore>false</AndroidKeyStore>
     <AndroidSigningKeyStore>C:\Users\Minwoo\AppData\Local\Xamarin\Mono for Android\Keystore\paloaltoinfo_devs\paloaltoinfo_devs.keystore</AndroidSigningKeyStore>
     <AndroidSigningStorePass>123456</AndroidSigningStorePass>
+    <AndroidUseAapt2>true</AndroidUseAapt2>
+    <AndroidSupportedAbis />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />
