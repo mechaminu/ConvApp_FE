@@ -1,9 +1,4 @@
-﻿using ConvApp.Models;
-using ConvApp.ViewModels;
-using Newtonsoft.Json;
-using RestSharp;
-using RestSharp.Serializers.NewtonsoftJson;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -11,8 +6,15 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+
 using Xamarin.Essentials;
 
+using Newtonsoft.Json;
+using RestSharp;
+using RestSharp.Serializers.NewtonsoftJson;
+
+using ConvApp.Models;
+using ConvApp.ViewModels;
 
 namespace ConvApp
 {
@@ -33,15 +35,50 @@ namespace ConvApp
 
         public async static Task RefreshRank()
         {
-            await client.ExecuteAsync(new RestRequest("feedbacks/ranking", Method.GET));
+            await client.ExecuteAsync(new RestRequest("ranking", Method.GET));
         }
 
-        public async static Task AddView(byte type, int id)
-        {
-            var request = new RestRequest("feedbacks/view", Method.POST)
-                .AddJsonBody(new { type = type, id = id, userid = App.User.Id });
 
-            await client.ExecuteAsync(request);
+        public async static Task<SearchResultModel> GetSearch(string queryStr)
+        {
+            return (await client.ExecuteAsync<SearchResultModel>(new RestRequest("search", Method.GET).AddQueryParameter("search", queryStr))).Data;
+        }
+
+        #region Products
+        public async static Task<ProductModel> GetProduct(int id)
+        {
+            var request = new RestRequest($"products/{id}", Method.GET);
+
+            var response = await client.ExecuteAsync<ProductModel>(request);
+
+            if (response == null || !response.IsSuccessful)
+                throw new InvalidOperationException($"제품{id} 정보 획득 실패!");
+
+            return response.Data;
+        }
+
+        public async static Task<List<ProductModel>> GetProducts(int? store = null, int? category = null)
+        {
+            var request = new RestRequest("products", Method.GET);
+
+            if (store != null)
+                request.AddQueryParameter("store", store + "");
+            if (category != null)
+                request.AddQueryParameter("category", category + "");
+
+            return (await client.ExecuteAsync<List<ProductModel>>(request)).Data;
+        }
+
+        public async static Task<List<ProductModel>> GetHotProducts(int? store = null, int? category = null)
+        {
+            var request = new RestRequest("products/hot", Method.GET);
+
+            if (store != null)
+                request.AddQueryParameter("store", store + "");
+            if (category != null)
+                request.AddQueryParameter("category", category + "");
+
+            return (await client.ExecuteAsync<List<ProductModel>>(request)).Data;
         }
 
         public async static Task<ProductViewModel> GetProductDetailViewModel(int id)
@@ -60,9 +97,6 @@ namespace ConvApp
                     reviews.Add(post as ReviewViewModel);
             }
 
-            Console.WriteLine(reviews.Count);
-            Console.WriteLine(recipes.Count);
-
             return new ProductViewModel
             {
                 Id = product.Id,
@@ -73,51 +107,16 @@ namespace ConvApp
                 Image = product.Image,
                 Name = product.Name,
                 Price = product.Price,
-                Rank = "123123",
-                Rate = "4.5",
+                Rank = "9999",
+                Rate = "9999",
                 Calory = "9999",
                 ReviewList = reviews,
                 RecipeList = recipes
             };
         }
+        #endregion
 
-        public async static Task<List<ProductModel>> GetHotProducts(int? store = null, int? category = null)
-        {
-            var request = new RestRequest("products/hot", Method.GET);
-
-            if (store != null)
-                request.AddQueryParameter("store", store + "");
-            if (category != null)
-                request.AddQueryParameter("category", category + "");
-
-            return (await client.ExecuteAsync<List<ProductModel>>(request)).Data;
-        }
-
-        public async static Task<List<ProductModel>> GetProducts(int? store = null, int? category = null)
-        {
-            var request = new RestRequest("products", Method.GET);
-
-            if (store != null)
-                request.AddQueryParameter("store", store + "");
-            if (category != null)
-                request.AddQueryParameter("category", category + "");
-
-            return (await client.ExecuteAsync<List<ProductModel>>(request)).Data;
-        }
-
-        public async static Task<ProductModel> GetProduct(int id)
-        {
-            var request = new RestRequest($"products/{id}", Method.GET);
-
-            var response = await client.ExecuteAsync<ProductModel>(request);
-
-            if (response == null || !response.IsSuccessful)
-                throw new InvalidOperationException($"제품{id} 정보 획득 실패!");
-
-            return response.Data;
-        }
-
-        #region FEEDBACK API
+        #region Feedbacks
         public async static Task<(List<CommentViewModel>, List<Like>)> GetFeedbacks(byte type, int id)
         {
             var request = new RestRequest("feedbacks", Method.GET)
@@ -232,9 +231,21 @@ namespace ConvApp
 
             return await CommentModel.Populate(response.Data);
         }
+
+        public async static Task DeleteComment(int id)
+        {
+            await client.ExecuteAsync(new RestRequest("feedbacks/comment", Method.DELETE)
+                .AddQueryParameter("id", $"{id}"));
+        }
+
+        public async static Task AddView(byte type, int id)
+        {
+            await client.ExecuteAsync(new RestRequest("feedbacks/view", Method.POST)
+                .AddJsonBody(new { ParentType = type, ParentId = id, UserId = App.User.Id }));
+        }
         #endregion
 
-        #region USER API
+        #region Users
         // 유저 데이터 획득
         public async static Task<UserModel> GetUser(int userId)
         {
@@ -252,7 +263,7 @@ namespace ConvApp
         }
         #endregion
 
-        #region POSTING API
+        #region Postings
         /// <summary>
         /// 포스트엔트리(포스트입력) 뷰모델을 받아 백엔드에 업로드하는 메소드 
         /// </summary>
@@ -353,7 +364,7 @@ namespace ConvApp
         }
         #endregion
 
-        #region IMAGE API
+        #region Images
         // 이미지 업로드
         public async static Task<string> UploadImage(IEnumerable<FileResult> images)
         {
@@ -408,6 +419,7 @@ namespace ConvApp
         #endregion
 
         // 인수로 주어진 FormFile 객체 배열(Dictionary)을 포함하는 multipart/form-data 요청 보내기
+        // 이거 Restsharp로 못하나?
         public async static Task<string> PostMultipart(string url, Dictionary<string, object> parameters)
         {
             try

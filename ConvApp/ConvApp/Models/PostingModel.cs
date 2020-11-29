@@ -20,14 +20,14 @@ namespace ConvApp.Models
         public DateTime ModifiedDate { get; set; }
 
         public byte PostingType { get; set; }
-        public int CreatorId { get; set; }
+        public int UserId { get; set; }
 
         public List<ProductModel> Products { get; set; }
         public List<PostingNodeModel> PostingNodes { get; set; }
 
         public static async Task<PostingViewModel> Populate(PostingModel model)
         {
-            var user = await ApiManager.GetUser(model.CreatorId);
+            var user = await ApiManager.GetUser(model.UserId);
 
             switch (model.PostingType)
             {

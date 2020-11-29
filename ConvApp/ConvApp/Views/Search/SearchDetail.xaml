@@ -20,23 +20,15 @@
                                         FontSize="18"
                                         HorizontalTextAlignment="Start"
                                         TextChanged="OnTextChanged_Search"/>
-               
-
             </StackLayout>
         </ContentView>
     </Shell.TitleView>
-    
 
-
-        <ContentPage Title="Top" BackgroundColor="White">
+    <ContentPage Title="Top" BackgroundColor="White">
         <ListView x:Name="searchResults" ItemsSource="{Binding SearchResults}" />
     </ContentPage>
-
     
-
     <ContentPage Title="items"/>
     <ContentPage Title="recipe"/>
-    <ContentPage Title=" chef"/>
-   
-   
+    <ContentPage Title="chef"/>
 </TabbedPage>

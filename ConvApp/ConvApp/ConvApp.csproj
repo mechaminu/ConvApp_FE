@@ -31,6 +31,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Resources\comment-dots-regular.svg" />
+    <None Remove="Resources\crown.svg" />
+    <None Remove="Resources\ellipsis-v-solid.svg" />
+    <None Remove="Resources\exclamation-circle-solid.svg" />
+    <None Remove="Resources\heart-regular.svg" />
+    <None Remove="Resources\heart-solid.svg" />
+    <None Remove="Resources\home.svg" />
+    <None Remove="Resources\plus.svg" />
+    <None Remove="Resources\search.svg" />
+    <None Remove="Resources\trash-alt-regular.svg" />
+    <None Remove="Resources\user.svg" />
     <None Remove="ViewModels\Models\NewFile1.txt" />
     <None Remove="Resources\bronze_2.png" />
     <None Remove="Resources\gold_2.png" />
@@ -43,12 +54,23 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Resources\bronze_2.png" />
+    <EmbeddedResource Include="Resources\comment-dots-regular.svg" />
+    <EmbeddedResource Include="Resources\crown.svg" />
+    <EmbeddedResource Include="Resources\ellipsis-v-solid.svg" />
+    <EmbeddedResource Include="Resources\exclamation-circle-solid.svg" />
     <EmbeddedResource Include="Resources\gold_2.png" />
+    <EmbeddedResource Include="Resources\heart-regular.svg" />
+    <EmbeddedResource Include="Resources\heart-solid.svg" />
     <EmbeddedResource Include="Resources\heart.png" />
     <EmbeddedResource Include="Resources\heartfilled.png" />
+    <EmbeddedResource Include="Resources\home.svg" />
     <EmbeddedResource Include="Resources\P1.jpg" />
+    <EmbeddedResource Include="Resources\plus.svg" />
+    <EmbeddedResource Include="Resources\search.svg" />
     <EmbeddedResource Include="Resources\silver_2.png" />
+    <EmbeddedResource Include="Resources\trash-alt-regular.svg" />
     <EmbeddedResource Include="Resources\trophy.png" />
+    <EmbeddedResource Include="Resources\user.svg" />
   </ItemGroup>
 
   <ItemGroup>

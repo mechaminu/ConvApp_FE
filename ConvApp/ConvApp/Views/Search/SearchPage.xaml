@@ -3,23 +3,34 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ConvApp.Views.SearchPage"
              Shell.NavBarIsVisible="False">
-    <!--x:customeditor="ConvApp."-->
-    <ContentPage.ToolbarItems>
-        <ToolbarItem/>
-    </ContentPage.ToolbarItems>
-    <StackLayout>
+    <StackLayout Spacing="0">
         <StackLayout Orientation="Horizontal">
-            <!--<Button  Text="뒤로" WidthRequest="30" Padding="0" Clicked="OnClicked_back"/>-->
-            <SearchBar x:Name="searchBar" Placeholder="Search items..."
-                    TextTransform="Lowercase"
-                    FontSize="Medium"
-                    HorizontalOptions="FillAndExpand"
-                    TextChanged="OnClick_search"/>
+            <SearchBar x:Name="searchBar" 
+                       Placeholder="Search items..."
+                       TextTransform="Lowercase"
+                       FontSize="Medium"
+                       HorizontalOptions="FillAndExpand"
+                       SearchButtonPressed="OnClick_search"/>
         </StackLayout>
-        <!--<Editor TextChanged="aaaaa" />-->
-
-        <ListView x:Name="searchResults" 
-                    HorizontalOptions="Fill"
-                    VerticalOptions="CenterAndExpand"/>
+        <AbsoluteLayout>
+            <ListView x:Name="searchResults"
+                      AbsoluteLayout.LayoutBounds="0,0,1,1"
+                      AbsoluteLayout.LayoutFlags="All">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding Id}" Detail="{Binding User.Name}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1"
+                         AbsoluteLayout.LayoutFlags="All">
+                <ActivityIndicator x:Name="activityInd"
+                                   WidthRequest="100"
+                                   IsRunning="True"
+                                   IsVisible="False"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="CenterAndExpand"/>
+            </StackLayout>
+        </AbsoluteLayout>
     </StackLayout>
 </ContentPage>

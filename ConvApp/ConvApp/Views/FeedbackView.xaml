@@ -2,6 +2,8 @@
 <StackLayout xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:fftf="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+             xmlns:ffsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
              x:Class="ConvApp.Views.FeedbackView">
     <StackLayout Orientation="Horizontal"
                  Margin="5">
@@ -27,44 +29,81 @@
                            CornerRadius="10">
                         <StackLayout Spacing="0"
                                  BackgroundColor="Gainsboro">
-                            <AbsoluteLayout>
+                            <StackLayout Orientation="Horizontal">
                                 <StackLayout Orientation="Horizontal"
-                                             Padding="10,5,10,0"
-                                             Spacing="0"
-                                             AbsoluteLayout.LayoutBounds="0,0,0.7,1"
-                                             AbsoluteLayout.LayoutFlags="All">
-                                    <ff:CachedImage Margin="0,0,10,0"
+                                             HorizontalOptions="FillAndExpand"
+                                             Padding="5,5,10,0"
+                                             Spacing="0">
+                                    <ff:CachedImage Margin="0,0,5,0"
                                             WidthRequest="30"
                                             HeightRequest="30"
-                                            Source="{Binding Creator.Image}"/>
+                                            VerticalOptions="Center"
+                                            Source="{Binding Creator.Image}">
+                                        <ff:CachedImage.Transformations>
+                                            <fftf:CircleTransformation BorderHexColor="#CCCCCC"/>
+                                        </ff:CachedImage.Transformations>
+                                    </ff:CachedImage>
                                     <Label Text="{Binding Creator.Name}"
-                                   HorizontalOptions="FillAndExpand"
-                                   VerticalOptions="Center"/>
-                                    <Label Text="{Binding Date}"
+                                           FontAttributes="Bold"
+                                           HorizontalOptions="FillAndExpand"
+                                           VerticalOptions="Center"/>
+                                    <Label Text="{Binding Date, StringFormat='{0:M/d HH:mm}'}"
+                                           FontAttributes="Bold"
                                            HorizontalOptions="End"
                                            VerticalOptions="Center"/>
                                 </StackLayout>
                                 <StackLayout Orientation="Horizontal"
-                                             Padding="0"
-                                             Spacing="0"
-                                             AbsoluteLayout.LayoutBounds="1,0,0.3,1"
-                                             AbsoluteLayout.LayoutFlags="All">
-                                    <ImageButton Source="{Binding Feedback.LikeImage}"
-                                                 Command="{Binding Feedback.LikeBtnCommand}"
-                                                 HeightRequest="20"
-                                                 Aspect="AspectFit"
-                                                 BackgroundColor="Transparent"/>
+                                             Padding="5,5,10,0"
+                                             Spacing="0">
+                                    <StackLayout Padding="5">
+                                        <ffsvg:SvgCachedImage Source="{Binding Feedback.LikeImage}"
+                                                              WidthRequest="20"
+                                                              HorizontalOptions="CenterAndExpand"
+                                                              VerticalOptions="CenterAndExpand">
+                                            <ffsvg:SvgCachedImage.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding Feedback.LikeBtnCommand}"/>
+                                            </ffsvg:SvgCachedImage.GestureRecognizers>
+                                        </ffsvg:SvgCachedImage>
+                                    </StackLayout>
                                     <Label Text="{Binding Feedback.Likes.Count}"
-                                           Padding="10,0,0,0"
+                                           FontSize="Small"
+                                           FontAttributes="Bold"
                                            VerticalOptions="Center"
-                                           HorizontalOptions="StartAndExpand"/>
-                                    <Label Text="내 댓글임"
-                                           Padding="0,0,10,0"
-                                           VerticalOptions="Center"
-                                           HorizontalOptions="EndAndExpand"
-                                           IsVisible="{Binding Owned}"/>
+                                           HorizontalOptions="Start"/>
+                                    <StackLayout Padding="5"
+                                                 HorizontalOptions="Fill">
+                                        <ffsvg:SvgCachedImage Source="resource://ConvApp.Resources.comment-dots-regular.svg"
+                                                              WidthRequest="20"
+                                                              HorizontalOptions="CenterAndExpand"
+                                                              VerticalOptions="CenterAndExpand">
+                                        </ffsvg:SvgCachedImage>
+                                    </StackLayout>
+                                    <StackLayout Padding="5"
+                                                 HorizontalOptions="Fill"
+                                                 IsVisible="{Binding Owned}">
+                                        <ffsvg:SvgCachedImage Source="resource://ConvApp.Resources.trash-alt-regular.svg"
+                                                              WidthRequest="20"
+                                                              HorizontalOptions="CenterAndExpand"
+                                                              VerticalOptions="CenterAndExpand">
+                                            <ffsvg:SvgCachedImage.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding DeleteComment}"/>
+                                            </ffsvg:SvgCachedImage.GestureRecognizers>
+                                        </ffsvg:SvgCachedImage>
+                                    </StackLayout>
+                                    <StackLayout Padding="5"
+                                                 HorizontalOptions="Fill"
+                                                 IsVisible="{Binding NotOwned}">
+                                        <ffsvg:SvgCachedImage Source="resource://ConvApp.Resources.exclamation-circle-solid.svg"
+                                                              WidthRequest="20"
+                                                              HorizontalOptions="CenterAndExpand"
+                                                              VerticalOptions="CenterAndExpand">
+                                            <!--<ffsvg:SvgCachedImage.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding DeleteComment}"/>
+                                            </ffsvg:SvgCachedImage.GestureRecognizers>-->
+                                        </ffsvg:SvgCachedImage>
+                                    </StackLayout>
                                 </StackLayout>
-                            </AbsoluteLayout>
+                            </StackLayout>
                             
                             <Label Text="{Binding Text}"
                                Padding="10"/>

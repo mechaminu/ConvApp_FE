@@ -94,7 +94,7 @@ namespace ConvApp.Views
 
                 await ApiManager.PostPosting(new PostingModel  // 이미지 업로드
                 {
-                    CreatorId = App.User.Id,
+                    UserId = App.User.Id,
                     PostingType = (byte)PostingTypes.REVIEW,
                     PostingNodes = modelNodes,
                     Products = prodList

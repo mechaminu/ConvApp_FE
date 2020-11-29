@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace ConvApp.ViewModels
 {
-    class DataSearch
+    public class SearchViewModel
     {
         public static List<string> Fruits { get; } = new List<string>
         {
@@ -103,12 +103,10 @@ namespace ConvApp.ViewModels
             "Yuzu"
         };
 
-
         public static List<string> GetSearchResults(string queryString)
         {
             var normalizedQuery = queryString?.ToLower() ?? "";
             return Fruits.Where(f => f.ToLowerInvariant().Contains(normalizedQuery)).ToList();
         }
-
     }
 }

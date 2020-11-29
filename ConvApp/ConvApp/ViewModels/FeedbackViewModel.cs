@@ -1,9 +1,11 @@
 ﻿using ConvApp.Models;
+using FFImageLoading.Svg.Forms;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace ConvApp.ViewModels
@@ -66,8 +68,8 @@ namespace ConvApp.ViewModels
         public ImageSource LikeImage
         {
             get => IsLiked
-                ? ImageSource.FromResource("ConvApp.Resources.heartfilled.png")
-                : ImageSource.FromResource("ConvApp.Resources.heart.png");
+                ? SvgImageSource.FromResource("ConvApp.Resources.heart-solid.svg")
+                : SvgImageSource.FromResource("ConvApp.Resources.heart-regular.svg");
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -76,24 +78,28 @@ namespace ConvApp.ViewModels
         {
             try
             {
-                //var cmtList = await ApiManager.GetComments(type, id);
-                //var likeList = await ApiManager.GetLikes(type, id);
-
                 // 튜플 받아오기. 한번의 Request.
                 var (cmtList, likeList) = await ApiManager.GetFeedbacks(type, id);
 
                 foreach (var cmt in cmtList)
                 {
                     await cmt.Feedback.Refresh();
+                    cmt.RefreshParent = () => Refresh();
                 }
 
                 isPopulated = false;
-                comments.Clear();
 
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    comments.Clear();
+                    foreach(var cmt in cmtList)
+                        comments.Add(cmt);
 
-                comments = new ObservableCollection<CommentViewModel>(cmtList);
-                likes.Clear();
-                likes = new ObservableCollection<Like>(likeList);
+                    likes.Clear();
+                    foreach(var like in likeList)
+                        likes.Add(like);
+                });
+                
                 IsLiked = likeList.Exists(l => l.Creator.Id == App.User.Id);
 
                 isPopulated = true;
@@ -143,6 +149,7 @@ namespace ConvApp.ViewModels
         public async Task PostComment(string text)
         {
             var cmt = await ApiManager.PostComment(type, id, text);
+            cmt.RefreshParent = () => Refresh();
             comments.Add(cmt);
         }
     }

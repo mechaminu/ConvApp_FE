@@ -15,7 +15,7 @@ namespace ConvApp.Views
 
         private void OnTextChanged_Search(object sender, TextChangedEventArgs e)
         {
-            searchResults.ItemsSource = DataSearch.GetSearchResults(searchBar.Text);
+            searchResults.ItemsSource = SearchViewModel.GetSearchResults(searchBar.Text);
         }
     }
 }
