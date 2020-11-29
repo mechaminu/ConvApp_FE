@@ -18,7 +18,7 @@
                       AbsoluteLayout.LayoutFlags="All">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <TextCell Text="{Binding Id}" Detail="{Binding User.Name}"/>
+                        <ImageCell ImageSource="{Binding Image}" Text="{Binding Description}" Detail="{Binding Id}"/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

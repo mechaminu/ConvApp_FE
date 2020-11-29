@@ -1,4 +1,5 @@
-﻿using ConvApp.ViewModels;
+﻿using ConvApp.Models;
+using ConvApp.ViewModels;
 using System;
 using System.Collections.Generic;
 
@@ -21,7 +22,7 @@ namespace ConvApp.Views
             activityInd.IsVisible = true;
 
             var result = await ApiManager.GetSearch((sender as SearchBar).Text);
-            var list = result.Postings;
+            var list = SearchResultModel.Populate(result);
 
             searchResults.ItemsSource = list;
             activityInd.IsVisible = false;

@@ -39,7 +39,7 @@
                        Padding="10"
                        FontSize="Medium"/>
 
-                <StackLayout x:Name="nodeArea"/>
+                <StackLayout x:Name="nodeArea"></StackLayout>
 
                 <local:FeedbackView BindingContext="{Binding Feedback}"/>
 
