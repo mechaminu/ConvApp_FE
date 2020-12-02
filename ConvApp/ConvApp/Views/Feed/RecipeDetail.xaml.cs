@@ -59,8 +59,10 @@ namespace ConvApp.Views
         {
             try
             {
+                (sender as Button).IsEnabled = false;
                 if (cmtEditor.Text != null)
                     await (BindingContext as PostingViewModel).Feedback.PostComment(cmtEditor.Text);
+                (sender as Button).IsEnabled = true;
             }
             catch (Exception ex)
             {

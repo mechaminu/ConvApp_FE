@@ -1,6 +1,10 @@
-﻿using System;
+﻿using ConvApp.ViewModels;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ConvApp.Models
 {
@@ -30,5 +34,37 @@ namespace ConvApp.Models
         public string ImageFilename { get; set; }
 
         public List<PostingModel> Postings { get; set; }
+
+        public async static Task<ProductViewModel> Populate(ProductModel model)
+        {
+            var reviews = new ObservableCollection<ReviewViewModel>();
+            var recipes = new ObservableCollection<RecipeViewModel>();
+
+            foreach (var e in model.Postings)
+            {
+                var post = await PostingModel.Populate(e);
+
+                if (post is RecipeViewModel)
+                    recipes.Add(post as RecipeViewModel);
+                else
+                    reviews.Add(post as ReviewViewModel);
+            }
+
+            return new ProductViewModel
+            {
+                Id = model.Id,
+                StoreId = model.StoreId,
+                CategoryId = model.CategoryId,
+                CreatedDate = model.CreatedDate,
+                Image = model.Image,
+                Name = model.Name,
+                Price = model.Price,
+                Rank = "9999",
+                Rate = $"{(reviews.Any() ? reviews.Average(r => r.Rating) : 0)}",
+                Calory = "9999",
+                ReviewList = reviews,
+                RecipeList = recipes
+            };
+        }
     }
 }

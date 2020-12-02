@@ -9,11 +9,11 @@
                         Margin="100"
                         HorizontalOptions="FillAndExpand"
                         VerticalOptions="FillAndExpand"/>
-        <Label Text="현재로선 그냥 로그인 버튼 누르면 접속됩니다!"
+        <Label Text="EMAIL 1@paltoinfos.com (2,3도 있음) / PW 아무거나"
                FontSize="Medium"
                HorizontalOptions="Center"/>
-        <Entry Placeholder="Email"/>
-        <Entry IsPassword="True" Placeholder="Password"/>
+        <Entry x:Name="emailEntry" Placeholder="Email"/>
+        <Entry x:Name="pwdEntry" IsPassword="True" Placeholder="Password"/>
         <Button Text="Login" Clicked="Button_Clicked"/>
     </StackLayout>
 </ContentPage>

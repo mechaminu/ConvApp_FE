@@ -25,6 +25,8 @@ namespace ConvApp.Models
         public List<ProductModel> Products { get; set; }
         public List<PostingNodeModel> PostingNodes { get; set; }
 
+        public string ProfileImage { get; private set; }
+
         public static async Task<PostingViewModel> Populate(PostingModel model)
         {
             var user = await ApiManager.GetUser(model.UserId);
@@ -34,7 +36,6 @@ namespace ConvApp.Models
                 case (byte)PostingTypes.RECIPE:
 
                     var otherNodes = new List<PostingNode>();
-
                     foreach (var node in model.PostingNodes.Skip(2))
                     {
                         otherNodes.Add(new PostingNode

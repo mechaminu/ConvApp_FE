@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Shell xmlns="http://xamarin.com/schemas/2014/forms"
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:local="clr-namespace:ConvApp"
        xmlns:views="clr-namespace:ConvApp.Views"
-       x:Class="ConvApp.AppShell"
-       >
+       x:Class="ConvApp.AppShell">
     <Shell.Resources>
         <Style x:Key="BaseStyle"
                TargetType="Element">
@@ -64,12 +64,6 @@
             <ShellContent Title="Category" 
                           ContentTemplate="{DataTemplate views:EntrySelection}" 
                           Style="{StaticResource BaseStyle}"/>
-            <!--<ShellContent Title="Review"
-                          ContentTemplate="{DataTemplate views:ReviewEntry}"
-                          Style="{StaticResource EntryShell}" />
-            <ShellContent Title="Recipe"
-                          ContentTemplate="{DataTemplate views:RecipeEntry}"
-                          Style="{StaticResource EntryShell}" />-->
         </Tab>
         <Tab Title="랭킹">
             <ShellContent Title="Category" 
@@ -78,12 +72,11 @@
             <ShellContent Title="Ranking" 
                           ContentTemplate="{DataTemplate views:CategoryGeneralRanking}"
                           Style="{StaticResource BaseStyle}"/>
-            
         </Tab>
-        <Tab Title="내 정보">
+        <local:ProfileTab Title="내 정보">
             <ShellContent Style="{StaticResource BaseStyle}">
-                <views:MyPage/>
+                <views:ProfilePage BindingContext="{Binding}"/>
             </ShellContent>
-        </Tab>
+        </local:ProfileTab>
     </TabBar>
 </Shell>
