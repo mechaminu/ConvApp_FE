@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ConvApp.Views.SearchDetail"
+             Shell.NavBarIsVisible="True">
+    <Shell.TitleView>
+        <ScrollView>
+            <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
+                <Frame BackgroundColor="Yellow" CornerRadius="10" HeightRequest="40" Padding="0">
+                    <SearchBar BackgroundColor="LightGray" 
+                   Placeholder="Search"
+                   Focused="OnFocused_SearchBar"
+                   Margin="0"/>
+                </Frame>
+            </StackLayout>
+        </ScrollView>
+    </Shell.TitleView>
+
+    <StackLayout>
+        <Frame BackgroundColor="Beige" HeightRequest="15"/>
+        <RefreshView x:Name="refreshFlex"
+                     Refreshing="RefreshFlex_Refreshing">
+            <ScrollView>
+                <Grid>
+                    <FlexLayout x:Name="flexLayout"
+                                Wrap="Wrap"
+                                Direction="Row" 
+                                JustifyContent="SpaceAround"/>
+
+                </Grid>
+            </ScrollView>
+        </RefreshView>
+    </StackLayout>
+</ContentPage>

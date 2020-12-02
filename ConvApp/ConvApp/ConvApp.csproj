@@ -98,7 +98,7 @@
     <Compile Update="Views\Category\CategoryGeneralRanking.xaml.cs">
       <DependentUpon>CategoryGeneralRanking.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\EmptyViews\MyPage.xaml.cs">
+    <Compile Update="Views\Profile\MyPage.xaml.cs">
       <DependentUpon>MyPage.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\Feed\FeedPageAll.xaml.cs">
@@ -183,6 +183,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\RelatedProductView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Search\SearchDetail.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Search\SearchPage.xaml">

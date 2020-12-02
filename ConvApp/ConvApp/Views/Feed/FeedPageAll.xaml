@@ -5,7 +5,8 @@
              Shell.NavBarHasShadow="False"
              Shell.NavBarIsVisible="False">
     <StackLayout>
-        <RefreshView x:Name="refreshView"
+        
+            <RefreshView x:Name="refreshView"
                      Refreshing="RefreshView_Refreshing">
             <ScrollView>
                 <StackLayout Spacing="0">
@@ -14,6 +15,7 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
+                        
                         <FlexLayout x:Name="LEFT" Grid.Column="0" Direction="Column" Margin="0"/>
                         <FlexLayout x:Name="RIGHT" Grid.Column="1" Direction="Column" Margin="0"/>
                     </Grid>

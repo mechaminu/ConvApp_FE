@@ -57,7 +57,7 @@
         </Tab>
         <Tab Title="검색" >
             <ShellContent Style="{StaticResource BaseStyle}">
-                <views:SearchPage/>
+                <views:SearchDetail/>
             </ShellContent>
         </Tab>
         <Tab Title="등록">

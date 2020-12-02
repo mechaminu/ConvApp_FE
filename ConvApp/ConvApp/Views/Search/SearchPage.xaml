@@ -1,36 +1,52 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ConvApp.Views.SearchPage"
-             Shell.NavBarIsVisible="False">
-    <StackLayout Spacing="0">
-        <StackLayout Orientation="Horizontal">
-            <SearchBar x:Name="searchBar" 
+             Shell.NavBarIsVisible="True"
+             SelectedTabColor="purple"
+             BarBackgroundColor="Beige"
+             BarTextColor="Black">
+    
+    <Shell.TitleView >
+        <ScrollView>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
+                <Frame HeightRequest="40" CornerRadius="10" Padding="0">
+                    <SearchBar x:Name="searchBar" 
                        Placeholder="Search items..."
                        TextTransform="Lowercase"
                        FontSize="Medium"
                        HorizontalOptions="FillAndExpand"
-                       SearchButtonPressed="OnClick_search"/>
-        </StackLayout>
-        <AbsoluteLayout>
-            <ListView x:Name="searchResults"
+                       TextChanged="OnClick_search"
+                       BackgroundColor="LightGray"/>
+                </Frame>
+            </StackLayout>
+        </ScrollView>
+    </Shell.TitleView>
+    
+    <ContentPage Title="Top" >
+        <StackLayout Spacing="0">
+            <AbsoluteLayout>
+                <ListView x:Name="searchResults"
                       AbsoluteLayout.LayoutBounds="0,0,1,1"
                       AbsoluteLayout.LayoutFlags="All">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ImageCell ImageSource="{Binding Image}" Text="{Binding Description}" Detail="{Binding Id}"/>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-            <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1"
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ImageCell ImageSource="{Binding Image}" Text="{Binding Description}" Detail="{Binding Id}"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1"
                          AbsoluteLayout.LayoutFlags="All">
-                <ActivityIndicator x:Name="activityInd"
+                    <ActivityIndicator x:Name="activityInd"
                                    WidthRequest="100"
                                    IsRunning="True"
                                    IsVisible="False"
                                    HorizontalOptions="Center"
                                    VerticalOptions="CenterAndExpand"/>
-            </StackLayout>
-        </AbsoluteLayout>
-    </StackLayout>
-</ContentPage>
+                </StackLayout>
+            </AbsoluteLayout>
+        </StackLayout>
+    </ContentPage>
+    <ContentPage Title="Items"/>
+    <ContentPage Title="Recipe"/>
+</TabbedPage>
