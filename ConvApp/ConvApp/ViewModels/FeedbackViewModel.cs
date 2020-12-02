@@ -117,11 +117,8 @@ namespace ConvApp.ViewModels
                 {
                     try
                     {
-                        var likeList = await ApiManager.DeleteLike(type, id);
-
-                        likes.Clear();
-                        likeList.ForEach(l => likes.Add(l));
-                        IsLiked = false;
+                        await ApiManager.DeleteLike(type, id);
+                        await Refresh();
                     }
                     catch
                     {
@@ -132,10 +129,8 @@ namespace ConvApp.ViewModels
                 {
                     try
                     {
-                        likes.Clear();
-                        IsLiked = true;
-                        var likeList = await ApiManager.PostLike(type, id);
-                        likeList.ForEach(l => likes.Add(l));
+                        await ApiManager.PostLike(type, id);
+                        await Refresh();
                     }
                     catch
                     {
@@ -143,15 +138,16 @@ namespace ConvApp.ViewModels
                     }
                 }
             else
-                throw new Exception("wait for viewmodel to be populated");
+            {
+                await Refresh();
+                await ToggleLike();
+            }
         }
 
         public async Task PostComment(string text)
         {
-            var cmt = await ApiManager.PostComment(type, id, text);
-            cmt.RefreshParent = async () => await Refresh();
-            await cmt.Feedback.Refresh();
-            comments.Add(cmt);
+            await ApiManager.PostComment(type, id, text);
+            await Refresh();
         }
     }
 }

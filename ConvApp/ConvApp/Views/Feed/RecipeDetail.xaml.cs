@@ -57,8 +57,16 @@ namespace ConvApp.Views
 
         private async void PostBtnClicked(object sender, EventArgs e)
         {
-            if (cmtEditor.Text != null)
-                await (BindingContext as PostingViewModel).Feedback.PostComment(cmtEditor.Text);
+            try
+            {
+                if (cmtEditor.Text != null)
+                    await (BindingContext as PostingViewModel).Feedback.PostComment(cmtEditor.Text);
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert(ex.Message, ex.StackTrace, "확인");
+                return;
+            }
 
             cmtEditor.Text = null;
             cmtEditor.Unfocus();

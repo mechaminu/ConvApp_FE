@@ -5,14 +5,17 @@ namespace ConvApp.Models
 {
     public class LikeModel
     {
-        public int CreatorId { get; set; }
+        public int Id { get; set; }
+        public byte ParentType { get; set; }
+        public int ParentId { get; set; }
+        public int UserId { get; set; }
         public DateTime CreatedDate { get; set; }
 
         public static async Task<Like> Populate(LikeModel model)
         {
             return new Like
             {
-                Creator = await ApiManager.GetUser(model.CreatorId),
+                Creator = await ApiManager.GetUser(model.UserId),
                 CreatedDate = model.CreatedDate
             };
         }
@@ -20,7 +23,8 @@ namespace ConvApp.Models
 
     public class Like
     {
-        public UserModel Creator { get; set; }
+        public int Id { get; set; }
+        public UserBreifModel Creator { get; set; }
         public DateTime CreatedDate { get; set; }
     }
 }

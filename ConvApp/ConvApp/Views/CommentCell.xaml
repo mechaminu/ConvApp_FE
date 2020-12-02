@@ -28,7 +28,7 @@
                            FontAttributes="Bold"
                            HorizontalOptions="FillAndExpand"
                            VerticalOptions="Center"/>
-                    <Label Text="{Binding Date, StringFormat='{0:M/d HH:mm}'}"
+                    <Label Text="{Binding Date, StringFormat='{0:M/dd HH:mm}'}"
                            FontAttributes="Bold"
                            HorizontalOptions="End"
                            VerticalOptions="Center"/>

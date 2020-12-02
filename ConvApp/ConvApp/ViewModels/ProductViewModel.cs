@@ -10,7 +10,6 @@ namespace ConvApp.ViewModels
         public int StoreId { get; set; }
         public int CategoryId { get; set; }
         public DateTime CreatedDate { get; set; }
-        public DateTime ModifiedDate { get; set; }
 
         public string StoreName { get => ProductModel.StoreNames[this.StoreId]; }
         public string CategoryName { get => ProductModel.CategoryNames[this.CategoryId]; }

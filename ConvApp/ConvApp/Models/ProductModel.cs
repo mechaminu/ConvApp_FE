@@ -11,17 +11,15 @@ namespace ConvApp.Models
 
         public int Id { get; set; }
         public int StoreId { get; set; }
-        public int CategoryId { get; set; }
-
-        public DateTime CreatedDate { get; set; }
-        public DateTime ModifiedDate { get; set; }
-
         public string StoreName { get => StoreNames[this.StoreId]; }
+        public int CategoryId { get; set; }
         public string CategoryName { get => CategoryNames[this.CategoryId]; }
 
+        public DateTime CreatedDate { get; set; }
+
         public string Name { get; set; }
+        public string Description { get; set; }
         public int Price { get; set; }
-        public string ImageFilename { get; set; }
 
         public string Image
         {
@@ -29,6 +27,7 @@ namespace ConvApp.Models
                 ? Path.Combine(ApiManager.ImageEndPointURL, ImageFilename)
                 : string.Empty;
         }
+        public string ImageFilename { get; set; }
 
         public List<PostingModel> Postings { get; set; }
     }

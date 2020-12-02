@@ -18,8 +18,8 @@ namespace ConvApp
     // Repository pattern 적용사례에 해당되는듯?
     public class ApiManager
     {
-        //private static readonly string EndPointURL = "http://minuuoo.ddns.net:5000/api";
-        private static readonly string EndPointURL = "http://convappdev.azurewebsites.net/api";
+        private static readonly string EndPointURL = "http://minuuoo.ddns.net:5000/api";
+        //private static readonly string EndPointURL = "http://convappdev.azurewebsites.net/api";
         public static readonly string ImageEndPointURL = "https://convappdev.blob.core.windows.net/images";
         private static readonly RestClient client = new RestClient(EndPointURL) { Timeout = -1 }.UseNewtonsoftJson(new JsonSerializerSettings
         {
@@ -35,6 +35,10 @@ namespace ConvApp
             await client.ExecuteAsync(new RestRequest("ranking", Method.GET));
         }
 
+        public async static Task<UserDetailModel> GetUserDetail(int id)
+        {
+            return (await client.ExecuteAsync<UserDetailModel>(new RestRequest($"users/detail/{id}", Method.GET))).Data;
+        }
 
         public async static Task<SearchResultModel> GetSearch(string queryStr)
         {
@@ -100,7 +104,6 @@ namespace ConvApp
                 StoreId = product.StoreId,
                 CategoryId = product.CategoryId,
                 CreatedDate = product.CreatedDate,
-                ModifiedDate = product.ModifiedDate,
                 Image = product.Image,
                 Name = product.Name,
                 Price = product.Price,
@@ -161,42 +164,24 @@ namespace ConvApp
             return likes;
         }
 
-        public async static Task<List<Like>> PostLike(byte type, int id)
+        public async static Task PostLike(byte type, int id)
         {
             var request = new RestRequest("feedbacks/like", Method.POST)
-                .AddQueryParameter("type", $"{type}")
-                .AddQueryParameter("id", $"{id}")
-                .AddJsonBody(new LikeModel { CreatorId = App.User.Id });
+                .AddJsonBody(new LikeModel { ParentType = type, ParentId = id, UserId = App.User.Id });
 
             var response = await client.ExecuteAsync<List<LikeModel>>(request);
 
             if (response == null || !response.IsSuccessful)
                 throw new InvalidOperationException("like posting failed");
-
-            var likes = new List<Like>();
-            foreach (var likeDTO in response.Data)
-                likes.Add(await LikeModel.Populate(likeDTO));
-
-            return likes;
         }
 
-        public async static Task<List<Like>> DeleteLike(byte type, int id)
+        public async static Task DeleteLike(byte type, int id)
         {
-            var request = new RestRequest("feedbacks/like", Method.DELETE)
-                .AddQueryParameter("type", $"{type}")
-                .AddQueryParameter("id", $"{id}")
-                .AddJsonBody(new LikeModel { CreatorId = App.User.Id });
-
-            var response = await client.ExecuteAsync<List<LikeModel>>(request);
+            var response = await client.ExecuteAsync<List<LikeModel>>(new RestRequest("feedbacks/like", Method.DELETE)
+                .AddJsonBody(new LikeModel { ParentType = type, ParentId = id, UserId = App.User.Id }));
 
             if (response == null || !response.IsSuccessful)
                 throw new InvalidOperationException("like deletion failed");
-
-            var likes = new List<Like>();
-            foreach (var likeDTO in response.Data)
-                likes.Add(await LikeModel.Populate(likeDTO));
-
-            return likes;
         }
 
         public async static Task<List<CommentViewModel>> GetComments(byte type, int id)
@@ -214,25 +199,24 @@ namespace ConvApp
             return comments;
         }
 
-        public async static Task<CommentViewModel> PostComment(byte type, int id, string text)
+        public async static Task PostComment(byte type, int id, string text)
         {
             var request = new RestRequest("feedbacks/comment", Method.POST)
-                .AddQueryParameter("type", $"{type}")
-                .AddQueryParameter("id", $"{id}")
-                .AddJsonBody(new CommentModel { CreatorId = App.User.Id, Text = text });
+                .AddJsonBody(new CommentModel { ParentType = type, ParentId = id, UserId = App.User.Id, Text = text });
 
             var response = await client.ExecuteAsync<CommentModel>(request);
 
             if (response == null || !response.IsSuccessful)
                 throw new InvalidOperationException("comment posting failed");
-
-            return await CommentModel.Populate(response.Data);
         }
 
         public async static Task DeleteComment(int id)
         {
-            await client.ExecuteAsync(new RestRequest("feedbacks/comment", Method.DELETE)
+            var response = await client.ExecuteAsync(new RestRequest("feedbacks/comment", Method.DELETE)
                 .AddQueryParameter("id", $"{id}"));
+
+            if (response == null || !response.IsSuccessful)
+                throw new InvalidOperationException("comment deletion failed");
         }
 
         public async static Task AddView(byte type, int id)
@@ -244,11 +228,11 @@ namespace ConvApp
 
         #region Users
         // 유저 데이터 획득
-        public async static Task<UserModel> GetUser(int userId)
+        public async static Task<UserBreifModel> GetUser(int userId)
         {
             try
             {
-                var response = await client.ExecuteAsync<UserModel>(new RestRequest($"users/{userId}", Method.GET));
+                var response = await client.ExecuteAsync<UserBreifModel>(new RestRequest($"users/{userId}", Method.GET));
                 var result = response.Data;
 
                 return result;

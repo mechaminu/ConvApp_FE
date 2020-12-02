@@ -180,16 +180,17 @@ namespace ConvApp.Views
                 }
 
                 posting.Feedback = feedback;
-                Page targetPage;
 
-                if (posting is ReviewViewModel)
-                    targetPage = new ReviewDetail { BindingContext = posting };
-                else
-                    targetPage = new RecipeDetail { BindingContext = posting };
+                posting.ShowPage.Execute(this);
+                //Page targetPage;
 
-                ApiManager.AddView(0, posting.Id);
+                //if (posting is ReviewViewModel)
+                //    targetPage = new ReviewDetail { BindingContext = posting };
+                //else
+                //    targetPage = new RecipeDetail { BindingContext = posting };
 
-                await Navigation.PushAsync(targetPage);
+                //await Navigation.PushAsync(targetPage);
+                await ApiManager.AddView(0, posting.Id);
             };
             elem.GestureRecognizers.Add(tap);
         }

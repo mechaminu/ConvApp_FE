@@ -38,6 +38,7 @@
     <None Remove="Resources\heart-regular.svg" />
     <None Remove="Resources\heart-solid.svg" />
     <None Remove="Resources\home.svg" />
+    <None Remove="Resources\logo.jpg" />
     <None Remove="Resources\plus.svg" />
     <None Remove="Resources\search.svg" />
     <None Remove="Resources\trash-alt-regular.svg" />
@@ -45,8 +46,6 @@
     <None Remove="ViewModels\Models\NewFile1.txt" />
     <None Remove="Resources\bronze_2.png" />
     <None Remove="Resources\gold_2.png" />
-    <None Remove="Resources\heart.png" />
-    <None Remove="Resources\heartfilled.png" />
     <None Remove="Resources\P1.jpg" />
     <None Remove="Resources\silver_2.png" />
     <None Remove="Resources\trophy.png" />
@@ -61,9 +60,8 @@
     <EmbeddedResource Include="Resources\gold_2.png" />
     <EmbeddedResource Include="Resources\heart-regular.svg" />
     <EmbeddedResource Include="Resources\heart-solid.svg" />
-    <EmbeddedResource Include="Resources\heart.png" />
-    <EmbeddedResource Include="Resources\heartfilled.png" />
     <EmbeddedResource Include="Resources\home.svg" />
+    <EmbeddedResource Include="Resources\logo.jpg" />
     <EmbeddedResource Include="Resources\P1.jpg" />
     <EmbeddedResource Include="Resources\plus.svg" />
     <EmbeddedResource Include="Resources\search.svg" />
@@ -93,6 +91,9 @@
   <ItemGroup>
     <Compile Update="AppShell.xaml.cs">
       <DependentUpon>AppShell.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Login.xaml.cs">
+      <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\Category\CategoryGeneralRanking.xaml.cs">
       <DependentUpon>CategoryGeneralRanking.xaml</DependentUpon>
@@ -166,6 +167,9 @@
     <EmbeddedResource Update="Views\Feed\ReviewDetail.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Login.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\PostDetail.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -184,5 +188,9 @@
     <EmbeddedResource Update="Views\Search\SearchPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\Login\" />
   </ItemGroup>
 </Project>

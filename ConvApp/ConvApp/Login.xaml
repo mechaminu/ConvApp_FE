@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             x:Class="ConvApp.Login">
+    <StackLayout BackgroundColor="#FFFFFF">
+        <ff:CachedImage Source="resource://ConvApp.Resources.logo.jpg"
+                        Aspect="AspectFill"
+                        Margin="100"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="FillAndExpand"/>
+        <Label Text="현재로선 그냥 로그인 버튼 누르면 접속됩니다!"
+               FontSize="Medium"
+               HorizontalOptions="Center"/>
+        <Entry Placeholder="Email"/>
+        <Entry IsPassword="True" Placeholder="Password"/>
+        <Button Text="Login" Clicked="Button_Clicked"/>
+    </StackLayout>
+</ContentPage>
