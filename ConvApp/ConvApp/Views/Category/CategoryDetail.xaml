@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
-             x:Class="ConvApp.Views.CategoryDetail">
+             x:Class="ConvApp.Views.CategoryDetail"
+             x:Name="source">
     <ScrollView>
         <StackLayout Spacing="0">
             <ff:CachedImage Source="{Binding Image}"
@@ -65,6 +66,9 @@
                     <DataTemplate>
                         <Frame Padding="0"
                                BackgroundColor="#EEEEEE">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ShowPage}" CommandParameter="{x:Reference source}"/>
+                            </Frame.GestureRecognizers>
                             <StackLayout Spacing="0">
                                 <ff:CachedImage Source="{Binding RecipeNode[0].NodeImage}"
                                                 HeightRequest="100"

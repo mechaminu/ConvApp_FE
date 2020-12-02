@@ -11,12 +11,14 @@ namespace ConvApp.ViewModels
     public class PostingViewModel
     {
         public int Id { get; set; }
-        public UserBreifModel User { get; set; }
+        public UserBriefModel User { get; set; }
         public bool Owned { get => User.Id == App.User.Id; }
 
         public DateTime Date { get; set; }
         public List<ProductModel> Products { get; set; }
         public FeedbackViewModel Feedback { get; set; }
+
+        public string Image { get; private set; }
 
         public ICommand ShowPage { get; set; }
     }
@@ -31,7 +33,13 @@ namespace ConvApp.ViewModels
     {
         public ReviewViewModel()
         {
-            this.ShowPage = new Command<Page>(async p => await Show(p));
+            ShowPage = new Command<Page>(async p => 
+            {
+                var feedback = new FeedbackViewModel(0, Id);
+                await feedback.Refresh();
+                Feedback = feedback;
+                await Show(p);
+            });
         }
 
         public double Rating { get; set; }                      // 평점 (0 ~ 10, 정수 >> 0 ~ 5, 0.5단위 소수)
@@ -48,7 +56,13 @@ namespace ConvApp.ViewModels
     {
         public RecipeViewModel()
         {
-            this.ShowPage = new Command<Page>(async p => await Show(p));
+            ShowPage = new Command<Page>(async p =>
+            {
+                var feedback = new FeedbackViewModel(0, Id);
+                await feedback.Refresh();
+                Feedback = feedback;
+                await Show(p);
+            });
         }
 
         public string Title { get; set; }                       // 레시피 이름

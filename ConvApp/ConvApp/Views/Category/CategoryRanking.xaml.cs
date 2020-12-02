@@ -18,10 +18,8 @@ namespace ConvApp.Views
             try
             {
                 var product = e.Item as ProductModel;
-                var productInfo = await ApiManager.GetProductDetailViewModel(product.Id);
-                ApiManager.AddView(1, product.Id);
-
-                await Navigation.PushAsync(new CategoryDetail { BindingContext = productInfo });
+                await Navigation.PushAsync(new CategoryDetail { BindingContext = await ProductModel.Populate(product) });
+                await ApiManager.AddView(1, product.Id);
             }
             catch (Exception ex)
             {

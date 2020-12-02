@@ -19,7 +19,7 @@ namespace ConvApp.ViewModels
         public int Id { get; set; }
         public DateTime Date { get; set; }
 
-        public UserBreifModel Creator { get; set; }
+        public UserBriefModel Creator { get; set; }
         public bool Owned { get => Creator.Id == App.User.Id; }
         public bool NotOwned { get => !Owned; }
         public string Text { get; set; }

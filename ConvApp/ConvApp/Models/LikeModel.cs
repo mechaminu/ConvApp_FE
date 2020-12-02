@@ -24,7 +24,7 @@ namespace ConvApp.Models
     public class Like
     {
         public int Id { get; set; }
-        public UserBreifModel Creator { get; set; }
+        public UserBriefModel Creator { get; set; }
         public DateTime CreatedDate { get; set; }
     }
 }

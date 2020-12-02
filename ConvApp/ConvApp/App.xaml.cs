@@ -1,4 +1,5 @@
 ﻿using ConvApp.Models;
+using ConvApp.ViewModels;
 using Xamarin.Forms;
 
 namespace ConvApp
@@ -6,7 +7,7 @@ namespace ConvApp
 
     public partial class App : Application
     {
-        public static UserDetailModel User { get; set; }
+        public static UserBriefModel User { get; set; }
 
         public App()
         {

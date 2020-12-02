@@ -30,6 +30,17 @@ namespace ConvApp
             PreserveReferencesHandling = PreserveReferencesHandling.All
         }) as RestClient;
 
+        public async static Task<UserBriefModel> Login(string email, string password)
+        {
+            var response = await client.ExecuteAsync<UserBriefModel>(new RestRequest("users/login", Method.POST)
+                .AddJsonBody(new { Email = email, Password = password }));
+
+            if (!response.IsSuccessful)
+                throw new Exception("로그인 실패. 아이디와 비밀번호를 확인하세요");
+
+            return response.Data;
+        }
+
         public async static Task RefreshRank()
         {
             await client.ExecuteAsync(new RestRequest("ranking", Method.GET));
@@ -80,39 +91,6 @@ namespace ConvApp
                 request.AddQueryParameter("category", category + "");
 
             return (await client.ExecuteAsync<List<ProductModel>>(request)).Data;
-        }
-
-        public async static Task<ProductViewModel> GetProductDetailViewModel(int id)
-        {
-            var product = await GetProduct(id);
-            var reviews = new ObservableCollection<ReviewViewModel>();
-            var recipes = new ObservableCollection<RecipeViewModel>();
-
-            foreach (var e in product.Postings)
-            {
-                var post = await PostingModel.Populate(e);
-
-                if (post is RecipeViewModel)
-                    recipes.Add(post as RecipeViewModel);
-                else
-                    reviews.Add(post as ReviewViewModel);
-            }
-
-            return new ProductViewModel
-            {
-                Id = product.Id,
-                StoreId = product.StoreId,
-                CategoryId = product.CategoryId,
-                CreatedDate = product.CreatedDate,
-                Image = product.Image,
-                Name = product.Name,
-                Price = product.Price,
-                Rank = "9999",
-                Rate = "9999",
-                Calory = "9999",
-                ReviewList = reviews,
-                RecipeList = recipes
-            };
         }
         #endregion
 
@@ -228,11 +206,11 @@ namespace ConvApp
 
         #region Users
         // 유저 데이터 획득
-        public async static Task<UserBreifModel> GetUser(int userId)
+        public async static Task<UserBriefModel> GetUser(int userId)
         {
             try
             {
-                var response = await client.ExecuteAsync<UserBreifModel>(new RestRequest($"users/{userId}", Method.GET));
+                var response = await client.ExecuteAsync<UserBriefModel>(new RestRequest($"users/{userId}", Method.GET));
                 var result = response.Data;
 
                 return result;

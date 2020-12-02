@@ -18,10 +18,7 @@ namespace ConvApp.Views
         {
             var btn = sender as Button;
             var ctx = btn.BindingContext as ProductModel;
-
-            var productVM = await ApiManager.GetProductDetailViewModel(ctx.Id);
-
-            await Navigation.PushAsync(new CategoryDetail { BindingContext = productVM });
+            await Navigation.PushAsync(new CategoryDetail { BindingContext = await ProductModel.Populate(ctx) });
         }
     }
 }

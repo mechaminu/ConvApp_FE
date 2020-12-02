@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ConvApp.Views.ProfilePage"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:fftf="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+             Shell.NavBarIsVisible="True"
+             Title="{Binding Name, StringFormat='{0} 님의 프로필'}">
+    <StackLayout>
+        <StackLayout>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="100"/>
+                </Grid.RowDefinitions>
+                <ff:CachedImage Source="{Binding Image}"
+                                Margin="10"
+                                Grid.Row="0"
+                                Grid.Column="1">
+                    <ff:CachedImage.Transformations>
+                        <fftf:CircleTransformation BorderSize="5" BorderHexColor="#111111"/>
+                    </ff:CachedImage.Transformations>
+                </ff:CachedImage>
+                <StackLayout Grid.Column="0" 
+                             Grid.Row="1">
+                    <Label Text="게시물" 
+                           VerticalTextAlignment="Center"
+                           HorizontalTextAlignment="Center"/>
+                    <Label Text="{Binding Postings.Count}" 
+                           VerticalTextAlignment="Center"
+                           HorizontalTextAlignment="Center"/>
+                </StackLayout>
+                <StackLayout Grid.Column="1" 
+                             Grid.Row="1">
+                    <Label Text="팔로워" 
+                           VerticalTextAlignment="Center"
+                           HorizontalTextAlignment="Center"/>
+                    <Label Text="{Binding FollowerUsers.Count}" 
+                           VerticalTextAlignment="Center"
+                           HorizontalTextAlignment="Center"/>
+                </StackLayout>
+                <StackLayout Grid.Column="2" 
+                             Grid.Row="1">
+                    <Label Text="팔로잉" 
+                           VerticalTextAlignment="Center"
+                           HorizontalTextAlignment="Center"/>
+                    <Label Text="{Binding FollowingUsers.Count}" 
+                           VerticalTextAlignment="Center"
+                           HorizontalTextAlignment="Center"/>
+                </StackLayout>
+            </Grid>
+        </StackLayout>
+        <Button Text="Edit Profile"/>
+        <ScrollView VerticalScrollBarVisibility="Never"
+                    VerticalOptions="Start" 
+                    HeightRequest="85"  
+                    Orientation ="Horizontal">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+                <Button Text="내게시물"
+                        BackgroundColor="White"
+                        Grid.Column="0"
+                        Clicked="Button_Clicked"/>
+                <Button Text="좋아요한 게시물"
+                        BackgroundColor="White"
+                        Grid.Column="1"
+                        Clicked="Button_Clicked_1"/>
+            </Grid>
+        </ScrollView>
+        <ListView x:Name="listView" ItemSelected="listView_ItemSelected">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding Id}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+    
+</ContentPage>

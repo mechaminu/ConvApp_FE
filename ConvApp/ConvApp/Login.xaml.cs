@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConvApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,8 +20,22 @@ namespace ConvApp
 
         private async void Button_Clicked(object sender, EventArgs e)
         {
-            App.User = await ApiManager.GetUserDetail(1);
-            Application.Current.MainPage = new AppShell();
+            try
+            {
+                if (emailEntry.Text == null && pwdEntry.Text == null)
+                    emailEntry.Text = "1@paltoinfos.com";
+                App.User = await ApiManager.Login(email: emailEntry.Text, password: pwdEntry.Text);
+                Application.Current.MainPage = new AppShell();
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("오류", ex.Message, "확인");
+            }
+            finally
+            {
+                emailEntry.Text = null;
+                pwdEntry.Text = null;
+            }
         }
     }
 }
