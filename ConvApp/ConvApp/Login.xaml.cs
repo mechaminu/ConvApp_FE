@@ -23,7 +23,10 @@ namespace ConvApp
             try
             {
                 if (emailEntry.Text == null && pwdEntry.Text == null)
+                {
                     emailEntry.Text = "1@paltoinfos.com";
+                    pwdEntry.Text = "123456";
+                }
                 App.User = await ApiManager.Login(email: emailEntry.Text, password: pwdEntry.Text);
                 Application.Current.MainPage = new AppShell();
             }

@@ -28,10 +28,11 @@
                 </StackLayout>
                 <local:RelatedProductView/>
 
-                <ff:CachedImage WidthRequest="300"
-                            HeightRequest="300"
-                            DownsampleToViewSize="true"
-                            Source="{Binding PostImage}"/>
+                <ff:CachedImage Aspect="AspectFit"
+                                HeightRequest="350"
+                                DownsampleToViewSize="True"
+                                BitmapOptimizations="True"
+                                Source="{Binding PostImage}"/>
 
                 <Label Text="{Binding Rating, StringFormat='평가 : {0} / 5'}"
                        FontSize="20"

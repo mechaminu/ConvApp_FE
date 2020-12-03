@@ -11,6 +11,14 @@ namespace ConvApp.Views
             InitializeComponent();
         }
 
+        protected override void OnBindingContextChanged()
+        {
+            base.OnBindingContextChanged();
+
+            if (BindingContext is UserDetailViewModel)
+                listView.ItemsSource = (BindingContext as UserDetailViewModel).Postings;
+        }
+
         private void Button_Clicked(object sender, System.EventArgs e)
         {
             listView.ItemsSource = null;

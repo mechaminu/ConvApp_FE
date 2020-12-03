@@ -21,11 +21,7 @@ namespace ConvApp
         //private static readonly string EndPointURL = "http://minuuoo.ddns.net:5000/api";
         private static readonly string EndPointURL = "http://convappdev.azurewebsites.net/api";
         public static readonly string ImageEndPointURL = "https://convappdev.blob.core.windows.net/images";
-        private static readonly RestClient client = new RestClient(EndPointURL) { Timeout = -1 }.UseNewtonsoftJson(new JsonSerializerSettings
-        {
-            PreserveReferencesHandling = PreserveReferencesHandling.All
-        }) as RestClient;
-        private static readonly RestClient client_img = new RestClient(ImageEndPointURL) { Timeout = -1 }.UseNewtonsoftJson(new JsonSerializerSettings
+        private static readonly RestClient client = new RestClient(EndPointURL) { Timeout = 10000 }.UseNewtonsoftJson(new JsonSerializerSettings
         {
             PreserveReferencesHandling = PreserveReferencesHandling.All
         }) as RestClient;
@@ -48,7 +44,9 @@ namespace ConvApp
 
         public async static Task<UserDetailModel> GetUserDetail(int id)
         {
-            return (await client.ExecuteAsync<UserDetailModel>(new RestRequest($"users/detail/{id}", Method.GET))).Data;
+            var response = await client.ExecuteAsync<UserDetailModel>(new RestRequest($"users/detail/{id}", Method.GET));
+
+            return response.Data;
         }
 
         public async static Task<SearchResultModel> GetSearch(string queryStr)
@@ -268,6 +266,9 @@ namespace ConvApp
                 if (!response.IsSuccessful)
                     throw new InvalidOperationException($"Request Failed - CODE : {response.StatusCode}");
 
+                if (response.StatusCode == HttpStatusCode.NoContent)
+                    throw new IndexOutOfRangeException();
+
                 var result = new List<PostingViewModel>();
                 foreach (var rawPosting in response.Data)
                 {
@@ -293,8 +294,11 @@ namespace ConvApp
                     request.AddQueryParameter("type", $"{type.Value}");
 
                 var response = await client.ExecuteAsync<List<PostingModel>>(request);
+
                 if (!response.IsSuccessful)
                     throw new InvalidOperationException($"Request Failed - CODE : {response.StatusCode}");
+                if (response.StatusCode == HttpStatusCode.NoContent)
+                    throw new IndexOutOfRangeException();
 
                 var result = new List<PostingViewModel>();
                 foreach (var rawPosting in response.Data)
@@ -344,19 +348,6 @@ namespace ConvApp
 
                 // 업로드를 통해 생성된 이미지 파일명 목록(Joined with ',') 획득 및 리턴 
                 return await PostMultipart(Path.Combine(EndPointURL, "images"), tmpDict);
-            }
-            catch
-            {
-                throw;
-            }
-        }
-
-        // 이미지는 직접 이미지 Azure storage로부터 REST API 활용하여 다운로드 가능
-        public async static Task<Stream> GetImage(string filename)
-        {
-            try
-            {
-                return new MemoryStream((await client_img.ExecuteAsync(new RestRequest($"images/{filename.Trim()}", Method.GET))).RawBytes);
             }
             catch
             {

@@ -17,6 +17,8 @@ namespace ConvApp.ViewModels
         }
 
         public int Id { get; set; }
+        public bool IsChild { get; set; }
+
         public DateTime Date { get; set; }
 
         public UserBriefModel Creator { get; set; }

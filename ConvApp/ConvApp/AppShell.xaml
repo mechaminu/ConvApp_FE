@@ -73,10 +73,10 @@
                           ContentTemplate="{DataTemplate views:CategoryGeneralRanking}"
                           Style="{StaticResource BaseStyle}"/>
         </Tab>
-        <local:ProfileTab Title="내 정보">
-            <ShellContent Style="{StaticResource BaseStyle}">
+        <Tab Title="내 정보">
+            <local:ProfileShellContent Style="{StaticResource BaseStyle}">
                 <views:ProfilePage BindingContext="{Binding}"/>
-            </ShellContent>
-        </local:ProfileTab>
+            </local:ProfileShellContent>
+        </Tab>
     </TabBar>
 </Shell>

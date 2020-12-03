@@ -28,7 +28,11 @@ namespace ConvApp.Views
             MainThread.BeginInvokeOnMainThread(() =>
             {
                 foreach (var cmt in btx.Comments)
-                    commentArea.Children.Add(new CommentCell { BindingContext = cmt });
+                {
+                    commentArea.Children.Add(new CommentCell(false) { BindingContext = cmt});
+                    foreach (var childCmt in cmt.Feedback.Comments)
+                        commentArea.Children.Add(new CommentCell(true) { BindingContext = childCmt});
+                }
             });
 
             btx.Comments.CollectionChanged += (s, e) =>

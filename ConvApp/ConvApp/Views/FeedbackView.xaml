@@ -15,7 +15,5 @@
                HorizontalOptions="EndAndExpand"
                VerticalOptions="Center"/>
     </StackLayout>
-    <StackLayout x:Name="commentArea">
-        
-    </StackLayout>
+    <StackLayout x:Name="commentArea" Padding="5" />
 </StackLayout>

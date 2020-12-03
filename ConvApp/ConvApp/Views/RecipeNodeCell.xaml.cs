@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FFImageLoading.Args;
+using FFImageLoading.Forms;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +17,11 @@ namespace ConvApp.Views
         public RecipeNodeCell()
         {
             InitializeComponent();
+        }
+
+        private void CachedImage_Success(object sender, SuccessEventArgs e)
+        {
+            var elem = sender as CachedImage;
         }
     }
 }

@@ -98,20 +98,11 @@
     <Compile Update="Views\Category\CategoryGeneralRanking.xaml.cs">
       <DependentUpon>CategoryGeneralRanking.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\Feed\FeedPage.xaml.cs">
+      <DependentUpon>FeedPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\Profile\ProfilePage.xaml.cs">
       <DependentUpon>ProfilePage.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="Views\Feed\FeedPageAll.xaml.cs">
-      <DependentUpon>FeedPageAll.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="Views\Feed\FeedPageHot.xaml.cs">
-      <DependentUpon>FeedPageHot.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="Views\Feed\FeedPageReview.xaml.cs">
-      <DependentUpon>FeedPageReview.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="Views\Feed\FeedPageRecipe.xaml.cs">
-      <DependentUpon>FeedPageRecipe.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\Feed\ReviewDetail.xaml.cs">
       <DependentUpon>ReviewDetail.xaml</DependentUpon>
@@ -150,12 +141,6 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\FeedbackView.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\Feed\FeedPageReview.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\Feed\FeedPageRecipe.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Feed\RecipeDetail.xaml">

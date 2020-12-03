@@ -1,4 +1,5 @@
 ﻿using ConvApp.Models;
+using ConvApp.Views;
 using Xamarin.Forms;
 
 namespace ConvApp
@@ -11,13 +12,14 @@ namespace ConvApp
         }
     }
 
-    class ProfileTab : Tab
+    class ProfileShellContent : ShellContent
     {
-        public ProfileTab() : base()
+        public ProfileShellContent()
         {
             Appearing += async (s, e) =>
             {
-                BindingContext = await UserDetailModel.Populate(await ApiManager.GetUserDetail(App.User.Id));
+                var page = (s as ShellContent).Content as ProfilePage;
+                page.BindingContext = await UserDetailModel.Populate(await ApiManager.GetUserDetail(App.User.Id));
             };
         }
     }

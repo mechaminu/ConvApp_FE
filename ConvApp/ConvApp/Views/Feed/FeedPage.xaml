@@ -1,10 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ConvApp.Views.FeedPageReview"      
+             x:Class="ConvApp.Views.FeedPage"
+             Shell.NavBarHasShadow="False"
              Shell.NavBarIsVisible="False">
     <StackLayout>
-        <RefreshView x:Name="refreshView"
+        
+            <RefreshView x:Name="refreshView"
                      Refreshing="RefreshView_Refreshing">
             <ScrollView>
                 <StackLayout Spacing="0">
@@ -13,8 +15,9 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <FlexLayout x:Name="LEFT" Grid.Column="0" Direction="Column" Margin="0"/>
-                        <FlexLayout x:Name="RIGHT" Grid.Column="1" Direction="Column" Margin="0"/>
+                        
+                        <FlexLayout x:Name="LeftColumn" Grid.Column="0" Direction="Column" Margin="0"/>
+                        <FlexLayout x:Name="RightColumn" Grid.Column="1" Direction="Column" Margin="0"/>
                     </Grid>
                     <Button Text="페이징"
                             Clicked="OnPaging"/>

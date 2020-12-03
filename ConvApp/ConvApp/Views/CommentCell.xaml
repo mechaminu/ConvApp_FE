@@ -4,12 +4,11 @@
              xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              xmlns:fftf="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
              xmlns:ffsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
-             x:Class="ConvApp.Views.CommentCell">
-    <Frame Margin="5"
-           Padding="0"
+             x:Class="ConvApp.Views.CommentCell"
+             x:Name="cell">
+    <Frame Padding="0"
            CornerRadius="10">
-        <StackLayout Spacing="0"
-                     BackgroundColor="Gainsboro">
+        <StackLayout Spacing="0">
             <StackLayout Orientation="Horizontal">
                 <StackLayout Orientation="Horizontal"
                              HorizontalOptions="FillAndExpand"
@@ -51,7 +50,8 @@
                             FontAttributes="Bold"
                             VerticalOptions="Center"
                             HorizontalOptions="Start"/>
-                    <StackLayout Padding="5"
+                    <StackLayout x:Name="childCmtBtn"
+                                 Padding="5"
                                  HorizontalOptions="Fill">
                         <ffsvg:SvgCachedImage Source="resource://ConvApp.Resources.comment-dots-regular.svg"
                                               WidthRequest="20"
@@ -75,9 +75,9 @@
                                  HorizontalOptions="Fill"
                                  IsVisible="{Binding NotOwned}">
                         <ffsvg:SvgCachedImage Source="resource://ConvApp.Resources.exclamation-circle-solid.svg"
-                                            WidthRequest="20"
-                                            HorizontalOptions="CenterAndExpand"
-                                            VerticalOptions="CenterAndExpand">
+                                              WidthRequest="20"
+                                              HorizontalOptions="CenterAndExpand"
+                                              VerticalOptions="CenterAndExpand">
                         </ffsvg:SvgCachedImage>
                     </StackLayout>
                 </StackLayout>

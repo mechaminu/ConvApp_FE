@@ -9,7 +9,10 @@
                         Margin="100"
                         HorizontalOptions="FillAndExpand"
                         VerticalOptions="FillAndExpand"/>
-        <Label Text="EMAIL 1@paltoinfos.com (2,3도 있음) / PW 아무거나"
+        <Label Text="EMAIL 1@paltoinfos.com (2,3도 있음) / PW 123456"
+               FontSize="Medium"
+               HorizontalOptions="Center"/>
+        <Label Text="그냥 빈상태로 버튼 누르면 1번 유저로 로그인 됩니다"
                FontSize="Medium"
                HorizontalOptions="Center"/>
         <Entry x:Name="emailEntry" Placeholder="Email"/>
