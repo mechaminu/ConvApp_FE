@@ -5,7 +5,7 @@ using Xamarin.Forms;
 
 namespace ConvApp.ViewModels
 {
-    public class CommentViewModel
+    public class CommentViewModel : ViewModelBase
     {
         public CommentViewModel()
         {

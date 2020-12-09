@@ -7,7 +7,7 @@
              BarBackgroundColor="Beige"
              BarTextColor="Black">
     
-    <Shell.TitleView >
+    <Shell.TitleView>
         <ScrollView>
             <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
                 <Frame HeightRequest="40" CornerRadius="10" Padding="0">

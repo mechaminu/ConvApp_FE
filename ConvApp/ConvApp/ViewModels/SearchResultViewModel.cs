@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace ConvApp.ViewModels
 {
-    public class SearchResultViewModel
+    public class SearchResultViewModel : ViewModelBase
     {
         public byte Type { get; set; }
         public int Id { get; set; }

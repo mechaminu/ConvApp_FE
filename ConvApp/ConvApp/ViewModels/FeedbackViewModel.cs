@@ -10,7 +10,7 @@ using Xamarin.Forms;
 
 namespace ConvApp.ViewModels
 {
-    public class FeedbackViewModel : INotifyPropertyChanged
+    public class FeedbackViewModel : ViewModelBase
     {
         private readonly byte type;
         private readonly int id;

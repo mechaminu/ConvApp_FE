@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 
 namespace ConvApp.ViewModels
 {
-    public class ProductViewModel
+    public class ProductViewModel : ViewModelBase
     {
         public int Id { get; set; }
         public int StoreId { get; set; }

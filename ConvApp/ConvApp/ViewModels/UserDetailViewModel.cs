@@ -6,9 +6,8 @@ using System.Text;
 
 namespace ConvApp.ViewModels
 {
-    public class UserDetailViewModel : INotifyPropertyChanged
+    public class UserDetailViewModel : ViewModelBase
     {
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public int Id { get; set; }
         public string Name { get; set; }

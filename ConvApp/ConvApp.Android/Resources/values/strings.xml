@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">편의점달인</string>
+  
+  <string name="facebook_app_id">679206729444577</string>
+  <string name="fb_login_protocol_scheme">fb679206729444577</string>
+
+  <string name="server_client_id">681688314448-jk0u2lcrvnt54al1j95hap206uf4u0n1.apps.googleusercontent.com</string>
+</resources>

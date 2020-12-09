@@ -8,7 +8,7 @@ using Xamarin.Forms;
 
 namespace ConvApp.ViewModels
 {
-    public class PostingViewModel
+    public class PostingViewModel : ViewModelBase
     {
         public int Id { get; set; }
         public UserBriefModel User { get; set; }

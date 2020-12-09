@@ -38,6 +38,7 @@
     <None Remove="Resources\heart-regular.svg" />
     <None Remove="Resources\heart-solid.svg" />
     <None Remove="Resources\home.svg" />
+    <None Remove="Resources\login\kakao_login_medium_wide.png" />
     <None Remove="Resources\logo.jpg" />
     <None Remove="Resources\plus.svg" />
     <None Remove="Resources\search.svg" />
@@ -61,6 +62,7 @@
     <EmbeddedResource Include="Resources\heart-regular.svg" />
     <EmbeddedResource Include="Resources\heart-solid.svg" />
     <EmbeddedResource Include="Resources\home.svg" />
+    <EmbeddedResource Include="Resources\login\kakao_login_medium_wide.png" />
     <EmbeddedResource Include="Resources\logo.jpg" />
     <EmbeddedResource Include="Resources\P1.jpg" />
     <EmbeddedResource Include="Resources\plus.svg" />
@@ -79,13 +81,15 @@
     <PackageReference Include="System.Drawing.Common" Version="5.0.0" />
     <PackageReference Include="Xam.Plugin.Media" Version="5.0.1" />
     <PackageReference Include="Xam.Plugins.Forms.ImageCircle" Version="3.1.1.1-beta" />
+    <PackageReference Include="Xamarin.Auth" Version="1.7.0" />
+    <PackageReference Include="Xamarin.Auth.XamarinForms" Version="1.7.0" />
     <PackageReference Include="Xamarin.FFImageLoading" Version="2.4.11.982" />
     <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.11.982" />
     <PackageReference Include="Xamarin.FFImageLoading.Svg" Version="2.4.11.982" />
     <PackageReference Include="Xamarin.FFImageLoading.Svg.Forms" Version="2.4.11.982" />
     <PackageReference Include="Xamarin.FFImageLoading.Transformations" Version="2.4.11.982" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.1709-pre4" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.6.0-pre4" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.6.0-pre5" />
   </ItemGroup>
 
   <ItemGroup>
