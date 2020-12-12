@@ -6,16 +6,16 @@ namespace ConvApp.ViewModels
 {
     public class ProductViewModel : ViewModelBase
     {
-        public int Id { get; set; }
-        public int StoreId { get; set; }
-        public int CategoryId { get; set; }
+        public long Id { get; set; }
+        public long StoreId { get; set; }
+        public long CategoryId { get; set; }
         public DateTime CreatedDate { get; set; }
 
         public string StoreName { get => ProductModel.StoreNames[this.StoreId]; }
         public string CategoryName { get => ProductModel.CategoryNames[this.CategoryId]; }
 
         public string Name { get; set; }
-        public int Price { get; set; }
+        public long Price { get; set; }
         public string Image { get; set; }
 
         public string Calory { get; set; }  // 상품의 칼로리 정보

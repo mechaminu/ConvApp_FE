@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ConvApp.UserRegisterPage"
+             BackgroundColor="#00000000"
+             x:Name="page">
+    <AbsoluteLayout>
+        <Frame AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1"
+               AbsoluteLayout.LayoutFlags="PositionProportional"
+               Margin="10"
+               BackgroundColor="#FFFFFF"
+               CornerRadius="10">
+            <StackLayout>
+                <Label Text="{Binding Source={x:Reference page},
+                                      Path=OAuthType}"
+                       HorizontalOptions="Center"/>
+                <Label Text="{Binding Source={x:Reference page},
+                                      Path=OAuthId}"
+                       HorizontalOptions="Center"/>
+                <Label Text="{Binding Source={x:Reference page},
+                                      Path=Email}"
+                       HorizontalOptions="Center"/>
+                <Button Text="가입 및 진행"/>
+            </StackLayout>
+        </Frame>
+    </AbsoluteLayout>
+</ContentPage>

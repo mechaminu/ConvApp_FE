@@ -39,12 +39,10 @@
                        FontAttributes="Bold"
                        HorizontalOptions="Center"/>
                 <Label Text="{Binding PostContent}" Padding ="10" FontSize="16" />
-                
-                <local:FeedbackView BindingContext="{Binding Feedback}"/>
+
+                <local:FeedbackView BindingContext="{Binding Feedback}" Editor="{x:Reference cmtEditor}"/>
             </StackLayout>
         </ScrollView>
-        <Button Text="댓글 입력창 강제 활성화 (대댓글 입력 테스트)"
-                Clicked="Button_Clicked"/>
         <Frame VerticalOptions="End"
                Padding="0">
             <Grid Padding="0"
@@ -59,11 +57,8 @@
                         AutoSize="TextChanges"
                         Grid.Column="0"/>
                 <Button Text="게시"
-                        Clicked="PostBtnClicked"
                         Grid.Column="1"/>
             </Grid>
         </Frame>
     </StackLayout>
-    
-
 </ContentPage>

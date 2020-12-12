@@ -30,21 +30,23 @@ namespace ConvApp.Views
         Stream imgStream;
         double rate = 5;
 
-        private async void AddImage(object sender, EventArgs e)
+        private void AddImage(object sender, EventArgs e)
         {
-
-            var pickResult = await FilePicker.PickAsync(new PickOptions { PickerTitle = "사진 선택", FileTypes = FilePickerFileType.Images });
-            if (pickResult != null)
+            MainThread.BeginInvokeOnMainThread(async () =>
             {
-                pickResult.ContentType = MimeTypesMap.GetMimeType(pickResult.FileName);
+                var pickResult = await FilePicker.PickAsync(new PickOptions { PickerTitle = "사진 선택", FileTypes = FilePickerFileType.Images });
+                if (pickResult != null)
+                {
+                    pickResult.ContentType = MimeTypesMap.GetMimeType(pickResult.FileName);
 
-                imgStream = await pickResult.OpenReadAsync();
-                imageView.Source = ImageSource.FromStream(() => imgStream);
+                    imgStream = await pickResult.OpenReadAsync();
+                    imageView.Source = ImageSource.FromStream(() => imgStream);
 
-                resultList.Add(pickResult);
-            }
-            else
-                return;
+                    resultList.Add(pickResult);
+                }
+                else
+                    return;
+            });
         }
 
         private readonly ObservableCollection<ProductModel> productList = new ObservableCollection<ProductModel>();

@@ -10,18 +10,7 @@ namespace ConvApp.Services
         Task<string> DoLogin();
     }
 
-    public interface IKakaoAuthService : IOAuthService
-    {
-        
-    }
-
-    public interface IFacebookAuthService : IOAuthService
-    {
-
-    }
-
-    public interface IGoogleAuthService : IOAuthService
-    {
-
-    }
+    public interface IKakaoAuthService : IOAuthService { }
+    public interface IFacebookAuthService : IOAuthService { }
+    public interface IGoogleAuthService : IOAuthService { }
 }

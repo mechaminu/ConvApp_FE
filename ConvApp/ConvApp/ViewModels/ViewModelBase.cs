@@ -23,5 +23,9 @@ namespace ConvApp.ViewModels
             }
         }
 
+        protected virtual void OnChange(PropertyChangedEventArgs e)
+        {
+            PropertyChanged?.Invoke(this, e);
+        }
     }
 }

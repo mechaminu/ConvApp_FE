@@ -4,12 +4,11 @@ using System.Text;
 
 namespace ConvApp.Models
 {
-    public enum LoginProvider
+    public enum FeedbackableType : byte
     {
-        None = -1,
-        Email,
-        Kakao,
-        Facebook,
-        Google
+        Posting,
+        Product,
+        Comment,
+        User
     }
 }

@@ -32,46 +32,5 @@ namespace ConvApp.Views
                     nodeArea.Children.Add(new RecipeNodeCell { BindingContext = node });
             });
         }
-
-        private void Button_Clicked(object sender, EventArgs e)
-        {
-            cmtEditor.Placeholder = "활성화시 기본 표시문구가 변경됩니다";
-            cmtEditor.Focus();
-
-            void eh(object s, FocusEventArgs e)
-            {
-                cmtEditor.Text = null;
-                cmtEditor.Placeholder = "취소했습니다!";
-
-                Task.Factory.StartNew(async () =>
-                {
-                    await Task.Delay(1000);
-                    MainThread.BeginInvokeOnMainThread(() => cmtEditor.Placeholder = "댓글 입력");
-                });
-
-                cmtEditor.Unfocused -= eh;
-            }
-
-            cmtEditor.Unfocused += eh;
-        }
-
-        private async void PostBtnClicked(object sender, EventArgs e)
-        {
-            try
-            {
-                (sender as Button).IsEnabled = false;
-                if (cmtEditor.Text != null)
-                    await (BindingContext as PostingViewModel).Feedback.PostComment(cmtEditor.Text);
-                (sender as Button).IsEnabled = true;
-            }
-            catch (Exception ex)
-            {
-                await DisplayAlert(ex.Message, ex.StackTrace, "확인");
-                return;
-            }
-
-            cmtEditor.Text = null;
-            cmtEditor.Unfocus();
-        }
     }
 }

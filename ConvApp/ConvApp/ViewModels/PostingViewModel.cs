@@ -10,9 +10,9 @@ namespace ConvApp.ViewModels
 {
     public class PostingViewModel : ViewModelBase
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public UserBriefModel User { get; set; }
-        public bool Owned { get => User.Id == App.User.Id; }
+        public bool Owned { get => App.User != null && User.Id == App.User.Id; }
 
         public DateTime Date { get; set; }
         public List<ProductModel> Products { get; set; }

@@ -9,7 +9,7 @@ namespace ConvApp.ViewModels
     public class UserDetailViewModel : ViewModelBase
     {
 
-        public int Id { get; set; }
+        public long Id { get; set; }
         public string Name { get; set; }
         public string Image { get; set; }
 

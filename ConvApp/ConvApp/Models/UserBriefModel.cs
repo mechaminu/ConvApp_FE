@@ -7,7 +7,7 @@ namespace ConvApp.Models
 {
     public class UserBriefModel
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public string Name { get; set; }
         public string ImageFilename { get; set; }
 

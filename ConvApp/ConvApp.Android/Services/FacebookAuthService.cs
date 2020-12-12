@@ -6,6 +6,7 @@ using Android.Views;
 using Android.Widget;
 using ConvApp.Droid.Services;
 using ConvApp.Services;
+using Org.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,20 +21,27 @@ namespace ConvApp.Droid.Services
 {
     public class FacebookAuthService : IFacebookAuthService
     {
+        private Activity context;
+        private LoginManager client;
+
+        public FacebookAuthService()
+        {
+            context = MainActivity.Instance;
+            client = LoginManager.Instance;
+        }
+
         public async Task<string> DoLogin()
         {
-            var loginClient = LoginManager.Instance;
-
             var tcs = new TaskCompletionSource<string>();
-            loginClient.RegisterCallback(MainActivity.CallbackManager, new FacebookCallback<LoginResult>
+            client.RegisterCallback(MainActivity.FacebookCallbackManager, new FacebookCallback<LoginResult>
             {
                 HandleSuccess = (r) => tcs.SetResult(r.AccessToken.Token),
                 HandleCancel = () => tcs.SetCanceled(),
                 HandleError = (err) => tcs.SetException(err)
             });
 
-            tcs.SetResult("facebook");
-
+            client.LogInWithReadPermissions(context, new string[] { "email" });
+            
             return await tcs.Task;
         }
 

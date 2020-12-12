@@ -3,7 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              xmlns:local="clr-namespace:ConvApp.Views"
+             xmlns:utilites="clr-namespace:ConvApp.Utilites"
              x:Class="ConvApp.Views.RecipeDetail">
+    <ContentPage.Resources>
+        <utilites:MultiBindingConverter x:Key="MultiBindingConverter"/>
+    </ContentPage.Resources>
     <StackLayout>
         <ScrollView>
             <StackLayout Spacing="0">
@@ -45,8 +49,6 @@
 
             </StackLayout>
         </ScrollView>
-        <Button Text="댓글 입력창 강제 활성화 (대댓글 입력 테스트)"
-                Clicked="Button_Clicked"/>
         <Frame VerticalOptions="End"
                Padding="0">
             <Grid Padding="0"
@@ -61,8 +63,15 @@
                         AutoSize="TextChanges"
                         Grid.Column="0"/>
                 <Button Text="게시"
-                        Clicked="PostBtnClicked"
-                        Grid.Column="1"/>
+                        Command="{Binding Feedback.PostCmtCommand}"
+                        Grid.Column="1">
+                    <Button.CommandParameter>
+                        <MultiBinding Converter="{StaticResource MultiBindingConverter}">
+                            <Binding Source="{x:Reference cmtEditor}"/>
+                            <Binding Source="{RelativeSource Self}"/>
+                        </MultiBinding>
+                    </Button.CommandParameter>
+                </Button>
             </Grid>
         </Frame>
     </StackLayout>

@@ -18,23 +18,47 @@ namespace ConvApp
     // Repository pattern 적용사례에 해당되는듯?
     public class ApiManager
     {
-        //private static readonly string EndPointURL = "http://minuuoo.ddns.net:5000/api";
-        private static readonly string EndPointURL = "http://convappdev.azurewebsites.net/api";
+        private static readonly string EndPointURL = "http://minuuoo.ddns.net:5000/api";
+        //private static readonly string EndPointURL = "https://paltoinfoconvapp.ddns.net/api";
         public static readonly string ImageEndPointURL = "https://convappdev.blob.core.windows.net/images";
-        private static readonly RestClient client = new RestClient(EndPointURL) { Timeout = 10000 }.UseNewtonsoftJson(new JsonSerializerSettings
+        private static readonly RestClient client = new RestClient(EndPointURL) { Timeout = -1 }.UseNewtonsoftJson(new JsonSerializerSettings
         {
             PreserveReferencesHandling = PreserveReferencesHandling.All
         }) as RestClient;
 
-        public async static Task<UserBriefModel> Login(string email, string password)
+        public async static Task<UserBriefModel> LoginEmailAccount(string id, string pwd)
         {
-            var response = await client.ExecuteAsync<UserBriefModel>(new RestRequest("users/login", Method.POST)
-                .AddJsonBody(new { Email = email, Password = password }));
+            var response = await client.ExecuteAsync<UserBriefModel>(new RestRequest("users/login", Method.GET)
+                .AddQueryParameter("id", id)
+                .AddQueryParameter("pwd", pwd));
 
             if (!response.IsSuccessful)
-                throw new Exception("로그인 실패. 아이디와 비밀번호를 확인하세요");
+                throw new Exception(response.ErrorMessage);
 
             return response.Data;
+        }
+
+        public async static Task<UserBriefModel> LoginOAuthAccount(string token, byte provider)
+        {
+            var request = new RestRequest("users/loginoauth", Method.GET)
+                .AddQueryParameter("token", token)
+                .AddHeader("provider", $"{provider}");
+
+            var response = await client.ExecuteAsync(request);
+
+            var result = JsonConvert.DeserializeObject(response.Content);
+
+            if (!response.IsSuccessful)
+                if (response.StatusCode == HttpStatusCode.NotFound)
+                {
+                    var ex = new Exception("회원정보없음");
+                    ex.Data.Add("result", result);
+                    throw ex;
+                }
+                else
+                    throw new Exception(response.ErrorMessage);
+
+            return (UserBriefModel)result;
         }
 
         public async static Task RefreshRank()
@@ -42,7 +66,7 @@ namespace ConvApp
             await client.ExecuteAsync(new RestRequest("ranking", Method.GET));
         }
 
-        public async static Task<UserDetailModel> GetUserDetail(int id)
+        public async static Task<UserDetailModel> GetUserDetail(long id)
         {
             var response = await client.ExecuteAsync<UserDetailModel>(new RestRequest($"users/detail/{id}", Method.GET));
 
@@ -93,7 +117,7 @@ namespace ConvApp
         #endregion
 
         #region Feedbacks
-        public async static Task<(List<CommentViewModel>, List<Like>)> GetFeedbacks(byte type, int id)
+        public async static Task<(List<CommentViewModel>, List<Like>)> GetFeedbacks(byte type, long id)
         {
             var request = new RestRequest("feedbacks", Method.GET)
                     .AddQueryParameter("type", $"{type}")
@@ -125,7 +149,7 @@ namespace ConvApp
             public List<LikeModel> Likes { get; set; }
         }
 
-        public async static Task<List<Like>> GetLikes(byte type, int id)
+        public async static Task<List<Like>> GetLikes(byte type, long id)
         {
             var request = new RestRequest("feedbacks/like", Method.GET)
                     .AddQueryParameter("type", $"{type}")
@@ -140,7 +164,7 @@ namespace ConvApp
             return likes;
         }
 
-        public async static Task PostLike(byte type, int id)
+        public async static Task PostLike(byte type, long id)
         {
             var request = new RestRequest("feedbacks/like", Method.POST)
                 .AddJsonBody(new LikeModel { ParentType = type, ParentId = id, UserId = App.User.Id });
@@ -151,7 +175,7 @@ namespace ConvApp
                 throw new InvalidOperationException("like posting failed");
         }
 
-        public async static Task DeleteLike(byte type, int id)
+        public async static Task DeleteLike(byte type, long id)
         {
             var response = await client.ExecuteAsync<List<LikeModel>>(new RestRequest("feedbacks/like", Method.DELETE)
                 .AddJsonBody(new LikeModel { ParentType = type, ParentId = id, UserId = App.User.Id }));
@@ -160,7 +184,7 @@ namespace ConvApp
                 throw new InvalidOperationException("like deletion failed");
         }
 
-        public async static Task<List<CommentViewModel>> GetComments(byte type, int id)
+        public async static Task<List<CommentViewModel>> GetComments(byte type, long id)
         {
             var request = new RestRequest("feedbacks/comment", Method.GET)
                 .AddQueryParameter("type", type + "")
@@ -175,7 +199,7 @@ namespace ConvApp
             return comments;
         }
 
-        public async static Task PostComment(byte type, int id, string text)
+        public async static Task PostComment(byte type, long id, string text)
         {
             var request = new RestRequest("feedbacks/comment", Method.POST)
                 .AddJsonBody(new CommentModel { ParentType = type, ParentId = id, UserId = App.User.Id, Text = text });
@@ -186,7 +210,7 @@ namespace ConvApp
                 throw new InvalidOperationException("comment posting failed");
         }
 
-        public async static Task DeleteComment(int id)
+        public async static Task DeleteComment(long id)
         {
             var response = await client.ExecuteAsync(new RestRequest("feedbacks/comment", Method.DELETE)
                 .AddQueryParameter("id", $"{id}"));
@@ -195,8 +219,11 @@ namespace ConvApp
                 throw new InvalidOperationException("comment deletion failed");
         }
 
-        public async static Task AddView(byte type, int id)
+        public async static Task AddView(byte type, long id)
         {
+            if (App.User == null)
+                return;
+
             await client.ExecuteAsync(new RestRequest("feedbacks/view", Method.POST)
                 .AddJsonBody(new { ParentType = type, ParentId = id, UserId = App.User.Id }));
         }
@@ -204,7 +231,7 @@ namespace ConvApp
 
         #region Users
         // 유저 데이터 획득
-        public async static Task<UserBriefModel> GetUser(int userId)
+        public async static Task<UserBriefModel> GetUser(long userId)
         {
             try
             {

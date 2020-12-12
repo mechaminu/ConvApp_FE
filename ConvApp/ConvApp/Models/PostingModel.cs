@@ -15,12 +15,12 @@ namespace ConvApp.Models
 
     public class PostingModel
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime ModifiedDate { get; set; }
 
         public byte PostingType { get; set; }
-        public int UserId { get; set; }
+        public long UserId { get; set; }
 
         public List<ProductModel> Products { get; set; }
         public List<PostingNodeModel> PostingNodes { get; set; }

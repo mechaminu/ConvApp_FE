@@ -35,31 +35,33 @@
                 <StackLayout Orientation="Horizontal"
                              Padding="5,5,10,0"
                              Spacing="0">
-                    <StackLayout Padding="5">
+                    <StackLayout Padding="5"
+                                 Orientation="Horizontal">
                         <ffsvg:SvgCachedImage Source="{Binding Feedback.LikeImage}"
                                               WidthRequest="20"
                                               HorizontalOptions="CenterAndExpand"
                                               VerticalOptions="CenterAndExpand">
-                            <ffsvg:SvgCachedImage.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding Feedback.LikeBtnCommand}"/>
-                            </ffsvg:SvgCachedImage.GestureRecognizers>
                         </ffsvg:SvgCachedImage>
+                        <Label Text="{Binding Feedback.Likes.Count}"
+                                FontSize="Small"
+                                FontAttributes="Bold"
+                                VerticalOptions="Center"
+                                HorizontalOptions="Start"/>
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Feedback.LikeBtnCommand}"/>
+                        </StackLayout.GestureRecognizers>
                     </StackLayout>
-                    <Label Text="{Binding Feedback.Likes.Count}"
-                            FontSize="Small"
-                            FontAttributes="Bold"
-                            VerticalOptions="Center"
-                            HorizontalOptions="Start"/>
                     <StackLayout x:Name="childCmtBtn"
-                                 Padding="5"
+                                 Padding="5,0,5,0"
                                  HorizontalOptions="Fill">
                         <ffsvg:SvgCachedImage Source="resource://ConvApp.Resources.comment-dots-regular.svg"
+                                              Aspect="AspectFill"
                                               WidthRequest="20"
                                               HorizontalOptions="CenterAndExpand"
                                               VerticalOptions="CenterAndExpand">
                         </ffsvg:SvgCachedImage>
                     </StackLayout>
-                    <StackLayout Padding="5"
+                    <StackLayout Padding="5,0,5,0"
                                  HorizontalOptions="Fill"
                                  IsVisible="{Binding Owned}">
                         <ffsvg:SvgCachedImage Source="resource://ConvApp.Resources.trash-alt-regular.svg"
@@ -71,7 +73,7 @@
                             </ffsvg:SvgCachedImage.GestureRecognizers>
                         </ffsvg:SvgCachedImage>
                     </StackLayout>
-                    <StackLayout Padding="5"
+                    <StackLayout Padding="5,0,0,0"
                                  HorizontalOptions="Fill"
                                  IsVisible="{Binding NotOwned}">
                         <ffsvg:SvgCachedImage Source="resource://ConvApp.Resources.exclamation-circle-solid.svg"

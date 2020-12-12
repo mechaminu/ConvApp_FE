@@ -7,6 +7,7 @@
     <OutputType>Library</OutputType>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <UserSecretsId>978544c0-b749-40c7-afe2-ebb45fd485ae</UserSecretsId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -40,6 +41,7 @@
     <None Remove="Resources\home.svg" />
     <None Remove="Resources\login\kakao_login_medium_wide.png" />
     <None Remove="Resources\logo.jpg" />
+    <None Remove="Resources\logo_transparent.png" />
     <None Remove="Resources\plus.svg" />
     <None Remove="Resources\search.svg" />
     <None Remove="Resources\trash-alt-regular.svg" />
@@ -64,6 +66,7 @@
     <EmbeddedResource Include="Resources\home.svg" />
     <EmbeddedResource Include="Resources\login\kakao_login_medium_wide.png" />
     <EmbeddedResource Include="Resources\logo.jpg" />
+    <EmbeddedResource Include="Resources\logo_transparent.png" />
     <EmbeddedResource Include="Resources\P1.jpg" />
     <EmbeddedResource Include="Resources\plus.svg" />
     <EmbeddedResource Include="Resources\search.svg" />
@@ -74,10 +77,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
     <PackageReference Include="MimeTypesMap" Version="1.0.8" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="RestSharp" Version="106.11.8-alpha.0.7" />
-    <PackageReference Include="RestSharp.Serializers.NewtonsoftJson" Version="106.11.8-alpha.0.7" />
+    <PackageReference Include="RestSharp" Version="106.11.8-alpha.0.11" />
+    <PackageReference Include="RestSharp.Serializers.NewtonsoftJson" Version="106.11.8-alpha.0.11" />
     <PackageReference Include="System.Drawing.Common" Version="5.0.0" />
     <PackageReference Include="Xam.Plugin.Media" Version="5.0.1" />
     <PackageReference Include="Xam.Plugins.Forms.ImageCircle" Version="3.1.1.1-beta" />
@@ -88,16 +92,16 @@
     <PackageReference Include="Xamarin.FFImageLoading.Svg" Version="2.4.11.982" />
     <PackageReference Include="Xamarin.FFImageLoading.Svg.Forms" Version="2.4.11.982" />
     <PackageReference Include="Xamarin.FFImageLoading.Transformations" Version="2.4.11.982" />
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.1709-pre4" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.6.0-pre5" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.1791-pre5" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.6.0-pre4" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Update="AppShell.xaml.cs">
       <DependentUpon>AppShell.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Login.xaml.cs">
-      <DependentUpon>Login.xaml</DependentUpon>
+    <Compile Update="LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\Category\CategoryGeneralRanking.xaml.cs">
       <DependentUpon>CategoryGeneralRanking.xaml</DependentUpon>
@@ -126,6 +130,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="UserRegisterPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\Category\ProductDetail.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -153,7 +160,7 @@
     <EmbeddedResource Update="Views\Feed\ReviewDetail.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Login.xaml">
+    <EmbeddedResource Update="LoginPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\PostDetail.xaml">

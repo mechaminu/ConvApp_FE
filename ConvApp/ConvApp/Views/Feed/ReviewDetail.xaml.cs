@@ -45,23 +45,23 @@ namespace ConvApp.Views
             cmtEditor.Unfocused += eh;
         }
 
-        private async void PostBtnClicked(object sender, EventArgs e)
-        {
-            try
-            {
-                (sender as Button).IsEnabled = false;
-                if (cmtEditor.Text != null)
-                    await (BindingContext as PostingViewModel).Feedback.PostComment(cmtEditor.Text);
-                (sender as Button).IsEnabled = true;
-            }
-            catch (Exception ex)
-            {
-                await DisplayAlert(ex.Message, ex.StackTrace, "확인");
-                return;
-            }
+        //private async void PostBtnClicked(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+        //        (sender as Button).IsEnabled = false;
+        //        if (cmtEditor.Text != null)
+        //            await (BindingContext as PostingViewModel).Feedback.PostComment(cmtEditor.Text);
+        //        (sender as Button).IsEnabled = true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        await DisplayAlert(ex.Message, ex.StackTrace, "확인");
+        //        return;
+        //    }
 
-            cmtEditor.Text = null;
-            cmtEditor.Unfocus();
-        }
+        //    cmtEditor.Text = null;
+        //    cmtEditor.Unfocus();
+        //}
     }
 }
