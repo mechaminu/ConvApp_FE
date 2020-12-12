@@ -1,6 +1,8 @@
 ﻿using ConvApp.Models;
+using ConvApp.Models.Auth;
 using ConvApp.ViewModels;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using RestSharp;
 using RestSharp.Serializers.NewtonsoftJson;
 using System;
@@ -21,10 +23,25 @@ namespace ConvApp
         private static readonly string EndPointURL = "http://minuuoo.ddns.net:5000/api";
         //private static readonly string EndPointURL = "https://paltoinfoconvapp.ddns.net/api";
         public static readonly string ImageEndPointURL = "https://convappdev.blob.core.windows.net/images";
-        private static readonly RestClient client = new RestClient(EndPointURL) { Timeout = -1 }.UseNewtonsoftJson(new JsonSerializerSettings
+        private static readonly RestClient client = new RestClient(EndPointURL) { Timeout = 10000 }.UseNewtonsoftJson(new JsonSerializerSettings
         {
             PreserveReferencesHandling = PreserveReferencesHandling.All
         }) as RestClient;
+
+        public async static Task<UserBriefModel> RegisterUser(RegisterDTO data)
+        {
+            var request = new RestRequest("users/register", Method.POST)
+                .AddJsonBody(data);
+
+            var response = await client.ExecuteAsync<UserBriefModel>(request);
+
+            var result = JsonConvert.DeserializeObject(response.Content);
+
+            if (!response.IsSuccessful)
+                throw new Exception((result as JContainer)["detail"].ToString());
+
+            return response.Data;
+        }
 
         public async static Task<UserBriefModel> LoginEmailAccount(string id, string pwd)
         {
@@ -32,8 +49,10 @@ namespace ConvApp
                 .AddQueryParameter("id", id)
                 .AddQueryParameter("pwd", pwd));
 
+            var result = JsonConvert.DeserializeObject(response.Content);
+
             if (!response.IsSuccessful)
-                throw new Exception(response.ErrorMessage);
+                throw new Exception((result as JContainer)["detail"].ToString());
 
             return response.Data;
         }
@@ -58,7 +77,7 @@ namespace ConvApp
                 else
                     throw new Exception(response.ErrorMessage);
 
-            return (UserBriefModel)result;
+            return JsonConvert.DeserializeObject<UserBriefModel>(response.Content);
         }
 
         public async static Task RefreshRank()
@@ -382,15 +401,15 @@ namespace ConvApp
             }
         }
 
-        public async static Task<bool> DeleteImage(string filename)
+        public async static Task DeleteImage(string filename)
         {
             try
             {
-                return (await client.ExecuteAsync(new RestRequest($"images/{filename.Trim()}", Method.DELETE))).IsSuccessful;
+                await client.ExecuteAsync(new RestRequest($"images/{filename.Trim()}", Method.DELETE));
             }
             catch
             {
-                throw;
+                
             }
         }
         #endregion

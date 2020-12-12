@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:fftransform="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
              x:Class="ConvApp.UserRegisterPage"
              BackgroundColor="#00000000"
              x:Name="page">
@@ -11,16 +13,23 @@
                BackgroundColor="#FFFFFF"
                CornerRadius="10">
             <StackLayout>
-                <Label Text="{Binding Source={x:Reference page},
-                                      Path=OAuthType}"
+                <ff:CachedImage Source="{Binding Image}"
+                                WidthRequest="50"
+                                HeightRequest="50"
+                                Aspect="AspectFit"
+                                DownsampleToViewSize="True">
+                    <ff:CachedImage.Transformations>
+                        <fftransform:CircleTransformation/>
+                    </ff:CachedImage.Transformations>
+                </ff:CachedImage>
+                <Label Text="{Binding OAuthType}"
                        HorizontalOptions="Center"/>
-                <Label Text="{Binding Source={x:Reference page},
-                                      Path=OAuthId}"
+                <Label Text="{Binding Email}"
                        HorizontalOptions="Center"/>
-                <Label Text="{Binding Source={x:Reference page},
-                                      Path=Email}"
-                       HorizontalOptions="Center"/>
-                <Button Text="가입 및 진행"/>
+                <Entry x:Name="username"
+                       Placeholder="유저명"/>
+                <Button Text="가입 및 진행"
+                        Clicked="Button_Clicked"/>
             </StackLayout>
         </Frame>
     </AbsoluteLayout>

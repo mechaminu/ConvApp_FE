@@ -6,6 +6,12 @@
              xmlns:fftf="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
              Shell.NavBarIsVisible="True"
              Title="{Binding Name, StringFormat='{0} 님의 프로필'}">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Order="Primary"
+                     Priority="0"
+                     Text="로그아웃"
+                     Clicked="ToolbarItem_Clicked"/>
+    </ContentPage.ToolbarItems>
     <StackLayout>
         <StackLayout>
             <Grid>

@@ -1,9 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ConvApp.Views.ReviewDetail"
              xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
-             xmlns:local ="clr-namespace:ConvApp.Views">
+             xmlns:local="clr-namespace:ConvApp.Views"
+             xmlns:utilites="clr-namespace:ConvApp.Utilites"
+             x:Class="ConvApp.Views.ReviewDetail">
+    <ContentPage.Resources>
+        <utilites:MultiBindingConverter x:Key="MultiBindingConverter"/>
+    </ContentPage.Resources>
     <StackLayout>
         <ScrollView>
             <StackLayout Orientation="Vertical">
@@ -40,7 +44,7 @@
                        HorizontalOptions="Center"/>
                 <Label Text="{Binding PostContent}" Padding ="10" FontSize="16" />
 
-                <local:FeedbackView BindingContext="{Binding Feedback}" Editor="{x:Reference cmtEditor}"/>
+                <local:FeedbackView BindingContext="{Binding Feedback}"/>
             </StackLayout>
         </ScrollView>
         <Frame VerticalOptions="End"
@@ -52,12 +56,20 @@
                     <ColumnDefinition Width="4*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Editor Placeholder="댓글 입력"
+                <Editor Placeholder="댓글 입력..."
                         x:Name="cmtEditor"
                         AutoSize="TextChanges"
                         Grid.Column="0"/>
                 <Button Text="게시"
-                        Grid.Column="1"/>
+                        Command="{Binding Feedback.PostCmtCommand}"
+                        Grid.Column="1">
+                    <Button.CommandParameter>
+                        <MultiBinding Converter="{StaticResource MultiBindingConverter}">
+                            <Binding Source="{x:Reference cmtEditor}"/>
+                            <Binding Source="{RelativeSource Self}"/>
+                        </MultiBinding>
+                    </Button.CommandParameter>
+                </Button>
             </Grid>
         </Frame>
     </StackLayout>

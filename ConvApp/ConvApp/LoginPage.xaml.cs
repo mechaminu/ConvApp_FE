@@ -1,12 +1,13 @@
 ﻿using ConvApp.Models;
 using ConvApp.Services;
 using ConvApp.ViewModels;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -18,6 +19,16 @@ namespace ConvApp
         public LoginPage()
         {
             InitializeComponent();
+
+            var bc = BindingContext as LoginViewModel;
+
+            var authStr = Preferences.Get("auth", null);
+            if (authStr != null)
+            {
+                var authData = JsonConvert.DeserializeObject<AuthContext>(authStr);
+                bc.LoginCommand.Execute(authData.Type);
+            }
+
         }
 
         private async void Button_Clicked(object sender, EventArgs e)
@@ -36,7 +47,16 @@ namespace ConvApp
             }
             catch (Exception ex) when (ex.Message == "회원정보없음")
             {
-                
+                if (await DisplayAlert("가입", "회원 정보가 없습니다. 신규 가입을 진행할까요?", "예", "아니오"))
+                    await Navigation.PushModalAsync(new UserRegisterPage
+                    {
+                        BindingContext = new UserRegisterViewModel
+                        {
+                            Email = idEntry.Text,
+                            Password = pwdEntry.Text,
+                            Image = "logo.jpg"
+                        }
+                    });
             }
             catch (Exception ex)
             {

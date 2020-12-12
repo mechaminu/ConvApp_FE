@@ -51,7 +51,7 @@
                             <TapGestureRecognizer Command="{Binding Feedback.LikeBtnCommand}"/>
                         </StackLayout.GestureRecognizers>
                     </StackLayout>
-                    <StackLayout x:Name="childCmtBtn"
+                    <!--<StackLayout x:Name="childCmtBtn"
                                  Padding="5,0,5,0"
                                  HorizontalOptions="Fill">
                         <ffsvg:SvgCachedImage Source="resource://ConvApp.Resources.comment-dots-regular.svg"
@@ -60,7 +60,7 @@
                                               HorizontalOptions="CenterAndExpand"
                                               VerticalOptions="CenterAndExpand">
                         </ffsvg:SvgCachedImage>
-                    </StackLayout>
+                    </StackLayout>-->
                     <StackLayout Padding="5,0,5,0"
                                  HorizontalOptions="Fill"
                                  IsVisible="{Binding Owned}">

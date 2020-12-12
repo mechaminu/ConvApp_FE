@@ -1,5 +1,7 @@
 ﻿using ConvApp.Models;
 using ConvApp.ViewModels;
+using System;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace ConvApp.Views
@@ -19,13 +21,13 @@ namespace ConvApp.Views
                 listView.ItemsSource = (BindingContext as UserDetailViewModel).Postings;
         }
 
-        private void Button_Clicked(object sender, System.EventArgs e)
+        private void Button_Clicked(object sender, EventArgs e)
         {
             listView.ItemsSource = null;
             listView.ItemsSource = (BindingContext as UserDetailViewModel).Postings;
         }
 
-        private void Button_Clicked_1(object sender, System.EventArgs e)
+        private void Button_Clicked_1(object sender, EventArgs e)
         {
             listView.ItemsSource = null;
             listView.ItemsSource = (BindingContext as UserDetailViewModel).LikedPostings;
@@ -34,6 +36,16 @@ namespace ConvApp.Views
         private void listView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             (e.SelectedItem as PostingViewModel).ShowPage.Execute(this);
+        }
+
+        private async void ToolbarItem_Clicked(object sender, EventArgs e)
+        {
+            if (await App.Current.MainPage.DisplayAlert("로그아웃","로그아웃하시겠습니까?","예","아니오"))
+            {
+                App.User = null;
+                Preferences.Remove("auth");
+                App.Current.MainPage = new LoginPage();
+            }
         }
     }
 }

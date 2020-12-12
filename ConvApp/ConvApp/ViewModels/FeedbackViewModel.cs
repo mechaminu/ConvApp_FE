@@ -79,34 +79,10 @@ namespace ConvApp.ViewModels
 
                 foreach (var cmt in cmtList)
                 {
-                    if (!(cmt.IsChild = type == (byte)FeedbackableType.Comment))
+                    cmt.IsChild = type == (byte)FeedbackableType.Comment;
+                    if (!cmt.IsChild)
                     {
                         await cmt.Feedback.Refresh();
-                        cmt.ChildCmtCommand = new Command(async () =>
-                        {
-                            if (await App.Current.MainPage.DisplayAlert("알림", "대댓글을 작성하시겠습니까?", "예", "아니오"))
-                            {
-                                //cmtEditor를 어떻게 받아올 수 있을까?
-                                //cmtEditor.Placeholder = "활성화시 기본 표시문구가 변경됩니다";
-                                //cmtEditor.Focus();
-
-                                //void eh(object s, FocusEventArgs e)
-                                //{
-                                //    cmtEditor.Text = null;
-                                //    cmtEditor.Placeholder = "취소했습니다!";
-
-                                //    Task.Factory.StartNew(async () =>
-                                //    {
-                                //        await Task.Delay(1000);
-                                //        MainThread.BeginInvokeOnMainThread(() => cmtEditor.Placeholder = "댓글 입력");
-                                //    });
-
-                                //    cmtEditor.Unfocused -= eh;
-                                //}
-
-                                //cmtEditor.Unfocused += eh;
-                            }
-                        });
                     }
 
                     cmt.RefreshParent = async () => await Refresh();
@@ -144,16 +120,13 @@ namespace ConvApp.ViewModels
                     throw new UnauthorizedAccessException("로그인 후 이용가능합니다!");
 
                 if (isPopulated)
+                {
                     if (IsLiked)
-                    {
                         await ApiManager.DeleteLike(type, id);
-                        await Refresh();
-                    }
                     else
-                    {
                         await ApiManager.PostLike(type, id);
-                        await Refresh();
-                    }
+                    await Refresh();
+                } 
                 else
                 {
                     await Refresh();

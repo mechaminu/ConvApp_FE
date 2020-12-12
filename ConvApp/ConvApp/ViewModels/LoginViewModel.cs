@@ -40,24 +40,45 @@ namespace ConvApp.ViewModels
                         }
                         catch (Exception ex) when (ex.Message == "회원정보없음")
                         {
-                            var data = ex.Data["result"] as JContainer;
-                            var id = data["oid"].ToString();
-                            var type = data["type"].ToObject<OAuthProvider>();
-                            var email = data["email"].ToString();
-                            
-                            Action action = ()=>IsBusy = false;
+                            if (await App.Current.MainPage.DisplayAlert("가입", "회원 정보가 없습니다. 신규 가입을 진행할까요?", "예", "아니오"))
+                            {
+                                var data = ex.Data["result"] as JContainer;
 
-                            await context.MainPage.Navigation.PushModalAsync(new UserRegisterPage(id, type, email, action), false);
+                                var registerPage = new UserRegisterPage
+                                {
+                                    BindingContext = new UserRegisterViewModel
+                                    {
+                                        OAuthType = data["type"].ToObject<OAuthProvider>(),
+                                        OAuthId = data["oid"].ToString(),
+                                        Email = data["email"].ToString(),
+                                        Image = data["image"].ToString()
+                                    }
+                                };
+
+                                registerPage.Disappearing += async (s, e) =>
+                                {
+                                    var bc = (s as UserRegisterPage).BindingContext as UserRegisterViewModel;
+                                    IsBusy = false;
+                                    if (!bc.isSuccessful)
+                                        await ApiManager.DeleteImage(bc.imageFilename);
+                                };
+
+                                await context.MainPage.Navigation.PushModalAsync(registerPage, false);
+                                return;
+                            }
+
+                            IsBusy = false;
                             return;
                         }
+                        
+                        
 
                         // TODO proper successful login handler
                         if (user != null)
                             Preferences.Set("auth", JsonConvert.SerializeObject(new AuthContext { LastLogined = DateTime.UtcNow, Type = loginProvider }));
 
-                        App.User = await ApiManager.GetUser(1);
-                        if (!(context.MainPage is AppShell))
-                            context.MainPage = new AppShell();
+                        App.User = user;
+                        context.MainPage = new AppShell();
                     }
                     catch (Exception ex)
                     {
