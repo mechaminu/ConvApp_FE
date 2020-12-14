@@ -45,18 +45,26 @@ namespace ConvApp.Droid.Services
             }
 
             tcs = new TaskCompletionSource<string>();
-            var signInIntent = client.SignInIntent;
-            context.StartActivityForResult(signInIntent, RC_SIGN_IN);
-            return await tcs.Task;
+                var signInIntent = client.SignInIntent;
+                context.StartActivityForResult(signInIntent, RC_SIGN_IN);
+                return await tcs.Task;
+
         }
 
         public static async void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
         {
             if (requestCode == RC_SIGN_IN)
             {
-                var account = await GoogleSignIn.GetSignedInAccountFromIntentAsync(data);
-                var token = account.IdToken;
-                tcs.SetResult(token);
+                try
+                {
+                    var account = await GoogleSignIn.GetSignedInAccountFromIntentAsync(data);
+                    var token = account.IdToken;
+                    tcs.SetResult(token);
+                }
+                catch (Exception ex)
+                {
+                    tcs.SetException(ex);
+                }
             }
         }
     }
