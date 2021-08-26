@@ -45,9 +45,9 @@ namespace ConvApp.Droid.Services
             }
 
             tcs = new TaskCompletionSource<string>();
-                var signInIntent = client.SignInIntent;
-                context.StartActivityForResult(signInIntent, RC_SIGN_IN);
-                return await tcs.Task;
+            var signInIntent = client.SignInIntent;
+            context.StartActivityForResult(signInIntent, RC_SIGN_IN);
+            return await tcs.Task;
 
         }
 

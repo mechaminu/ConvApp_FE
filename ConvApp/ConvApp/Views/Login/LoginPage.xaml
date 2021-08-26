@@ -18,33 +18,25 @@
                             Margin="50"
                             HorizontalOptions="FillAndExpand"
                             VerticalOptions="FillAndExpand"/>
-            <Entry x:Name="idEntry" Placeholder="아이디 이메일 주소"/>
-            <Entry x:Name="pwdEntry" Placeholder="비밀번호" IsPassword="True"/>
             <Frame CornerRadius="10"
                    Padding="0">
-                <Button Text="이메일 로그인"
-                        Clicked="Button_Clicked"
+                <Button Text="이메일로 계속하기"
+                        Clicked="Button_Clicked" 
                         BackgroundColor="#777777"
                         TextColor="#FFFFFF"
                         HeightRequest="50"/>
             </Frame>
-            <BoxView HeightRequest="1"
-                     HorizontalOptions="FillAndExpand"
-                     BackgroundColor="Gray"
-                     Margin="0,5,0,5"/>
-            
             <Frame CornerRadius="10"
                    Padding="0">
-                <Button Text="카카오 로그인"
-                        Command="{Binding LoginCommand}"
-                        CommandParameter="{x:Static models:OAuthProvider.Kakao}"
+                <Button Text="카카오로 계속하기 (비활성화)"
+                        IsEnabled="False"
                         BackgroundColor="#FEE500"
                         TextColor="#000000"
                         HeightRequest="50"/>
             </Frame>
             <Frame CornerRadius="10"
                    Padding="0">
-                <Button Text="페이스북 로그인"
+                <Button Text="페이스북으로 계속하기"
                         Command="{Binding LoginCommand}"
                         CommandParameter="{x:Static models:OAuthProvider.Facebook}"
                         BackgroundColor="#1877F2"
@@ -53,9 +45,8 @@
             </Frame>
             <Frame CornerRadius="10"
                    Padding="0">
-                <Button Text="구글계정 로그인" 
-                        Command="{Binding LoginCommand}"
-                        CommandParameter="{x:Static models:OAuthProvider.Google}"
+                <Button Text="구글계정으로 계속하기 (비활성화)" 
+                        IsEnabled="False"
                         BackgroundColor="#FFFFFF"
                         HeightRequest="50"/>
             </Frame>
@@ -69,6 +60,25 @@
             </Label>
             <Label Margin="10"
                    Text="이용약관 및 개인정보처리방침"
+                   TextColor="#AAAAAA"
+                   HorizontalOptions="Center"
+                   VerticalOptions="End">
+                <Label.GestureRecognizers>
+                    <!--<TapGestureRecognizer Command="{Binding LoginCommand}"
+                                          CommandParameter="{x:Static models:LoginProvider.None}"/>-->
+                </Label.GestureRecognizers>
+            </Label>
+            <Label Text="경희대학교 이민우 포트폴리오용 알파"
+                   TextColor="#AAAAAA"
+                   HorizontalOptions="Center"
+                   VerticalOptions="End">
+                <Label.GestureRecognizers>
+                    <!--<TapGestureRecognizer Command="{Binding LoginCommand}"
+                                          CommandParameter="{x:Static models:LoginProvider.None}"/>-->
+                </Label.GestureRecognizers>
+            </Label>
+            <Label Margin="10"
+                   Text="!다크모드에선 앱에 오류가 발생하여 이용이 불가합니다!"
                    TextColor="#AAAAAA"
                    HorizontalOptions="Center"
                    VerticalOptions="End">

@@ -25,7 +25,7 @@ namespace ConvApp.ViewModels
                         OAuthProvider.Kakao => DependencyService.Get<IKakaoAuthService>(),
                         OAuthProvider.Facebook => DependencyService.Get<IFacebookAuthService>(),
                         OAuthProvider.Google => DependencyService.Get<IGoogleAuthService>(),
-                        _ => throw new Exception("로그인 제공자 오류")
+                        _ => throw new InvalidOperationException("로그인 제공자 오류")
                     };
 
                     try
@@ -33,10 +33,10 @@ namespace ConvApp.ViewModels
                         var context = Application.Current as App;
                         UserBriefModel user = null;
 
-                        var token = await authService.DoLogin();
+                        var result = await authService.DoLogin();
                         try
                         {
-                            user = await ApiManager.LoginOAuthAccount(token, (byte)loginProvider);
+                            user = await ApiManager.LoginOAuthAccount(result, (byte)loginProvider);
                         }
                         catch (Exception ex) when (ex.Message == "회원정보없음")
                         {

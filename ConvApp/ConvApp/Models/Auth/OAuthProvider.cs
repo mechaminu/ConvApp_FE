@@ -6,7 +6,7 @@ namespace ConvApp.Models
 {
     public enum OAuthProvider
     {
-        None = -1,
+        None = 0,
         Kakao,
         Facebook,
         Google

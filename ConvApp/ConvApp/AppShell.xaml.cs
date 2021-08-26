@@ -23,7 +23,7 @@ namespace ConvApp
                     if (await App.Current.MainPage.DisplayAlert("", "로그인 후 이용가능한 메뉴입니다", "로그인으로 이동", "취소"))
                         await App.Current.MainPage.Navigation.PushModalAsync(new LoginPage());
                     else
-                        await Shell.Current.GoToAsync("//pageAllFeed");
+                        await Shell.Current.GoToAsync("//pageHotFeed");
                     return;
                 }
 

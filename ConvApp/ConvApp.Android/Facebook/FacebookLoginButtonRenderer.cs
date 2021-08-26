@@ -16,8 +16,10 @@ using Xamarin.Facebook.Login.Widget;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
-[assembly: ExportRenderer(typeof(FacebookLoginButton), typeof(FacebookLoginButtonRenderer))]
+[assembly: ExportRenderer(typeof(LoginButton), typeof(FacebookLoginButtonRenderer))]
 namespace ConvApp.Droid.Facebook
+
+
 {
     class FacebookLoginButtonRenderer : ViewRenderer
     {
@@ -35,7 +37,7 @@ namespace ConvApp.Droid.Facebook
 
             if (Control == null)
             {
-                var fbLoginBtnView = e.NewElement as FacebookLoginButton;
+                var fbLoginBtnView = e.NewElement as LoginButton;
                 var fbLoginBtnCtrl = new LoginButton(context)
                 {
                     LoginBehavior = LoginBehavior.NativeWithFallback

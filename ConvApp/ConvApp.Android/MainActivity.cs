@@ -7,7 +7,6 @@ using Android.Runtime;
 using Com.Kakao.Sdk.Common;
 using ConvApp.Droid.Services;
 using FFImageLoading.Forms.Platform;
-using System;
 using Xamarin.Facebook;
 
 namespace ConvApp.Droid
@@ -34,7 +33,7 @@ namespace ConvApp.Droid
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             Xamarin.Forms.Forms.Init(this, savedInstanceState);
 
-            KakaoSdk.Init(ApplicationContext, "79ecfca2ec6587af7561173f0865e798");
+            KakaoSdk.Init(ApplicationContext, GetString(Resource.String.server_client_id));
 
             GoogleClient = GoogleSignIn.GetClient(this, new GoogleSignInOptions.Builder(GoogleSignInOptions.DefaultSignIn)
                 .RequestIdToken(GetString(Resource.String.server_client_id))

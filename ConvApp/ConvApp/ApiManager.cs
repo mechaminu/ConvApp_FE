@@ -20,9 +20,9 @@ namespace ConvApp
     // Repository pattern 적용사례에 해당되는듯?
     public class ApiManager
     {
-        //private static readonly string EndPointURL = "http://minuuoo.ddns.net:5000/api";
-        private static readonly string EndPointURL = "https://paltoinfoconvapp.ddns.net/api";
-        public static readonly string ImageEndPointURL = "https://convappdev.blob.core.windows.net/images";
+        //private static readonly string EndPointURL = "http://localhost:8080/api";
+        private static readonly string EndPointURL = "https://convappserver-showcase.azurewebsites.net/api";
+        public static readonly string ImageEndPointURL = "https://convappserverstorage.blob.core.windows.net/images";
         private static readonly RestClient client = new RestClient(EndPointURL) { Timeout = 10000 }.UseNewtonsoftJson(new JsonSerializerSettings
         {
             PreserveReferencesHandling = PreserveReferencesHandling.All
@@ -31,6 +31,22 @@ namespace ConvApp
         public async static Task<UserBriefModel> RegisterUser(RegisterDTO data)
         {
             var request = new RestRequest("users/register", Method.POST)
+                .AddJsonBody(data);
+
+            var response = await client.ExecuteAsync<UserBriefModel>(request);
+
+            var result = JsonConvert.DeserializeObject(response.Content);
+
+            if (!response.IsSuccessful)
+                throw new Exception((result as JContainer)["detail"].ToString());
+
+            return response.Data;
+        }
+
+
+        public async static Task<UserBriefModel> UpdateOAuth(RegisterDTO data)
+        {
+            var request = new RestRequest("users/updateoauth", Method.POST)
                 .AddJsonBody(data);
 
             var response = await client.ExecuteAsync<UserBriefModel>(request);

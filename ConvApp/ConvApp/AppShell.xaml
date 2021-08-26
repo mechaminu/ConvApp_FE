@@ -38,22 +38,22 @@
     </Shell.Resources>
     <TabBar>
         <Tab Title="피드" >
-            <ShellContent Title="All"
-                          ContentTemplate="{DataTemplate views:FeedPageAll}"
-                          Style="{StaticResource FeedShell}"
-                          Route="pageAllFeed"/>
-            <ShellContent Title="Review"
-                          ContentTemplate="{DataTemplate views:FeedPageReview}"
-                          Style="{StaticResource FeedShell}"
-                          Route="pageReviewFeed"/>
-            <ShellContent Title="Recipe"
-                          ContentTemplate="{DataTemplate views:FeedPageRecipe}"
-                          Style="{StaticResource FeedShell}"
-                          Route="pageRecipeFeed"/>
-            <ShellContent Title="Hot"
+            <ShellContent Title="인기"
                           ContentTemplate="{DataTemplate views:FeedPageHot}"
                           Style="{StaticResource FeedShell}"
                           Route="pageHotFeed"/>
+            <ShellContent Title="상품평"
+                          ContentTemplate="{DataTemplate views:FeedPageReview}"
+                          Style="{StaticResource FeedShell}"
+                          Route="pageReviewFeed"/>
+            <ShellContent Title="레시피"
+                          ContentTemplate="{DataTemplate views:FeedPageRecipe}"
+                          Style="{StaticResource FeedShell}"
+                          Route="pageRecipeFeed"/>
+            <ShellContent Title="전체"
+                          ContentTemplate="{DataTemplate views:FeedPageAll}"
+                          Style="{StaticResource FeedShell}"
+                          Route="pageAllFeed"/>
         </Tab>
         <Tab Title="검색" >
             <ShellContent Style="{StaticResource BaseStyle}">

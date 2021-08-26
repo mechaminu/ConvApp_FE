@@ -7,7 +7,6 @@
     <OutputType>Library</OutputType>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
-    <UserSecretsId>978544c0-b749-40c7-afe2-ebb45fd485ae</UserSecretsId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -77,37 +76,37 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
     <PackageReference Include="MimeTypesMap" Version="1.0.8" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="RestSharp" Version="106.11.8-alpha.0.11" />
-    <PackageReference Include="RestSharp.Serializers.NewtonsoftJson" Version="106.11.8-alpha.0.11" />
-    <PackageReference Include="System.Drawing.Common" Version="5.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="RestSharp" Version="106.12.0" />
+    <PackageReference Include="RestSharp.Serializers.NewtonsoftJson" Version="106.12.0" />
+    <PackageReference Include="System.Drawing.Common" Version="6.0.0-preview.7.21377.19" />
     <PackageReference Include="Xam.Plugin.Media" Version="5.0.1" />
     <PackageReference Include="Xam.Plugins.Forms.ImageCircle" Version="3.1.1.1-beta" />
-    <PackageReference Include="Xamarin.Auth" Version="1.7.0" />
-    <PackageReference Include="Xamarin.Auth.XamarinForms" Version="1.7.0" />
     <PackageReference Include="Xamarin.FFImageLoading" Version="2.4.11.982" />
     <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.11.982" />
     <PackageReference Include="Xamarin.FFImageLoading.Svg" Version="2.4.11.982" />
     <PackageReference Include="Xamarin.FFImageLoading.Svg.Forms" Version="2.4.11.982" />
     <PackageReference Include="Xamarin.FFImageLoading.Transformations" Version="2.4.11.982" />
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.1791-pre5" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.6.0-pre4" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2083" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Update="AppShell.xaml.cs">
       <DependentUpon>AppShell.xaml</DependentUpon>
     </Compile>
-    <Compile Update="LoginPage.xaml.cs">
-      <DependentUpon>LoginPage.xaml</DependentUpon>
+    <Compile Update="Login.xaml.cs">
+      <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\Category\CategoryGeneralRanking.xaml.cs">
       <DependentUpon>CategoryGeneralRanking.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\Feed\FeedPage.xaml.cs">
       <DependentUpon>FeedPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Login\EmailLoginModal.xaml.cs">
+      <DependentUpon>EmailLoginModal.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\Profile\ProfilePage.xaml.cs">
       <DependentUpon>ProfilePage.xaml</DependentUpon>
@@ -130,7 +129,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="UserRegisterPage.xaml">
+    <EmbeddedResource Update="Views\Login\EmailLoginModal.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Category\ProductDetail.xaml">
@@ -160,7 +159,7 @@
     <EmbeddedResource Update="Views\Feed\ReviewDetail.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="LoginPage.xaml">
+    <EmbeddedResource Update="Login.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\PostDetail.xaml">

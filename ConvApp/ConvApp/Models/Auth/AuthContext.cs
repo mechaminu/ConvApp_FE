@@ -8,5 +8,11 @@ namespace ConvApp.Models
     {
         public DateTime LastLogined { get; set; }
         public OAuthProvider Type { get; set; }
+        public IAuthdata Data { get; set; }
+    }
+
+    interface IAuthdata
+    {
+
     }
 }

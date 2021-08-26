@@ -105,14 +105,14 @@ namespace ConvApp.Views
             catch (IndexOutOfRangeException)
             {
                 // 페이징 끝에 도달한 경우
-                if(await DisplayAlert("여정의 끝...?", "더 보여드릴 자료가 없습니다!\n\n목록을 최신 기준으로 갱신할까요?", "예", "아니오"))
+                if(await DisplayAlert("여정의 끝...?", "\n더 보여드릴 자료가 없습니다!\n목록을 최신 기준으로 갱신할까요?", "예", "아니오"))
                     await Refresh();
             }
             catch (Exception ex)
             {
                 // 이외 예외처리
                 await DisplayAlert(ex.Message, ex.StackTrace, "확인");
-                throw;
+                //throw;
             }
         }
 

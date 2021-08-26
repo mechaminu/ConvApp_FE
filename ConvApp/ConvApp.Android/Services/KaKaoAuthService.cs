@@ -5,16 +5,11 @@ using Java.Lang;
 using Kotlin.Jvm.Functions;
 using System;
 using System.Threading.Tasks;
-using Application = Android.App.Application;
 
 using Xamarin.Forms;
 using ConvApp.Droid.Services;
 using Android.App;
-using Android.OS;
-using Android.Content;
 using Com.Kakao.Sdk.Auth.Model;
-using Com.Kakao.Sdk.User;
-using Com.Kakao.Sdk.User.Model;
 
 #nullable enable
 

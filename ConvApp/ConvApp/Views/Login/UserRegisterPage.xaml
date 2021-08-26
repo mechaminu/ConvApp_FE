@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:fftf="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+             x:Class="ConvApp.UserRegisterPage"
+             BackgroundColor="#00000000"
+             x:Name="page">
+    <StackLayout HorizontalOptions="FillAndExpand"
+                 VerticalOptions="Center">
+        <Frame Margin="10"
+               Padding="10"
+               BackgroundColor="#FFFFFF"
+               CornerRadius="10">
+            <StackLayout>
+                <ff:CachedImage x:Name="profileImg"
+                                Source="{Binding Image}"
+                                WidthRequest="50"
+                                HeightRequest="50"
+                                Aspect="AspectFit"
+                                DownsampleToViewSize="True">
+                    <ff:CachedImage.Transformations>
+                        <fftf:CircleTransformation BorderSize="5" BorderHexColor="#111111"/>
+                    </ff:CachedImage.Transformations>
+                </ff:CachedImage>
+                <Button Text="프로필 이미지 변경"
+                        Clicked="AddImage"/>
+                <Label x:Name="oauthLabel"
+                       Text="{Binding OAuthType}"
+                       HorizontalOptions="Center"/>
+                <Label x:Name="emailLabel"
+                       Text="{Binding Email}"
+                       HorizontalOptions="Center"/>
+                <Entry x:Name="emailEntry"
+                       Placeholder="이메일"/>
+                <Entry x:Name="nameEntry"
+                       Placeholder="유저명"/>
+                <Entry x:Name="pwdEntry"
+                       Placeholder="비밀번호"
+                       IsPassword="True"/>
+                <Entry x:Name="pwd2Entry"
+                       Placeholder="비밀번호 확인"
+                       IsPassword="True"/>
+                <Button Text="완료"
+                        Clicked="Button_Clicked"/>
+            </StackLayout>
+        </Frame>
+    </StackLayout>
+</ContentPage>

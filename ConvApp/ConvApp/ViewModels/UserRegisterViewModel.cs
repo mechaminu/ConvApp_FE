@@ -21,7 +21,7 @@ namespace ConvApp.ViewModels
         public string imageFilename = null;
         public string Image
         {
-            get => Path.Combine(ApiManager.ImageEndPointURL, imageFilename);
+            get => imageFilename != null ? Path.Combine(ApiManager.ImageEndPointURL, imageFilename) : null;
             set 
             {
                 imageFilename = value;
