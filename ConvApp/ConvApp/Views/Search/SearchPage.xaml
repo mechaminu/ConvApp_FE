@@ -12,11 +12,10 @@
             <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
                 <Frame HeightRequest="40" CornerRadius="10" Padding="0">
                     <SearchBar x:Name="searchBar" 
-                       Placeholder="제품, 레시피, 상품평, 카테고리 통합 검색"
+                       Placeholder="(비활성화) 제품, 레시피, 상품평, 카테고리 통합 검색"
                        TextTransform="Lowercase"
                        FontSize="Medium"
                        HorizontalOptions="FillAndExpand"
-                       TextChanged="OnClick_search"
                        BackgroundColor="LightGray"/>
                 </Frame>
             </StackLayout>

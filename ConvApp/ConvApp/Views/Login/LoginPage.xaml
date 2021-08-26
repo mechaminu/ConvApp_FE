@@ -59,7 +59,7 @@
                 </Label.GestureRecognizers>
             </Label>
             <Label Margin="10"
-                   Text="이용약관 및 개인정보처리방침"
+                   Text="이용약관 및 개인정보처리방침 (비활성화)"
                    TextColor="#AAAAAA"
                    HorizontalOptions="Center"
                    VerticalOptions="End">
@@ -69,16 +69,6 @@
                 </Label.GestureRecognizers>
             </Label>
             <Label Text="경희대학교 이민우 포트폴리오용 알파"
-                   TextColor="#AAAAAA"
-                   HorizontalOptions="Center"
-                   VerticalOptions="End">
-                <Label.GestureRecognizers>
-                    <!--<TapGestureRecognizer Command="{Binding LoginCommand}"
-                                          CommandParameter="{x:Static models:LoginProvider.None}"/>-->
-                </Label.GestureRecognizers>
-            </Label>
-            <Label Margin="10"
-                   Text="!다크모드에선 앱에 오류가 발생하여 이용이 불가합니다!"
                    TextColor="#AAAAAA"
                    HorizontalOptions="Center"
                    VerticalOptions="End">

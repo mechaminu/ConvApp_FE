@@ -14,7 +14,8 @@ namespace ConvApp
         public App()
         {
             InitializeComponent();
-            MainPage = new LoginPage();
+            Application.Current.UserAppTheme = OSAppTheme.Light;
+            Application.Current.MainPage = new LoginPage();
         }
     }
 }

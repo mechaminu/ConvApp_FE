@@ -4,6 +4,7 @@ using Android.Content.PM;
 using Android.Gms.Auth.Api.SignIn;
 using Android.OS;
 using Android.Runtime;
+using AndroidX.AppCompat.App;
 using Com.Kakao.Sdk.Common;
 using ConvApp.Droid.Services;
 using FFImageLoading.Forms.Platform;
@@ -22,6 +23,7 @@ namespace ConvApp.Droid
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
+            AppCompatDelegate.DefaultNightMode = AppCompatDelegate.ModeNightNo; // 다크모드 강제 해제
             base.OnCreate(savedInstanceState);
             Instance = this;
 
