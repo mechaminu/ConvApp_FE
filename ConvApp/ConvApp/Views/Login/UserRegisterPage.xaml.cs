@@ -72,8 +72,11 @@ namespace ConvApp
             }
             catch (Exception ex) when (ex.Message == "동일 이메일로 가입정보가 이미 존재합니다")
             {
-                if (await App.Current.MainPage.DisplayAlert("알림", $"동일 이메일로 가입정보가 존재합니다.\n{dto.Email}\n SNS 로그인 정보를 추가할까요?", "예", "아니오"))
-                    App.User = await ApiManager.UpdateOAuth(dto);
+                if (dto.OAuthProvider == (byte)OAuthProvider.None)
+                    await App.Current.MainPage.DisplayAlert("오류", ex.Message, "확인");
+                else
+                    if (await App.Current.MainPage.DisplayAlert("알림", $"SNS가 사용중인 이메일로 가입정보가 존재합니다.\n{dto.Email}\n 해당 계정에 SNS 로그인 정보를 추가할까요?", "예", "아니오"))
+                        App.User = await ApiManager.UpdateOAuth(dto);
             }
             catch (Exception ex)
             {
